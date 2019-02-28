@@ -1,9 +1,10 @@
 #include "controller.h"
+#include "network/network.h"
+#include "network/streamer.h"
+#include "network/messenger.h"
 #include "haptics/haptics.h"
 #include "graphics/graphics.h"
 
-using namespace chai3d;
-using namespace std;
 
 extern HapticData hapticsData;
 extern GraphicsData graphicsData;
@@ -22,16 +23,19 @@ int main(int argc, char* argv[])
   
   controlData.simulationRunning = false;
   controlData.simulationFinished = true;
+  controlData.STREAMER_IP = "127.0.0.1";
+  controlData.STREAMER_PORT = 10000;
+  controlData.MESSENGER_IP = "127.0.0.1";
+  controlData.MESSENGER_PORT = 2000;
+  controlData.totalPackets = 0;
 
   initDisplay();
   initScene();
   initHaptics();
   initTask();
-  
-    
-  hapticsData.hapticsThread = new cThread();
-  hapticsData.hapticsThread->start(updateHaptics, CTHREAD_PRIORITY_HAPTICS);
-
+  startHapticsThread(); 
+  streamStart(); 
+  startMessenger();
   atexit(close);
   resizeWindowCallback(graphicsData.window, graphicsData.width, graphicsData.height);
   while (!glfwWindowShouldClose(graphicsData.window)) {
@@ -56,4 +60,30 @@ void close()
   delete hapticsData.hapticsThread;
   delete graphicsData.world;
   delete hapticsData.handler;
+  closeAllConnections();
+}
+
+void parsePacket(char* packet)
+{
+  MSG_HEADER header;
+  memcpy(&header, packet, sizeof(header));
+  int msgType = header.msg_type;
+  // cout << "Packet size " << sizeof(&packet) << endl;
+  // cout << "Header size " << sizeof(header) << endl;
+  // cout << "Message type " << msgType << endl;
+  switch (msgType)
+  {
+    case GRAPHICS_SHAPE_SPHERE:
+      cout << "RECEIVED GRAPHICS_SHAPE_SPHERE Message" << endl;
+      M_GRAPHICS_SHAPE_SPHERE sphere;
+      memcpy(&sphere, packet, sizeof(sphere));
+      cShapeSphere* sphereObj = new cShapeSphere(sphere.radius);
+      graphicsData.world->addChild(sphereObj);
+      sphereObj->setLocalPos(sphere.localPosition[0], sphere.localPosition[1], sphere.localPosition[2]);
+      sphereObj->m_material->setColorf(sphere.color[0], sphere.color[1], sphere.color[2], sphere.color[3]);
+      sphereObj->m_material->setStiffness(0);
+      cEffectSurface* newEffect = new cEffectSurface(sphereObj);
+      sphereObj->addEffect(newEffect);
+      break;
+  }
 }

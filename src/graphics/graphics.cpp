@@ -1,6 +1,7 @@
 #include "graphics.h"
 
 extern HapticData hapticsData;
+extern ControlData controlData;
 GraphicsData graphicsData;
 
 void initDisplay(void)
@@ -47,7 +48,8 @@ void initDisplay(void)
   }
   
   glfwGetWindowSize(graphicsData.window, &graphicsData.width, &graphicsData.height);
-  glfwSetWindowPos(graphicsData.window, graphicsData.xPos, graphicsData.yPos); 
+  glfwSetWindowPos(graphicsData.window, graphicsData.xPos, graphicsData.yPos);
+  glfwSetKeyCallback(graphicsData.window, keySelectCallback);
   glfwSetWindowSizeCallback(graphicsData.window, resizeWindowCallback);
   glfwMakeContextCurrent(graphicsData.window);
   glfwSwapInterval(graphicsData.swapInterval);

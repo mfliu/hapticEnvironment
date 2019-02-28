@@ -18,6 +18,12 @@ void initHaptics(void)
   hapticsData.tool->start();
 }
 
+void startHapticsThread(void)
+{
+  hapticsData.hapticsThread = new cThread();
+  hapticsData.hapticsThread->start(updateHaptics, CTHREAD_PRIORITY_HAPTICS);
+}
+
 void updateHaptics(void)
 {
   cPrecisionClock clock;

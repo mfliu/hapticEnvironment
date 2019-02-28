@@ -19,8 +19,15 @@ struct HapticData
   cFrequencyCounter freqCounterHaptics;
 };
 
-void initHaptics(void);
-void updateHaptics(void);
+#define HAPTIC_DEVICE_ANGLE_DEG 45.0
+#define GAIN_HAPTIC_TO_RIG 1000.0
+#define HAPTIC_WORKSPACE_ANGLE_DEG 0.00
+#define WORKSPACE_WIDTH 250
+#define WORKSPACE_HEIGHT 250 
+#define DRAG_COEFF .02
 
+void initHaptics(void);
+void startHapticsThread(void);
+void updateHaptics(void);
 
 #endif
