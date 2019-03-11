@@ -23,16 +23,21 @@ int main(int argc, char* argv[])
   
   controlData.simulationRunning = false;
   controlData.simulationFinished = true;
+  controlData.totalPackets = 0;
+
+  // TODO: Set these IP addresses from a config file
   controlData.STREAMER_IP = "127.0.0.1";
   controlData.STREAMER_PORT = 10000;
   controlData.MESSENGER_IP = "127.0.0.1";
   controlData.MESSENGER_PORT = 2000;
-  controlData.totalPackets = 0;
-
-  initDisplay();
-  initScene();
+  controlData.hapticsOnly = false;
+  
+  if (controlData.hapticsOnly == false) {
+    initDisplay();
+    initScene();
+  }
   initHaptics();
-  initTask();
+  //initTask();
   startHapticsThread(); 
   streamStart(); 
   startMessenger();
@@ -52,6 +57,7 @@ int main(int argc, char* argv[])
 
 void close()
 {
+  // TODO: Make thread exits more graceful, currently hangs
   controlData.simulationRunning = false;
   while (!controlData.simulationFinished) {
     cSleepMs(100);
@@ -73,17 +79,51 @@ void parsePacket(char* packet)
   // cout << "Message type " << msgType << endl;
   switch (msgType)
   {
-    case GRAPHICS_SHAPE_SPHERE:
-      cout << "RECEIVED GRAPHICS_SHAPE_SPHERE Message" << endl;
+    case HAPTICS_SET_STIFFNESS:
+    {
+      cout << "Received HAPTICS_SET_STIFFNESS Message" << endl;
+      M_HAPTICS_SET_STIFFNESS stiffness;
+      memcpy(&stiffness, packet, sizeof(stiffness));
+      char* objectName;
+      objectName = stiffness.objectName;
+      if (controlData.objectMap.find(objectName) == controlData.objectMap.end()) {
+        cout << objectName << " not found" << endl;
+      }
+      else {
+        cout << objectName << " found" << endl;
+        controlData.objectMap[objectName]->m_material->setStiffness(stiffness.stiffness);
+      }
+      break;
+    }
+    case GRAPHICS_SHAPE_SPHERE: 
+    {
+      cout << "Received GRAPHICS_SHAPE_SPHERE Message" << endl;
       M_GRAPHICS_SHAPE_SPHERE sphere;
       memcpy(&sphere, packet, sizeof(sphere));
       cShapeSphere* sphereObj = new cShapeSphere(sphere.radius);
       graphicsData.world->addChild(sphereObj);
       sphereObj->setLocalPos(sphere.localPosition[0], sphere.localPosition[1], sphere.localPosition[2]);
       sphereObj->m_material->setColorf(sphere.color[0], sphere.color[1], sphere.color[2], sphere.color[3]);
+      cEffectSurface* sphereEffect = new cEffectSurface(sphereObj);
+      sphereObj->addEffect(sphereEffect);
+      controlData.objectMap[sphere.objectName] = sphereObj;
       sphereObj->m_material->setStiffness(0);
-      cEffectSurface* newEffect = new cEffectSurface(sphereObj);
-      sphereObj->addEffect(newEffect);
       break;
+    }
+    case GRAPHICS_SHAPE_TORUS:
+    {
+      cout << "Received GRAPHICS_SHAPE_TORUS Message" << endl;
+      M_GRAPHICS_SHAPE_TORUS torus;
+      memcpy(&torus, packet, sizeof(torus));
+      cShapeTorus* torusObj = new cShapeTorus(torus.innerRadius, torus.outerRadius);
+      graphicsData.world->addChild(torusObj);
+      torusObj->setLocalPos(0.0, 0.0, 0.0);
+      torusObj->m_material->setStiffness(1.0);
+      torusObj->m_material->setColorf(255.0, 255.0, 255.0, 1.0);
+      cEffectSurface* torusEffect = new cEffectSurface(torusObj);
+      torusObj->addEffect(torusEffect);
+      controlData.objectMap[torus.objectName] = torusObj;
+      break; 
+    }
   }
 }

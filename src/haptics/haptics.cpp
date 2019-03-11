@@ -22,14 +22,15 @@ void startHapticsThread(void)
 {
   hapticsData.hapticsThread = new cThread();
   hapticsData.hapticsThread->start(updateHaptics, CTHREAD_PRIORITY_HAPTICS);
+  controlData.simulationRunning = true;
+  controlData.simulationFinished = false;
+
 }
 
 void updateHaptics(void)
 {
   cPrecisionClock clock;
   clock.reset();
-  controlData.simulationRunning = true;
-  controlData.simulationFinished = false;
   cVector3d angVel(0.0, 0.0, 0.1);
   while (controlData.simulationRunning){
     clock.stop();
@@ -46,6 +47,7 @@ void updateHaptics(void)
     const double DAMPING = 0.1;
 
     cVector3d toolPos = hapticsData.tool->getDeviceGlobalPos();
+    /*
     cVector3d objectPos = graphicsData.object->getGlobalPos();
     cVector3d v = cSub(toolPos, objectPos);
     cVector3d angAcc(0, 0, 0);
@@ -67,6 +69,6 @@ void updateHaptics(void)
     if (angVel.length() > C_SMALL) {
       graphicsData.object->rotateAboutGlobalAxisRad(cNormalize(angVel), timeInterval * angVel.length());
     }
-    
+    */
   }
 }

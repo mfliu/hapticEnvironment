@@ -16,10 +16,29 @@ sphereObj = md.M_GRAPHICS_SHAPE_SPHERE();
 sphereObj.header.serialNo = c_int(1);
 sphereObj.header.msg_type = c_int(md.GRAPHICS_SHAPE_SPHERE);
 sphereObj.header.timestamp = c_double(0.01);
+
+objectName = create_string_buffer(b"SphereObject", 128)
+objectNamePtr = (c_char_p) (addressof(objectName))
+
+sphereObj.objectName = objectNamePtr.value;
 sphereObj.radius = c_double(1.0);
 sphereObj.localPosition = (c_double * 3) (0.0, 0.0, 0.0) 
 sphereObj.color = (c_float * 4) (255, 0, 0, 1)
 
-print(sizeof(sphereObj.header))
 packet = MR.makeMessage(sphereObj)
-print(sock.sendto(packet, (UDP_IP, UDP_PORT)))
+sock.sendto(packet, (UDP_IP, UDP_PORT))
+
+time.sleep(1)
+
+sphereStiffness = md.M_HAPTICS_SET_STIFFNESS();
+sphereStiffness.header.serialNo = c_int(1);
+sphereStiffness.header.msg_type = c_int(md.HAPTICS_SET_STIFFNESS);
+sphereStiffness.header.timestamp = c_double(0.01);
+
+objectName = create_string_buffer(b"SphereObject", 128)
+objectNamePtr = (c_char_p) (addressof(objectName))
+
+sphereStiffness.objectName = objectNamePtr.value
+sphereStiffness.stiffness = (c_double) (5.0)
+packet = MR.makeMessage(sphereStiffness)
+sock.sendto(packet, (UDP_IP, UDP_PORT))

@@ -91,10 +91,10 @@ void initScene(void)
 
 void initTask(void)
 {
-  double workspaceScaleFactor = hapticsData.tool->getWorkspaceScaleFactor();
-  double maxStiffness = hapticsData.hapticDeviceInfo.m_maxLinearStiffness / workspaceScaleFactor;
+  //double workspaceScaleFactor = hapticsData.tool->getWorkspaceScaleFactor();
+  //double maxStiffness = hapticsData.hapticDeviceInfo.m_maxLinearStiffness / workspaceScaleFactor;
   
-
+  /*
   graphicsData.object = new cShapeTorus(0.24, 0.50);
   graphicsData.world->addChild(graphicsData.object);
   graphicsData.object->setLocalPos(0.0, 0.0, 0.0);
@@ -107,7 +107,7 @@ void initTask(void)
 
   cEffectSurface* newEffect = new cEffectSurface(graphicsData.object);
   graphicsData.object->addEffect(newEffect);
-
+  */
 }
 
 void resizeWindowCallback(GLFWwindow* a_window, int a_width, int a_height)

@@ -13,6 +13,7 @@
 #define HAPTICS_EFFECT_SURFACE 1004
 #define HAPTICS_EFFECT_VIBRATION 1005
 #define HAPTICS_EFFECT_VISCOSITY 1006
+#define HAPTICS_SET_STIFFNESS 1007
 
 // Graphics Messages are 2000-3000 
 /*#define GRAPHICS_COLORF 2000
@@ -66,7 +67,7 @@
 //#define GRAPHICS_SHAPE_ELLIPSOID 2048
 //#define GRAPHICS_SHAPE_LINE 2049
 #define GRAPHICS_SHAPE_SPHERE 2050
-//#define GRAPHICS_SHAPE_TORUS 2051
+#define GRAPHICS_SHAPE_TORUS 2051
 //#define GRAPHICS_VOXEL_OBJECT 2052
 
 // MSG_HEADER
@@ -126,6 +127,12 @@ typedef struct {
   MSG_HEADER header;
   char objectName[128];
 } M_HAPTICS_EFFECT_VISCOSITY;
+
+typedef struct {
+  MSG_HEADER header;
+  char objectName[128];
+  double stiffness;
+} M_HAPTICS_SET_STIFFNESS;
 
 typedef struct {
   MSG_HEADER header;
@@ -429,8 +436,16 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
+  char objectName[128];
   double radius;
   double localPosition[3];
   float color[4];
   int reserved[6];
 } M_GRAPHICS_SHAPE_SPHERE;
+
+typedef struct {
+  MSG_HEADER header;
+  char objectName[128];
+  double innerRadius;
+  double outerRadius;
+} M_GRAPHICS_SHAPE_TORUS;
