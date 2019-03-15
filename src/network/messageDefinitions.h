@@ -1,5 +1,6 @@
 #define DEFAULT_IP "localhost:10000"
-#define MAX_PACKET_LENGTH 4096 // arbitrary 
+#define MAX_PACKET_LENGTH 8192 // arbitrary 
+#define MAX_STRING_LENGTH 128  // also arbitrary
 
 // Experiment Control Messages 0-1000 
 #define CONTROL_SIMULATION_STARTED 10
@@ -8,29 +9,30 @@
 // Haptics Messages 1000-2000
 #define HAPTIC_DATA_STREAM 1000
 #define HAPTICS_TOOL_CONNECTED 1001
-#define HAPTICS_EFFECT_MAGNET 1002
-#define HAPTICS_EFFECT_STICKSLIP 1003
-#define HAPTICS_EFFECT_SURFACE 1004
-#define HAPTICS_EFFECT_VIBRATION 1005
-#define HAPTICS_EFFECT_VISCOSITY 1006
-#define HAPTICS_SET_STIFFNESS 1007
+#define HAPTICS_SET_ENABLED 1002
+#define HAPTICS_EFFECT_MAGNET 1003
+#define HAPTICS_EFFECT_STICKSLIP 1004
+#define HAPTICS_EFFECT_SURFACE 1005
+#define HAPTICS_EFFECT_VIBRATION 1006
+#define HAPTICS_EFFECT_VISCOSITY 1007
+#define HAPTICS_SET_STIFFNESS 1008
 
 // Graphics Messages are 2000-3000 
-/*#define GRAPHICS_COLORF 2000
-#define GRAPHICS_COLORB 2001
-#define GRAPHICS_DISPLAY_LIST 2002
-#define GRAPHICS_FOG 2003
-#define GRAPHICS_FONT 2004
-#define GRAPHICS_GENERIC_ARRAY 2005
-#define GRAPHICS_IMAGE 2006
-#define GRAPHICS_MULTI_IMAGE 2007
-#define GRAPHICS_POINT_ARRAY 2008
-#define GRAPHICS_RENDER_OPTIONS 2009
-#define GRAPHICS_SEGMENT_ARRAY 2010
-#define GRAPHICS_TRIANGLE_ARRAY 2011
-#define GRAPHICS_VERTEX_ARRAY_OPTIONS 2012
-#define GRAPHICS_VERTEX_ARRAY 2013
-#define GRAPHICS_VIDEO 2014*/
+#define GRAPHICS_SET_ENABLED 2000
+/*#define GRAPHICS_COLORF 2001
+#define GRAPHICS_COLORB 2002
+#define GRAPHICS_DISPLAY_LIST 2003
+#define GRAPHICS_FOG 2004
+#define GRAPHICS_FONT 2005
+#define GRAPHICS_GENERIC_ARRAY 2006
+#define GRAPHICS_IMAGE 2007
+#define GRAPHICS_MULTI_IMAGE 2008
+#define GRAPHICS_POINT_ARRAY 2009
+#define GRAPHICS_RENDER_OPTIONS 2010
+#define GRAPHICS_SEGMENT_ARRAY 2011
+#define GRAPHICS_TRIANGLE_ARRAY 2012
+#define GRAPHICS_VERTEX_ARRAY_OPTIONS 2013
+#define GRAPHICS_VERTEX_ARRAY 2014 */
 #define GRAPHICS_COLOR_FTOB 2015
 #define GRAPHICS_COLOR_BTOF 2016
 #define GRAPHICS_LOOKAT 2017
@@ -97,6 +99,7 @@ typedef struct {
   double forceX;
   double forceY;
   double forceZ;
+  char collisions[4][MAX_STRING_LENGTH]; // 4 object collisions at a time
 } M_HAPTIC_DATA_STREAM;
 
 typedef struct {
@@ -105,34 +108,46 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char objectName[128];
+  char objectName[MAX_STRING_LENGTH];
+  int enabled;
+} M_HAPTICS_SET_ENABLED;
+
+typedef struct {
+  MSG_HEADER header;
+  char objectName[MAX_STRING_LENGTH];
 } M_HAPTICS_EFFECT_MAGNET;
 
 typedef struct {
   MSG_HEADER header;
-  char objectName[128];
+  char objectName[MAX_STRING_LENGTH];
 } M_HAPTICS_EFFECT_STICKSLIP;
 
 typedef struct {
   MSG_HEADER header;
-  char objectName[128];
+  char objectName[MAX_STRING_LENGTH];
 } M_HAPTICS_EFFECT_SURFACE;
 
 typedef struct {
   MSG_HEADER header;
-  char objectName[128];
+  char objectName[MAX_STRING_LENGTH];
 } M_HAPTICS_EFFECT_VIBRATION;
 
 typedef struct {
   MSG_HEADER header;
-  char objectName[128];
+  char objectName[MAX_STRING_LENGTH];
 } M_HAPTICS_EFFECT_VISCOSITY;
 
 typedef struct {
   MSG_HEADER header;
-  char objectName[128];
+  char objectName[MAX_STRING_LENGTH];
   double stiffness;
 } M_HAPTICS_SET_STIFFNESS;
+
+typedef struct {
+  MSG_HEADER header;
+  char objectName[MAX_STRING_LENGTH];
+  int enabled;
+} M_GRAPHICS_SET_ENABLED;
 
 typedef struct {
   MSG_HEADER header;
@@ -192,7 +207,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double lengthX;
   double lengthY;
   double position[3];
@@ -202,7 +217,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double lengthX;
   double lengthY;
   double position[3];
@@ -215,7 +230,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double lengthX;
   double lengthY;
   unsigned int numSidesX;
@@ -227,7 +242,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double radiusX;
   double radiusY;
   unsigned int numSlices;
@@ -238,7 +253,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double lengthX;
   double lengthY;
   double radiusCorners;
@@ -250,7 +265,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double lengthX;
   double lengthY;
   double cornerTopLeftRadius;
@@ -268,7 +283,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double lengthX;
   double lengthY;
   double lengthZ;
@@ -279,7 +294,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double size;
   int resolution;
   double position[3];
@@ -289,7 +304,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128]; 
+  char meshObjectName[MAX_STRING_LENGTH]; 
   double height;
   double radius;
   unsigned int numSides;
@@ -304,7 +319,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double height;
   double innerRadius;
   double outerRadius;
@@ -317,7 +332,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double radius;
   unsigned int numSlices;
   unsigned int numStacks;
@@ -328,7 +343,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double radiusX;
   double radiusY;
   double radiusZ;
@@ -341,7 +356,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double innerRadius;
   double outerRadius;
   unsigned int numSides;
@@ -353,7 +368,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double innerRadius0;
   double innerRadius1;
   double outerRadius;
@@ -368,7 +383,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double height;
   double radiusBototm;
   double radiusTop;
@@ -384,7 +399,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double height;
   double baseSize;
   int includeBottom;
@@ -395,7 +410,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double a_length;
   double radiusShaft;
   double lengthTip;
@@ -409,7 +424,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double innerRadius0;
   double innerRadius1;
   double outerRadius;
@@ -426,7 +441,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char meshObjectName[128];
+  char meshObjectName[MAX_STRING_LENGTH];
   double controlPoints[3];
   int numDivisions;
   double position[3];
@@ -436,16 +451,17 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
-  char objectName[128];
+  char objectName[MAX_STRING_LENGTH];
   double radius;
   double localPosition[3];
   float color[4];
-  int reserved[6];
 } M_GRAPHICS_SHAPE_SPHERE;
 
 typedef struct {
   MSG_HEADER header;
-  char objectName[128];
+  char objectName[MAX_STRING_LENGTH];
   double innerRadius;
   double outerRadius;
+  double localPosition[3];
+  float color[4];
 } M_GRAPHICS_SHAPE_TORUS;

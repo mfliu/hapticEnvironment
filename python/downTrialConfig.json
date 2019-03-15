@@ -1,0 +1,23 @@
+{
+  "name": "downTrial",
+  "states": ["downTrial"],
+  "startState": "downTrial", 
+  "transitionSymbols": ["success", "failure"],
+  "entryFile": "centerOutFunctions", 
+  "downTrial":
+  {
+    "transitions": {
+      "success": "end",
+      "failure": "end"
+    }, 
+    "options": [],
+    "entry": "downTrialEntry",
+    "graphics": {
+      "shape": "sphere",
+      "radius": 0.1,
+      "color": [0, 255, 0, 1],
+      "position": [0.0, 0.0, -1.0],
+      "name": "downTrial"
+    }
+  }
+}

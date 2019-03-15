@@ -74,11 +74,28 @@ void parsePacket(char* packet)
   MSG_HEADER header;
   memcpy(&header, packet, sizeof(header));
   int msgType = header.msg_type;
-  // cout << "Packet size " << sizeof(&packet) << endl;
-  // cout << "Header size " << sizeof(header) << endl;
-  // cout << "Message type " << msgType << endl;
   switch (msgType)
   {
+    case HAPTICS_SET_ENABLED:
+    {
+      cout << "Received HAPTICS_SET_ENABLED Message" << endl;
+      M_HAPTICS_SET_ENABLED hapticsEnabled;
+      memcpy(&hapticsEnabled, packet, sizeof(hapticsEnabled));
+      char* objectName;
+      objectName = hapticsEnabled.objectName;
+      if (controlData.objectMap.find(objectName) == controlData.objectMap.end()) {
+        cout << objectName << " not found" << endl;
+      }
+      else {
+        if (hapticsEnabled.enabled == 1) {
+          controlData.objectMap[objectName]->setHapticEnabled(true);
+        }
+        else if (hapticsEnabled.enabled == 0) {
+          controlData.objectMap[objectName]->setHapticEnabled(false);
+        }
+      }
+      break;
+    }
     case HAPTICS_SET_STIFFNESS:
     {
       cout << "Received HAPTICS_SET_STIFFNESS Message" << endl;
@@ -90,11 +107,32 @@ void parsePacket(char* packet)
         cout << objectName << " not found" << endl;
       }
       else {
-        cout << objectName << " found" << endl;
         controlData.objectMap[objectName]->m_material->setStiffness(stiffness.stiffness);
       }
       break;
     }
+    case GRAPHICS_SET_ENABLED:
+    {
+      cout << "Received GRAPHICS_SET_ENABLED Message" << endl;
+      M_GRAPHICS_SET_ENABLED graphicsEnabled;
+      memcpy(&graphicsEnabled, packet, sizeof(graphicsEnabled));
+      char* objectName;
+      objectName = graphicsEnabled.objectName;
+      int enabled = graphicsEnabled.enabled;
+      if (controlData.objectMap.find(objectName) == controlData.objectMap.end()) {
+        cout << objectName << " not found" << endl;
+      }
+      else {
+        if (graphicsEnabled.enabled == 1) {
+          controlData.objectMap[objectName]->setShowEnabled(true);
+        }
+        else if (graphicsEnabled.enabled == 0) {
+          controlData.objectMap[objectName]->setShowEnabled(false);
+        }
+      }
+      break;
+    }
+
     case GRAPHICS_SHAPE_SPHERE: 
     {
       cout << "Received GRAPHICS_SHAPE_SPHERE Message" << endl;
@@ -107,7 +145,6 @@ void parsePacket(char* packet)
       cEffectSurface* sphereEffect = new cEffectSurface(sphereObj);
       sphereObj->addEffect(sphereEffect);
       controlData.objectMap[sphere.objectName] = sphereObj;
-      sphereObj->m_material->setStiffness(0);
       break;
     }
     case GRAPHICS_SHAPE_TORUS:

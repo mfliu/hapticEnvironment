@@ -3,7 +3,7 @@ import time
 import struct 
 import messageDefinitions as md
 import Messenger as MR
-
+from ctypes import * 
 UDP_IP = "127.0.0.1"
 UDP_PORT = 10000
 
@@ -13,7 +13,6 @@ while True:
   data, addr = sock.recvfrom(1024)
   msg_data = md.M_HAPTIC_DATA_STREAM()
   MR.readMessage(data, msg_data)
-  print(msg_data.header.serial_no)
-  print(msg_data.header.msg_type)
-  print(msg_data.posX)
-  time.sleep(0.05)
+  collisions = c_char_p(addressof(msg_data.collisions))
+  collisionData = struct.unpack(str(len(collisions.value)) + 's', collisions.value)
+  time.sleep(0.001)

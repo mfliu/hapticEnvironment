@@ -1,0 +1,10 @@
+import messageDefinitions as md
+
+LISTENER_IP = "127.0.0.1"
+LISTENER_PORT = 10000
+
+SENDER_IP = "127.0.0.1"
+SENDER_PORT = 2000
+
+
+CHAI_DATA = md.M_HAPTIC_DATA_STREAM() 

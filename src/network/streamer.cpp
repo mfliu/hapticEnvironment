@@ -51,26 +51,40 @@ void streamUpdate(void)
     forceY = force.y();
     forceZ = force.z();
     
-    M_HAPTIC_DATA_STREAM emgData;
-    memset(&emgData, 0, sizeof(emgData));  
-    emgData.header.serial_no = (int) controlData.totalPackets;
-    emgData.header.msg_type = HAPTIC_DATA_STREAM;
-    emgData.header.timestamp = currTime;
-    emgData.posX = posX;
-    emgData.posY = posY;
-    emgData.posZ = posZ;
-    emgData.velX = velX;
-    emgData.velY = velY;
-    emgData.velZ = velZ;
-    emgData.forceX = forceX;
-    emgData.forceY = forceY;
-    emgData.forceZ = forceZ;
+    M_HAPTIC_DATA_STREAM toolData;
+    memset(&toolData, 0, sizeof(toolData));  
+    toolData.header.serial_no = (int) controlData.totalPackets;
+    toolData.header.msg_type = HAPTIC_DATA_STREAM;
+    toolData.header.timestamp = currTime;
+    toolData.posX = posX;
+    toolData.posY = posY;
+    toolData.posZ = posZ;
+    toolData.velX = velX;
+    toolData.velY = velY;
+    toolData.velZ = velZ;
+    toolData.forceX = forceX;
+    toolData.forceY = forceY;
+    toolData.forceZ = forceZ;
     
-    char* packet[sizeof(emgData)];
-    memcpy(&packet, &emgData, sizeof(emgData));
+    char collisions[4][MAX_STRING_LENGTH];
+    int collisionIdx = 0;
+    unordered_map<string, cGenericObject*>::iterator objectItr;
+    for (objectItr = controlData.objectMap.begin(); objectItr != controlData.objectMap.end(); objectItr++)
+    {
+      if (hapticsData.tool->isInContact(objectItr->second)) {
+        int n = objectItr->first.length();
+        char objectName[n+1];
+        strcpy(objectName, objectItr->first.c_str());
+        memcpy(&(collisions[collisionIdx]), objectName, sizeof(collisions[collisionIdx]));
+        collisionIdx++;
+      }
+    }
+    memcpy(&(toolData.collisions), collisions, sizeof(toolData.collisions));
+    char* packet[sizeof(toolData)];
+    memcpy(&packet, &toolData, sizeof(toolData));
    
     sendPacket((char *) packet, sizeof(packet), true);
-    usleep(1000); // 1000 microseconds = 1 millisecond
+    usleep(250); // 1000 microseconds = 1 millisecond
   }
   closeStreamingSocket();
 }

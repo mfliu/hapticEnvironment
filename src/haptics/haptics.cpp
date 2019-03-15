@@ -42,11 +42,6 @@ void updateHaptics(void)
     hapticsData.tool->computeInteractionForces();
     hapticsData.tool->applyToDevice();
 
-    const double INERTIA = 0.4;
-    const double MAX_ANGLE_VEL = 10.0;
-    const double DAMPING = 0.1;
-
-    cVector3d toolPos = hapticsData.tool->getDeviceGlobalPos();
     /*
     cVector3d objectPos = graphicsData.object->getGlobalPos();
     cVector3d v = cSub(toolPos, objectPos);

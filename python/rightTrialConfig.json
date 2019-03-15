@@ -1,0 +1,23 @@
+{
+  "name": "rightTrial",
+  "states": ["rightTrial"],
+  "startState": "rightTrial", 
+  "transitionSymbols": ["success", "failure"],
+  "entryFile": "centerOutFunctions",
+  "rightTrial":
+  {
+    "transitions": {
+        "success": "end",
+        "failure": "end"
+    },
+    "options": [],
+    "entry": "rightTrialEntry",
+    "graphics": {
+      "shape": "sphere",
+      "radius": 0.1,
+      "color": [0, 255, 0, 1],
+      "position": [0.0, 1.0, 0.0],
+      "name": "rightTrial"
+    }
+  }
+}

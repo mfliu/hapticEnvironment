@@ -1,0 +1,23 @@
+{
+  "name": "leftPunishment",
+  "states": ["leftPunishment"],
+  "startState": "leftPunishment", 
+  "transitionSymbols": ["success", "failure"],
+  "entryFile": "centerOutFunctions", 
+  "leftPunishment":
+  {
+    "transitions": {
+      "success": "end",
+      "failure": "end"
+    }, 
+    "options": [],
+    "entry": "leftPunishmentEntry",
+    "graphics": {
+      "shape": "sphere",
+      "radius": 0.1,
+      "color": [255, 0, 0, 1],
+      "position": [0.0, -1.0, 0.0],
+      "name": "leftPunishment"
+    }
+  }
+}
