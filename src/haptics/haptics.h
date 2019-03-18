@@ -30,4 +30,11 @@ void initHaptics(void);
 void startHapticsThread(void);
 void updateHaptics(void);
 
+
+// ---------------------------------------------------- //
+// -----------Custom Haptics Functionality------------- // 
+// ---------------------------------------------------- // 
+
+#include "cBoundingPlane.h"
+
 #endif

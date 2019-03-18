@@ -70,11 +70,21 @@ class StateMachine(object):
     self.build(config)
     
     if top == True:
+      self.setBoundingPlane()
       self.listenerSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
       self.listenerSocket.bind((Globals.LISTENER_IP, Globals.LISTENER_PORT))
       self.listenerThread = Thread(target=self.listener)
       self.listenerThread.daemon = True
       self.listenerThread.start()
+
+  def setBoundingPlane(self):
+    message = md.M_HAPTICS_BOUNDING_PLANE()
+    message.header.serialNo = c_int(1)
+    message.header.msg_type = c_int(md.HAPTICS_BOUNDING_PLANE)
+    message.header.timestamp = c_double(0.01) 
+    packet = MR.makeMessage(message)
+    senderSocket.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
+
 
   # Build should return the start state of the StateMachine
   def build(self, config):

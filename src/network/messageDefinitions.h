@@ -16,6 +16,7 @@
 #define HAPTICS_EFFECT_VIBRATION 1006
 #define HAPTICS_EFFECT_VISCOSITY 1007
 #define HAPTICS_SET_STIFFNESS 1008
+#define HAPTICS_BOUNDING_PLANE 1009 
 
 // Graphics Messages are 2000-3000 
 #define GRAPHICS_SET_ENABLED 2000
@@ -142,6 +143,10 @@ typedef struct {
   char objectName[MAX_STRING_LENGTH];
   double stiffness;
 } M_HAPTICS_SET_STIFFNESS;
+
+typedef struct {
+  MSG_HEADER header;
+} M_HAPTICS_BOUNDING_PLANE;
 
 typedef struct {
   MSG_HEADER header;

@@ -111,6 +111,20 @@ void parsePacket(char* packet)
       }
       break;
     }
+
+    case HAPTICS_BOUNDING_PLANE:
+    {
+      cout << "Received HAPTICS_BOUNDING_PLANE Message" << endl;
+      cVector3d* topLeft = new cVector3d(-100.0, 0.0, 0.0);
+      cVector3d* topRight = new cVector3d(100.0, 0.0, 0.0);
+      cVector3d* botLeft = new cVector3d(0.0, 0.0, -100.0);
+      cVector3d* botRight = new cVector3d(0.0, 0.0, 100.0);
+      int stiffness = hapticsData.hapticDeviceInfo.m_maxLinearStiffness;
+      cBoundingPlane* bP = new cBoundingPlane(topLeft, topRight, botLeft, botRight, stiffness);
+      controlData.objectMap["boundingPlane"] = bP;
+      break;
+    }
+
     case GRAPHICS_SET_ENABLED:
     {
       cout << "Received GRAPHICS_SET_ENABLED Message" << endl;
