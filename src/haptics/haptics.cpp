@@ -8,14 +8,16 @@ void initHaptics(void)
   hapticsData.handler = new cHapticDeviceHandler();
   hapticsData.handler->getDevice(hapticsData.hapticDevice, 0);
   hapticsData.hapticDeviceInfo = hapticsData.hapticDevice->getSpecifications();
+  hapticsData.toolRadius = HAPTIC_TOOL_RADIUS;
 
   hapticsData.tool = new cToolCursor(graphicsData.world);
   graphicsData.world->addChild(hapticsData.tool);
   hapticsData.tool->setHapticDevice(hapticsData.hapticDevice);
-  hapticsData.tool->setRadius(0.03);
+  hapticsData.tool->setRadius(HAPTIC_TOOL_RADIUS);
   hapticsData.tool->setWorkspaceRadius(1.0);
   hapticsData.tool->setWaitForSmallForce(false);
   hapticsData.tool->start();
+  hapticsData.tool->setDeviceLocalPos(0.0, 0.0, 0.0);
 }
 
 void startHapticsThread(void)

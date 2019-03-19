@@ -11,7 +11,14 @@ UDP_PORT = 2000
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 #sock.bind((UDP_IP, UDP_PORT))
+message = md.M_HAPTICS_BOUNDING_PLANE()
+message.header.serialNo = c_int(1)
+message.header.msg_type = c_int(md.HAPTICS_BOUNDING_PLANE)
+message.header.timestamp = c_double(0.01) 
+packet = MR.makeMessage(message)
+sock.sendto(packet, (UDP_IP, UDP_PORT))
 
+"""
 sphereObj = md.M_GRAPHICS_SHAPE_SPHERE();
 sphereObj.header.serialNo = c_int(1);
 sphereObj.header.msg_type = c_int(md.GRAPHICS_SHAPE_SPHERE);
@@ -42,3 +49,4 @@ sphereStiffness.objectName = objectNamePtr.value
 sphereStiffness.stiffness = (c_double) (5.0)
 packet = MR.makeMessage(sphereStiffness)
 sock.sendto(packet, (UDP_IP, UDP_PORT))
+"""

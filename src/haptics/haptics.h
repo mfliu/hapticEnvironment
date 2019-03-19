@@ -17,6 +17,7 @@ struct HapticData
   cToolCursor* tool;
   cThread* hapticsThread;
   cFrequencyCounter freqCounterHaptics;
+  double toolRadius;
 };
 
 #define HAPTIC_DEVICE_ANGLE_DEG 45.0
@@ -25,6 +26,7 @@ struct HapticData
 #define WORKSPACE_WIDTH 250
 #define WORKSPACE_HEIGHT 250 
 #define DRAG_COEFF .02
+#define HAPTIC_TOOL_RADIUS 0.04
 
 void initHaptics(void);
 void startHapticsThread(void);

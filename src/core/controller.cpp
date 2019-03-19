@@ -115,13 +115,15 @@ void parsePacket(char* packet)
     case HAPTICS_BOUNDING_PLANE:
     {
       cout << "Received HAPTICS_BOUNDING_PLANE Message" << endl;
-      cVector3d* topLeft = new cVector3d(-100.0, 0.0, 0.0);
-      cVector3d* topRight = new cVector3d(100.0, 0.0, 0.0);
-      cVector3d* botLeft = new cVector3d(0.0, 0.0, -100.0);
-      cVector3d* botRight = new cVector3d(0.0, 0.0, 100.0);
       int stiffness = hapticsData.hapticDeviceInfo.m_maxLinearStiffness;
-      cBoundingPlane* bP = new cBoundingPlane(topLeft, topRight, botLeft, botRight, stiffness);
-      controlData.objectMap["boundingPlane"] = bP;
+      double toolRadius = hapticsData.toolRadius;
+      cBoundingPlane* bp = new cBoundingPlane(stiffness, toolRadius);
+      graphicsData.world->addChild(bp->getLowerBoundingPlane());
+      graphicsData.world->addChild(bp->getUpperBoundingPlane());
+      graphicsData.world->addChild(bp->getTopBoundingPlane());
+      graphicsData.world->addChild(bp->getBottomBoundingPlane());
+      graphicsData.world->addChild(bp->getLeftBoundingPlane());
+      graphicsData.world->addChild(bp->getRightBoundingPlane());
       break;
     }
 
