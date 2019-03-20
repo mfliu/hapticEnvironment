@@ -67,6 +67,7 @@ void streamUpdate(void)
     toolData.forceZ = forceZ;
     
     char collisions[4][MAX_STRING_LENGTH];
+    memset(&collisions, 0, sizeof(collisions));
     int collisionIdx = 0;
     unordered_map<string, cGenericObject*>::iterator objectItr;
     for (objectItr = controlData.objectMap.begin(); objectItr != controlData.objectMap.end(); objectItr++)

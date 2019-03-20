@@ -3,15 +3,15 @@
 cBoundingPlane::cBoundingPlane(int stiffness, double toolRadius)
 {
   
-  cVector3d p0l = cVector3d(-0.05, 0.75, 0.75);
-  cVector3d p1l = cVector3d(-0.05, -0.75, 0.75);
-  cVector3d p2l = cVector3d(-0.05, 0.75, -0.75);
-  cVector3d p3l = cVector3d(-0.05, -0.75, -0.75);
+  cVector3d p0l = cVector3d(-0.05, 0.95, 0.95);
+  cVector3d p1l = cVector3d(-0.05, -0.95, 0.95);
+  cVector3d p2l = cVector3d(-0.05, 0.95, -0.95);
+  cVector3d p3l = cVector3d(-0.05, -0.95, -0.95);
   
-  cVector3d p0u = cVector3d(0.05, 0.75, 0.75);
-  cVector3d p1u = cVector3d(0.05, -0.75, 0.75);
-  cVector3d p2u = cVector3d(0.05, 0.75, -0.75);
-  cVector3d p3u = cVector3d(0.05, -0.75, -0.75);
+  cVector3d p0u = cVector3d(0.05, 0.95, 0.95);
+  cVector3d p1u = cVector3d(0.05, -0.95, 0.95);
+  cVector3d p2u = cVector3d(0.05, 0.95, -0.95);
+  cVector3d p3u = cVector3d(0.05, -0.95, -0.95);
 
   lowerMesh = new cMesh();
   lowerMesh->setLocalPos(0.0, 0.0, 0.0);
@@ -129,7 +129,7 @@ cBoundingPlane::cBoundingPlane(int stiffness, double toolRadius)
   leftMesh->computeBoundaryBox(true);
   leftMesh->createAABBCollisionDetector(toolRadius);
   leftMesh->setStiffness(0.08*stiffness);
-  leftMesh->setShowTriangles(true);
+  leftMesh->setShowTriangles(false);
   leftMesh->m_material->setHapticTriangleSides(false, true);
   
   rightMesh = new cMesh();
@@ -149,7 +149,7 @@ cBoundingPlane::cBoundingPlane(int stiffness, double toolRadius)
   rightMesh->computeBoundaryBox(true);
   rightMesh->createAABBCollisionDetector(toolRadius);
   rightMesh->setStiffness(0.08*stiffness);
-  rightMesh->setShowTriangles(true);
+  rightMesh->setShowTriangles(false);
   rightMesh->m_material->setHapticTriangleSides(true, false);
 
 

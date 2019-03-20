@@ -26,7 +26,7 @@
         "success": "center",
         "failure": "punishment"
       },
-      "options": ["upTrial", "downTrial", "leftTrial", "rightTrial"],
+      "options": ["rightTrial", "leftTrial", "upTrial", "downTrial"],
       "entry": "trialEntry",
       "graphics": {}
     },
