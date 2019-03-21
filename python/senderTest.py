@@ -18,6 +18,15 @@ message.header.timestamp = c_double(0.01)
 packet = MR.makeMessage(message)
 sock.sendto(packet, (UDP_IP, UDP_PORT))
 
+forcefield = md.M_HAPTICS_CONSTANT_FORCE_FIELD()
+forcefield.header.serialNo = c_int(1)
+forcefield.header.msg_type = c_int(md.HAPTICS_CONSTANT_FORCE_FIELD)
+forcefield.header.timestamp = c_double(0.01)
+forcefield.direction = c_double(65.0)
+forcefield.magnitude = c_double(5.0)
+packet = MR.makeMessage(forcefield)
+sock.sendto(packet, (UDP_IP, UDP_PORT))
+"""
 sphereObj = md.M_GRAPHICS_SHAPE_SPHERE();
 sphereObj.header.serialNo = c_int(1);
 sphereObj.header.msg_type = c_int(md.GRAPHICS_SHAPE_SPHERE);
@@ -50,7 +59,7 @@ sphereObj.color = (c_float * 4) (0, 255, 0, 1)
 
 packet = MR.makeMessage(sphereObj)
 sock.sendto(packet, (UDP_IP, UDP_PORT))
-
+"""
 
 """
 time.sleep(1)

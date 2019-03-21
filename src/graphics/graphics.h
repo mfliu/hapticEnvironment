@@ -29,7 +29,6 @@ struct GraphicsData {
 
 void initDisplay(void);
 void initScene(void);
-void initTask(void);
 void errorCallback(int error, const char* errorDescription);
 void resizeWindowCallback(GLFWwindow* window, int w, int h);
 void keySelectCallback(GLFWwindow* window, int key, int scancode, int action, int mods);

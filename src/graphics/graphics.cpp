@@ -89,27 +89,6 @@ void initScene(void)
   graphicsData.light->setCutOffAngleDeg(20);
 }
 
-void initTask(void)
-{
-  //double workspaceScaleFactor = hapticsData.tool->getWorkspaceScaleFactor();
-  //double maxStiffness = hapticsData.hapticDeviceInfo.m_maxLinearStiffness / workspaceScaleFactor;
-  
-  /*
-  graphicsData.object = new cShapeTorus(0.24, 0.50);
-  graphicsData.world->addChild(graphicsData.object);
-  graphicsData.object->setLocalPos(0.0, 0.0, 0.0);
-  graphicsData.object->rotateAboutGlobalAxisDeg(cVector3d(0, 1, 0), 90);
-  graphicsData.object->m_material->setStiffness(1.0 * maxStiffness);
-  graphicsData.object->m_material->m_ambient.set(0.9f, 0.9f, 0.9f);
-  graphicsData.object->m_material->m_diffuse.set(0.9f, 0.9f, 0.9f);
-  graphicsData.object->m_material->m_specular.set(1.0f, 1.0f, 1.0f);
-  
-
-  cEffectSurface* newEffect = new cEffectSurface(graphicsData.object);
-  graphicsData.object->addEffect(newEffect);
-  */
-}
-
 void resizeWindowCallback(GLFWwindow* a_window, int a_width, int a_height)
 {
   graphicsData.width = a_width;

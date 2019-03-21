@@ -126,7 +126,18 @@ void parsePacket(char* packet)
       graphicsData.world->addChild(bp->getRightBoundingPlane());
       break;
     }
-
+    
+    case HAPTICS_CONSTANT_FORCE_FIELD:
+    {
+      cout << "Received HAPTICS_CONSTANT_FORCE_FIELD Message" << endl;
+      M_HAPTICS_CONSTANT_FORCE_FIELD cffInfo;
+      memcpy(&cffInfo, packet, sizeof(cffInfo));
+      double d = cffInfo.direction;
+      double m = cffInfo.magnitude;
+      cConstantForceFieldEffect* cFF = new cConstantForceFieldEffect(graphicsData.world, d, m);
+      graphicsData.world->addEffect(cFF);
+      break;
+    }
     case GRAPHICS_SET_ENABLED:
     {
       cout << "Received GRAPHICS_SET_ENABLED Message" << endl;

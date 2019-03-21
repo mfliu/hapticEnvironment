@@ -38,5 +38,5 @@ void updateHaptics(void);
 // ---------------------------------------------------- // 
 
 #include "cBoundingPlane.h"
-
+#include "cConstantForceFieldEffect.h"
 #endif

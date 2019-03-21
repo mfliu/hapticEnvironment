@@ -17,7 +17,6 @@ void initHaptics(void)
   hapticsData.tool->setWorkspaceRadius(1.0);
   hapticsData.tool->setWaitForSmallForce(false);
   hapticsData.tool->start();
-  hapticsData.tool->setDeviceLocalPos(0.0, 0.0, 0.0);
 }
 
 void startHapticsThread(void)
