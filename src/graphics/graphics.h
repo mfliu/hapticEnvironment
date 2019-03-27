@@ -1,11 +1,18 @@
 #ifndef _GRAPHICS_H_INCLUDED_
 #define _GRAPHICS_H_INCLUDED_ 
 
-
-#include <vector>
+#include <time.h>
 #include "chai3d.h"
 #include <GLFW/glfw3.h>
 #include "haptics/haptics.h"
+#include <vector>
+
+// ------------------------------------------------------
+// -------------Custom Graphics Functionality------------
+// ------------------------------------------------------
+#include "cGenericMovingObject.h"
+#include "cMovingDots.h"
+
 
 using namespace chai3d; 
 using namespace std; 
@@ -16,7 +23,7 @@ struct GraphicsData {
   bool mirroredDisplay;
   cWorld* world;
   cCamera* camera;
-  cSpotLight* light;
+  cDirectionalLight* light;
   GLFWwindow* window;
   int width;
   int height;
@@ -25,6 +32,8 @@ struct GraphicsData {
   int swapInterval;
   cShapeTorus* object;
   cFrequencyCounter freqCounterGraphics;
+  clock_t graphicsClock;
+  vector<cGenericMovingObject*> movingObjects;
 };
 
 void initDisplay(void);

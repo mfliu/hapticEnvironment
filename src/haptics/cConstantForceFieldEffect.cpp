@@ -11,11 +11,12 @@ bool cConstantForceFieldEffect::computeForce(const cVector3d& a_toolPos, const c
   if (m_parent->getHapticEnabled() == true) {
     a_reactionForce.x(magnitude * cCosDeg(direction));
     a_reactionForce.y(magnitude * cSinDeg(direction));
+    return true;
   }
   else {
     a_reactionForce.zero();
+    return false;
   }
-  return true;
 }
 
 

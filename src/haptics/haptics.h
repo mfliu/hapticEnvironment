@@ -39,4 +39,5 @@ void updateHaptics(void);
 
 #include "cBoundingPlane.h"
 #include "cConstantForceFieldEffect.h"
+#include "cViscosityEffect.h"
 #endif

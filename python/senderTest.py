@@ -9,23 +9,34 @@ UDP_IP = "127.0.0.1"
 UDP_PORT = 2000
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-#sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-#sock.bind((UDP_IP, UDP_PORT))
-message = md.M_HAPTICS_BOUNDING_PLANE()
-message.header.serialNo = c_int(1)
-message.header.msg_type = c_int(md.HAPTICS_BOUNDING_PLANE)
-message.header.timestamp = c_double(0.01) 
-packet = MR.makeMessage(message)
+
+
+#message = md.M_HAPTICS_BOUNDING_PLANE()
+#message.header.serialNo = c_int(1)
+#message.header.msg_type = c_int(md.HAPTICS_BOUNDING_PLANE)
+#message.header.timestamp = c_double(0.01) 
+#packet = MR.makeMessage(message)
+#sock.sendto(packet, (UDP_IP, UDP_PORT))
+
+dots = md.M_GRAPHICS_MOVING_DOTS()
+dots.header.serialNo = c_int(1)
+dots.header.msg_type = c_int(md.GRAPHICS_MOVING_DOTS)
+dots.header.timestamp = c_double(0.01)
+dots.numDots = c_int(500)
+dots.coherence = c_double(0.75)
+dots.direction = c_double(250)
+dots.magnitude = c_double(50)
+packet = MR.makeMessage(dots)
 sock.sendto(packet, (UDP_IP, UDP_PORT))
 
-forcefield = md.M_HAPTICS_CONSTANT_FORCE_FIELD()
-forcefield.header.serialNo = c_int(1)
-forcefield.header.msg_type = c_int(md.HAPTICS_CONSTANT_FORCE_FIELD)
-forcefield.header.timestamp = c_double(0.01)
-forcefield.direction = c_double(65.0)
-forcefield.magnitude = c_double(5.0)
-packet = MR.makeMessage(forcefield)
-sock.sendto(packet, (UDP_IP, UDP_PORT))
+#forcefield = md.M_HAPTICS_CONSTANT_FORCE_FIELD()
+#forcefield.header.serialNo = c_int(1)
+#forcefield.header.msg_type = c_int(md.HAPTICS_CONSTANT_FORCE_FIELD)
+#forcefield.header.timestamp = c_double(0.01)
+#forcefield.direction = c_double(65.0)
+#forcefield.magnitude = c_double(5.0)
+#packet = MR.makeMessage(forcefield)
+#sock.sendto(packet, (UDP_IP, UDP_PORT))
 """
 sphereObj = md.M_GRAPHICS_SHAPE_SPHERE();
 sphereObj.header.serialNo = c_int(1);

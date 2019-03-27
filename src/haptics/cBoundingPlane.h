@@ -14,7 +14,7 @@ class cBoundingPlane : public cGenericObject
     cMesh* leftMesh;
 
   public:
-    cBoundingPlane(int stiffness, double toolRadius);
+    cBoundingPlane(int stiffness, double toolRadius, double bWidth, double bHeight);
     cMesh* getLowerBoundingPlane() { return lowerMesh; }
     cMesh* getUpperBoundingPlane() { return upperMesh; }
     cMesh* getTopBoundingPlane() { return topMesh; }

@@ -79,14 +79,15 @@ void initScene(void)
   graphicsData.camera->setMirrorVertical(graphicsData.mirroredDisplay);
   
 
-  graphicsData.light = new cSpotLight(graphicsData.world);
+  graphicsData.light = new cDirectionalLight(graphicsData.world);
   graphicsData.camera->addChild(graphicsData.light); 
   graphicsData.light->setEnabled(true);
   graphicsData.light->setLocalPos(0.0, 0.5, 0.0);
   graphicsData.light->setDir(-3.0, -0.5, 0.0);
-  graphicsData.light->setShadowMapEnabled(true);
-  graphicsData.light->m_shadowMap->setQualityLow();
-  graphicsData.light->setCutOffAngleDeg(20);
+  //graphicsData.light->setShadowMapEnabled(true);
+  //graphicsData.light->m_shadowMap->setQualityLow();
+  //graphicsData.light->setCutOffAngleDeg(20);
+
 }
 
 void resizeWindowCallback(GLFWwindow* a_window, int a_width, int a_height)
@@ -135,6 +136,12 @@ void updateGraphics(void)
 {
   graphicsData.world->updateShadowMaps(false, graphicsData.mirroredDisplay);
   graphicsData.camera->renderView(graphicsData.width, graphicsData.height);
+  for(vector<cGenericMovingObject*>::iterator it = graphicsData.movingObjects.begin(); it != graphicsData.movingObjects.end(); it++)
+  {
+    double dt = (clock() - graphicsData.graphicsClock)/double(CLOCKS_PER_SEC);
+    graphicsData.graphicsClock = clock();
+    (*it)->graphicsLoopFunction(dt);
+  }
   glFinish();
   GLenum err = glGetError();
   if (err != GL_NO_ERROR) {

@@ -18,23 +18,11 @@
 #define HAPTICS_SET_STIFFNESS 1008
 #define HAPTICS_BOUNDING_PLANE 1009 
 #define HAPTICS_CONSTANT_FORCE_FIELD 1010
+#define HAPTICS_VISCOSITY_FIELD 1011
 
 // Graphics Messages are 2000-3000 
 #define GRAPHICS_SET_ENABLED 2000
-/*#define GRAPHICS_COLORF 2001
-#define GRAPHICS_COLORB 2002
-#define GRAPHICS_DISPLAY_LIST 2003
-#define GRAPHICS_FOG 2004
-#define GRAPHICS_FONT 2005
-#define GRAPHICS_GENERIC_ARRAY 2006
-#define GRAPHICS_IMAGE 2007
-#define GRAPHICS_MULTI_IMAGE 2008
-#define GRAPHICS_POINT_ARRAY 2009
-#define GRAPHICS_RENDER_OPTIONS 2010
-#define GRAPHICS_SEGMENT_ARRAY 2011
-#define GRAPHICS_TRIANGLE_ARRAY 2012
-#define GRAPHICS_VERTEX_ARRAY_OPTIONS 2013
-#define GRAPHICS_VERTEX_ARRAY 2014 */
+#define GRAPHICS_MOVING_DOTS 2014
 #define GRAPHICS_COLOR_FTOB 2015
 #define GRAPHICS_COLOR_BTOF 2016
 #define GRAPHICS_LOOKAT 2017
@@ -147,19 +135,37 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
+  double bWidth;
+  double bHeight;
 } M_HAPTICS_BOUNDING_PLANE;
 
 typedef struct {
   MSG_HEADER header;
+  char effectName[MAX_STRING_LENGTH];
   double direction;
   double magnitude;
 } M_HAPTICS_CONSTANT_FORCE_FIELD;
 
 typedef struct {
   MSG_HEADER header;
+  char effectName[MAX_STRING_LENGTH];
+  double viscosityMatrix[9];
+} M_HAPTICS_VISCOSITY_FIELD;
+
+typedef struct {
+  MSG_HEADER header;
   char objectName[MAX_STRING_LENGTH];
   int enabled;
 } M_GRAPHICS_SET_ENABLED;
+
+typedef struct {
+  MSG_HEADER header;
+  char objectName[MAX_STRING_LENGTH];
+  int numDots;
+  double coherence;
+  double direction;
+  double magnitude;
+} M_GRAPHICS_MOVING_DOTS;
 
 typedef struct {
   MSG_HEADER header;

@@ -6,6 +6,12 @@
 #include <atomic>
 #include <string>
 #include <unordered_map>
+#include <vector>
+#include "network/network.h"
+#include "network/streamer.h"
+#include "network/messenger.h"
+#include "haptics/haptics.h"
+#include "graphics/graphics.h"
 
 using namespace chai3d;
 using namespace std;
@@ -26,6 +32,9 @@ struct ControlData
   cThread* streamerThread;
   cThread* messengerThread;
   unordered_map<string, cGenericObject*> objectMap;
+  unordered_map<string, vector<string>> objectEffects;
+  unordered_map<string, cGenericEffect*> worldEffects;
+  //vector<cGenericMovingObject*> movingObjects;
 };
 void close(void);
 void parsePacket(char* packet);

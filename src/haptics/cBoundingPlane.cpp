@@ -1,17 +1,18 @@
 #include "cBoundingPlane.h"
 
-cBoundingPlane::cBoundingPlane(int stiffness, double toolRadius)
+cBoundingPlane::cBoundingPlane(int stiffness, double toolRadius, double bWidth, double bHeight)
 {
+  double w = bWidth/2;
+  double h = bHeight/2;
+  cVector3d p0l = cVector3d(-0.05, w, h);
+  cVector3d p1l = cVector3d(-0.05, -w, h);
+  cVector3d p2l = cVector3d(-0.05, w, -h);
+  cVector3d p3l = cVector3d(-0.05, -w, -h);
   
-  cVector3d p0l = cVector3d(-0.05, 0.95, 0.95);
-  cVector3d p1l = cVector3d(-0.05, -0.95, 0.95);
-  cVector3d p2l = cVector3d(-0.05, 0.95, -0.95);
-  cVector3d p3l = cVector3d(-0.05, -0.95, -0.95);
-  
-  cVector3d p0u = cVector3d(0.05, 0.95, 0.95);
-  cVector3d p1u = cVector3d(0.05, -0.95, 0.95);
-  cVector3d p2u = cVector3d(0.05, 0.95, -0.95);
-  cVector3d p3u = cVector3d(0.05, -0.95, -0.95);
+  cVector3d p0u = cVector3d(0.05, w, h);
+  cVector3d p1u = cVector3d(0.05, -w, h);
+  cVector3d p2u = cVector3d(0.05, w, -h);
+  cVector3d p3u = cVector3d(0.05, -w, -h);
 
   lowerMesh = new cMesh();
   lowerMesh->setLocalPos(0.0, 0.0, 0.0);

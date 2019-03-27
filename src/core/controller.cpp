@@ -1,10 +1,4 @@
 #include "controller.h"
-#include "network/network.h"
-#include "network/streamer.h"
-#include "network/messenger.h"
-#include "haptics/haptics.h"
-#include "graphics/graphics.h"
-
 
 extern HapticData hapticsData;
 extern GraphicsData graphicsData;
@@ -37,7 +31,6 @@ int main(int argc, char* argv[])
     initScene();
   }
   initHaptics();
-  //initTask();
   startHapticsThread(); 
   streamStart(); 
   startMessenger();
@@ -45,6 +38,7 @@ int main(int argc, char* argv[])
   resizeWindowCallback(graphicsData.window, graphicsData.width, graphicsData.height);
   while (!glfwWindowShouldClose(graphicsData.window)) {
     glfwGetWindowSize(graphicsData.window, &graphicsData.width, &graphicsData.height);
+    graphicsData.graphicsClock = clock();
     updateGraphics();
     glfwSwapBuffers(graphicsData.window);
     glfwPollEvents();
@@ -115,15 +109,20 @@ void parsePacket(char* packet)
     case HAPTICS_BOUNDING_PLANE:
     {
       cout << "Received HAPTICS_BOUNDING_PLANE Message" << endl;
+      M_HAPTICS_BOUNDING_PLANE bpMsg;
+      memcpy(&bpMsg, packet, sizeof(bpMsg));
+      double bWidth = bpMsg.bWidth;
+      double bHeight = bpMsg.bHeight;
       int stiffness = hapticsData.hapticDeviceInfo.m_maxLinearStiffness;
       double toolRadius = hapticsData.toolRadius;
-      cBoundingPlane* bp = new cBoundingPlane(stiffness, toolRadius);
+      cBoundingPlane* bp = new cBoundingPlane(stiffness, toolRadius, bWidth, bHeight);
       graphicsData.world->addChild(bp->getLowerBoundingPlane());
       graphicsData.world->addChild(bp->getUpperBoundingPlane());
       graphicsData.world->addChild(bp->getTopBoundingPlane());
       graphicsData.world->addChild(bp->getBottomBoundingPlane());
       graphicsData.world->addChild(bp->getLeftBoundingPlane());
       graphicsData.world->addChild(bp->getRightBoundingPlane());
+      controlData.objectMap["boundingPlane"] = bp;
       break;
     }
     
@@ -136,8 +135,24 @@ void parsePacket(char* packet)
       double m = cffInfo.magnitude;
       cConstantForceFieldEffect* cFF = new cConstantForceFieldEffect(graphicsData.world, d, m);
       graphicsData.world->addEffect(cFF);
+      controlData.worldEffects[cffInfo.effectName] = cFF;
       break;
     }
+
+    case HAPTICS_VISCOSITY_FIELD:
+    {
+      cout << "Received HAPTICS_VISCOSITY_FIELD Message" << endl;
+      M_HAPTICS_VISCOSITY_FIELD vF;
+      memcpy(&vF, packet, sizeof(vF));
+      cMatrix3d* B = new cMatrix3d(vF.viscosityMatrix[0], vF.viscosityMatrix[1], vF.viscosityMatrix[2],
+                                   vF.viscosityMatrix[3], vF.viscosityMatrix[4], vF.viscosityMatrix[5],
+                                   vF.viscosityMatrix[6], vF.viscosityMatrix[7], vF.viscosityMatrix[8]);
+      cViscosityEffect* vFF = new cViscosityEffect(graphicsData.world, B);
+      graphicsData.world->addEffect(vFF);
+      controlData.worldEffects[vF.effectName] = vFF;
+      break;
+    }
+
     case GRAPHICS_SET_ENABLED:
     {
       cout << "Received GRAPHICS_SET_ENABLED Message" << endl;
@@ -157,6 +172,22 @@ void parsePacket(char* packet)
           controlData.objectMap[objectName]->setShowEnabled(false);
         }
       }
+      break;
+    }
+    
+    case GRAPHICS_MOVING_DOTS:
+    {
+      cout << "Received GRAPHICS_MOVING_DOTS Message" << endl;
+      cMultiPoint* test = new cMultiPoint();
+      M_GRAPHICS_MOVING_DOTS dots;
+      memcpy(&dots, packet, sizeof(dots));
+      char* objectName;
+      objectName = dots.objectName;
+      cMovingDots* md = new cMovingDots(dots.numDots, dots.coherence, dots.direction, dots.magnitude);
+      controlData.objectMap[objectName] = md;
+      graphicsData.movingObjects.push_back(md);
+      graphicsData.world->addChild(md->getMovingPoints());
+      graphicsData.world->addChild(md->getRandomPoints());
       break;
     }
 
