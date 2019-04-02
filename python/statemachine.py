@@ -70,7 +70,7 @@ class StateMachine(object):
     self.build(config)
     
     if top == True:
-      self.setBoundingPlane()
+      #self.setBoundingPlane()
       self.listenerSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
       self.listenerSocket.bind((Globals.LISTENER_IP, Globals.LISTENER_PORT))
       self.listenerThread = Thread(target=self.listener)
@@ -97,6 +97,10 @@ class StateMachine(object):
     self.stateTree = {}
     self.entryFile = config["entryFile"]
     self.entryModule = __import__(self.entryFile, globals(), locals(), [], 0)
+    
+    self.setupFunc = getattr(self.entryModule, "setup")
+    self.taskVars = self.setupFunc()
+
     for stateName in config["states"]:
       stateConfig = config[stateName]
       stateTransitions = stateConfig["transitions"]
@@ -122,15 +126,15 @@ class StateMachine(object):
       time.sleep(0.001)
   
   def run(self):
-    print(self.name)
+    #print(self.name)
     while self.currentState != "end":
       currentState = self.states[self.currentState]
       if len(currentState.graphics.keys()) > 0:
         currentState.setTargetGraphics(currentState.objectName, 1)
         currentState.setTargetHaptics(currentState.objectName, 1)
 
-      transition = currentState.entry(self.stateTree[self.currentState])
-      print(transition)      
+      transition = currentState.entry(self.stateTree[self.currentState], self.taskVars)
+      #print(transition)      
       if len(currentState.graphics.keys()) > 0:
         currentState.setTargetGraphics(currentState.objectName, 0)
         currentState.setTargetHaptics(currentState.objectName, 0)

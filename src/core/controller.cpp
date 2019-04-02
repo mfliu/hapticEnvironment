@@ -152,6 +152,17 @@ void parsePacket(char* packet)
       controlData.worldEffects[vF.effectName] = vFF;
       break;
     }
+    
+    case HAPTICS_REMOVE_FIELD_EFFECT:
+    {
+      cout << "Received HAPTICS_REMOVE_FIELD_EFFECT Message" << endl;
+      M_HAPTICS_REMOVE_FIELD_EFFECT rmField;
+      memcpy(&rmField, packet, sizeof(rmField));
+      cGenericEffect* fieldEffect = controlData.worldEffects[rmField.effectName];
+      graphicsData.world->removeEffect(fieldEffect);
+      controlData.worldEffects.erase(rmField.effectName);
+      break;
+    }
 
     case GRAPHICS_SET_ENABLED:
     {
@@ -175,6 +186,18 @@ void parsePacket(char* packet)
       break;
     }
     
+    case GRAPHICS_CHANGE_BG_COLOR:
+    {
+      cout << "Received GRAPHICS_CHANGE_BG_COLOR Message" << endl;
+      M_GRAPHICS_CHANGE_BG_COLOR bgColor;
+      memcpy(&bgColor, packet, sizeof(bgColor));
+      float red = bgColor.color[0]/250.0;
+      float green = bgColor.color[1]/250.0;
+      float blue = bgColor.color[2]/250.0;
+      graphicsData.world->setBackgroundColor(red, green, blue);
+      break;
+    }
+
     case GRAPHICS_MOVING_DOTS:
     {
       cout << "Received GRAPHICS_MOVING_DOTS Message" << endl;
@@ -190,7 +213,7 @@ void parsePacket(char* packet)
       graphicsData.world->addChild(md->getRandomPoints());
       break;
     }
-
+    
     case GRAPHICS_SHAPE_SPHERE: 
     {
       cout << "Received GRAPHICS_SHAPE_SPHERE Message" << endl;
