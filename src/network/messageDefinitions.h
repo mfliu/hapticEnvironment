@@ -3,6 +3,12 @@
 #define MAX_STRING_LENGTH 128  // also arbitrary
 
 // Experiment Control Messages 0-1000 
+#define GET_MESSAGE_COUNT 1
+#define GET_MESSAGE_TIMESTAMP 2
+#define TRIAL_START 3
+#define TRIAL_END 4
+#define START_RECORDING 5
+#define STOP_RECORDING 6
 
 // Haptics Messages 1000-2000
 #define HAPTIC_DATA_STREAM 1000

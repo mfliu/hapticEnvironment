@@ -64,7 +64,20 @@ INCLUDES  = $(wildcard $(HDR_DIR)/*/*.h)
 OBJECTS   = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(SOURCES)))
 OUTPUT    = $(BASE_DIR)/$(PROG)
 
-all: $(OUTPUT)
+# Message handling configuration 
+RPCLIB_DIR = ./external/rpclib
+MSG_DIR = ./messageHandler
+MSG_HDR = ./messageHandler
+MSG_OBJ = ./obj/$(CFG)/$(OS)-$(ARCH)-$(COMPILER)
+MSG_PROG = messageHandler
+MSG_SOURCES = $(wildcard $(MSG_DIR)/*.cpp)
+MSG_INCLUDES = $(wildcard $(MSG_DIR)/*.h)
+MSG_OBJECTS = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(MSG_SOURCES)))
+MSG_OUTPUT = $(BASE_DIR)/$(MSG_PROG)
+MSG_FLAGS = -DLINUX -Wno-deprecated -std=c++17 -I$(RPCLIB_DIR)/include/ 
+MSG_LDFLAGS = -L$(RPCLIB_DIR)/build -lrpc -lpthread
+
+all: $(OUTPUT) $(MSG_OUTPUT)
 
 D_FILES = $(OBJECTS:.o=.d)
 -include $(D_FILES)
@@ -84,7 +97,21 @@ $(BASE_DIR):
 $(OBJ_DIR)/%.o : $(SRC_DIR)/*/%.cpp | $(OBJ_DIR) 
 	$(CXX) $(CXXFLAGS) -I$(HDR_DIR) -MD -MF $(OBJ_DIR)/$.d -c -o $@ $<
 
+#########################################################
+$(MSG_OBJECTS): $(MSG_INCLUDES)
+
+$(MSG_OUTPUT): $(MSG_OBJ) $(BASE_DIR) $(MSG_OBJECTS)
+	$(CXX) $(MSG_FLAGS) -I$(MSG_HDR) $(MSG_OBJECTS) $(MSG_LDFLAGS) -o $(MSG_OUTPUT)
+
+$(MSG_OBJ)/%.o: $(MSG_DIR)/%.cpp | $(MSG_OBJ)
+	$(CXX) $(MSG_FLAGS) -I$(MSG_HDR) -MD -MF $(MSG_OBJ)/$.d -c -o $@ $<
+#########################################################
+
 clean:
 	rm -f $(OUTPUT) $(OBJECTS) *~
+	rm -f $(MSG_OUTPUT) $(MSG_OBJECTS) *~
 	rm -rf $(OBJ_DIR)
+	rm -rf $(MSG_OBJ)
 	rm -rf $(BASE_DIR)
+
+	
