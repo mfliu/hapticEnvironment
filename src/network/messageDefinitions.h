@@ -2,9 +2,10 @@
 #define MAX_PACKET_LENGTH 8192 // arbitrary 
 #define MAX_STRING_LENGTH 128  // also arbitrary
 
-// Experiment Control Messages 0-1000 
-#define GET_MESSAGE_COUNT 1
-#define GET_MESSAGE_TIMESTAMP 2
+// Experiment Control Messages 1-1000 
+// Sometimes 0 is poorly parsed as a truncation signal
+#define SESSION_START 1
+#define SESSION_END 2
 #define TRIAL_START 3
 #define TRIAL_END 4
 #define START_RECORDING 5
@@ -33,6 +34,31 @@ typedef struct {
   double reserved;
   double timestamp;
 } MSG_HEADER;
+
+typedef struct {
+  MSG_HEADER header;
+} M_SESSION_START;
+
+typedef struct {
+  MSG_HEADER header;
+} M_SESSION_END;
+
+typedef struct {
+  MSG_HEADER header;
+} M_TRIAL_START;
+
+typedef struct {
+  MSG_HEADER header;
+} M_TRIAL_END;
+
+typedef struct {
+  MSG_HEADER header;
+  char filename[MAX_STRING_LENGTH];
+} M_START_RECORDING;
+
+typedef struct {
+  MSG_HEADER header;
+} M_STOP_RECORDING;
 
 typedef struct {
   MSG_HEADER header;

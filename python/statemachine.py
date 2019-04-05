@@ -119,7 +119,7 @@ class StateMachine(object):
 
   def listener(self):
     while True:
-      data, addr = self.listenerSocket.recvfrom(1024)
+      data, addr = self.listenerSocket.recvfrom(md.MAX_PACKET_LENGTH)
       msg_data = md.M_HAPTIC_DATA_STREAM()
       MR.readMessage(data, msg_data)
       Globals.CHAI_DATA = msg_data

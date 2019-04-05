@@ -18,14 +18,14 @@ void startMessenger()
 
 void updateMessenger()
 {
- double currTime;
- cPrecisionClock clock;
+  //double currTime;
+  //cPrecisionClock clock;
   char rawPacket[MAX_PACKET_LENGTH];
   char* packetPointer = rawPacket;
 
   while (controlData.simulationRunning)
   {
-    currTime = clock.getCurrentTimeSeconds();
+    //currTime = clock.getCurrentTimeSeconds();
     memset(rawPacket, 0, MAX_PACKET_LENGTH);
     int bytesRead = readPacket(packetPointer);
     if (bytesRead > 0) {

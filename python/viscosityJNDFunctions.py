@@ -9,28 +9,30 @@ from ctypes import *
 import socket 
 import numpy as np 
 import csv 
+from mprpc import RPCClient 
 
 UDP_IP = "127.0.0.1"
 UDP_PORT = 2000
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+client = RPCClient("127.0.0.1", 8080)
 
 def enableGraphics(objectName, setVal):
     namePtr = (c_char_p) (addressof(objectName))
     message = md.M_GRAPHICS_SET_ENABLED()
-    message.header.serialNo = c_int(1)
+    message.header.serialNo = c_int(client.call("getMsgNum"))
     message.header.msg_type = c_int(md.GRAPHICS_SET_ENABLED)
-    message.header.timestamp = c_double(0.01) 
+    message.header.timestamp = c_double(client.call("getTimestamp")) 
     message.objectName = namePtr.value 
     message.enabled = c_int(setVal)
     packet = MR.makeMessage(message)
-    sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
+    sock.sendto(packet, (UDP_IP, UDP_PORT))
 
 def removeEffect(effectName):
   rmField = md.M_HAPTICS_REMOVE_FIELD_EFFECT()
-  rmField.header.serialNo = c_int(1)
+  rmField.header.serialNo = c_int(client.call("getMsgNum"))
   rmField.header.msg_type = c_int(md.HAPTICS_REMOVE_FIELD_EFFECT)
-  rmField.header.timestamp = c_double(0.01)
+  rmField.header.timestamp = c_double(client.call("getTimestamp"))
   fieldNamePtr = (c_char_p) (addressof(effectName))
   rmField.effectName = fieldNamePtr.value
   packet = MR.makeMessage(rmField)
@@ -58,9 +60,9 @@ def setup():
     fwrite.writerow(["Trial", "Reference Viscosity", "Compare Viscosity", "Choice"])
 
   sameObj = md.M_GRAPHICS_SHAPE_SPHERE()
-  sameObj.header.serial_no = c_int(1)
+  sameObj.header.serial_no = c_int(client.call("getMsgNum"))
   sameObj.header.msg_type = md.GRAPHICS_SHAPE_SPHERE
-  sameObj.header.timestamp = c_double(0.1)
+  sameObj.header.timestamp = c_double(client.call("getTimestamp"))
   sameName = create_string_buffer(b"sameTarget", 128)
   sameNamePtr = (c_char_p) (addressof(sameName))
   sameObj.objectName = sameNamePtr.value
@@ -72,9 +74,9 @@ def setup():
   enableGraphics(sameName, 0)
 
   diffObj = md.M_GRAPHICS_SHAPE_SPHERE()
-  diffObj.header.serial_no = c_int(1)
+  diffObj.header.serial_no = c_int(client.call("getMsgNum"))
   diffObj.header.msg_type = md.GRAPHICS_SHAPE_SPHERE
-  diffObj.header.timestamp = c_double(0.1)
+  diffObj.header.timestamp = c_double(client.call("getTimestamp"))
   diffName = create_string_buffer(b"diffTarget", 128)
   diffNamePtr = (c_char_p) (addressof(diffName))
   diffObj.objectName = diffNamePtr.value
@@ -83,16 +85,15 @@ def setup():
   diffObj.color = (c_float * 4) (152/250, 0, 0, 1)
   packet = MR.makeMessage(diffObj)
   sock.sendto(packet, (UDP_IP, UDP_PORT))
-  
   enableGraphics(diffName, 0)
   
   return taskVars
 
 def setBackground(red, green, blue):
   bg = md.M_GRAPHICS_CHANGE_BG_COLOR()
-  bg.header.serialNo = c_int(1)
+  bg.header.serialNo = c_int(client.call("getMsgNum"))
   bg.header.msg_type = c_int(md.GRAPHICS_CHANGE_BG_COLOR)
-  bg.header.timestamp = c_double(0.01)
+  bg.header.timestamp = c_double(client.call("getTimestamp"))
   bg.color = (c_float * 4) (red, green, blue, 1.0)
   packet = MR.makeMessage(bg)
   sock.sendto(packet, (UDP_IP, UDP_PORT))
@@ -115,9 +116,9 @@ def field1Entry(options, taskVars):
   #print("Reference Viscosity: ", field1Visc)
   
   field1 = md.M_HAPTICS_VISCOSITY_FIELD()
-  field1.header.serial_no = c_int(1)
+  field1.header.serial_no = c_int(client.call("getMsgNum"))
   field1.header.msg_type = c_int(md.HAPTICS_VISCOSITY_FIELD)
-  field1.timestamp = c_double(0.1)
+  field1.timestamp = c_double(client.call("getTimestamp"))
   field1Name = create_string_buffer(b"field1", md.MAX_STRING_LENGTH)
   field1NamePtr = (c_char_p) (addressof(field1Name))
   field1.effectName = field1NamePtr.value 
@@ -157,9 +158,9 @@ def field2Entry(options, taskVars):
   #print("Field Viscosity: ", taskVars["field2Visc"])
   
   field2 = md.M_HAPTICS_VISCOSITY_FIELD()
-  field2.header.serial_no = c_int(1)
+  field2.header.serial_no = c_int(client.call("getMsgNum"))
   field2.header.msg_type = c_int(md.HAPTICS_VISCOSITY_FIELD)
-  field2.timestamp = c_double(0.1)
+  field2.timestamp = c_double(client.call("getTimestamp"))
   field2Name = create_string_buffer(b"field2", md.MAX_STRING_LENGTH)
   field2NamePtr = (c_char_p) (addressof(field2Name))
   field2.effectName = field2NamePtr.value 

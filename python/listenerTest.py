@@ -13,12 +13,12 @@ sock.bind((UDP_IP, UDP_PORT))
 
 while True:
   data, addr = sock.recvfrom(1024)
+  print(data)
   msg_data = md.M_HAPTIC_DATA_STREAM()
   MR.readMessage(data, msg_data)
-  for i in range(0, len(msg_data.collisions)):
-    collision = c_char_p(addressof(msg_data.collisions[i]))
-    collisionName = struct.unpack(str(len(collision.value)) + 's', collision.value)
-    print(collisionName)
-  #collisions = c_char_p(addressof(msg_data.collisions))
-  #collisionData = struct.unpack(str(len(collisions.value)) + 's', collisions.value)
+  print(msg_data.posX)
+  #for i in range(0, len(msg_data.collisions)):
+  #  collision = c_char_p(addressof(msg_data.collisions[i]))
+  #  collisionName = struct.unpack(str(len(collision.value)) + 's', collision.value)
+  #  print(collisionName)
   time.sleep(0.001)

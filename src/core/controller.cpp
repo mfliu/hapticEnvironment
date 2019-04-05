@@ -17,7 +17,6 @@ int main(int argc, char* argv[])
   
   controlData.simulationRunning = false;
   controlData.simulationFinished = true;
-  //controlData.totalPackets = 0;
 
   // TODO: Set these IP addresses from a config file
   controlData.STREAMER_IP = "127.0.0.1";
@@ -71,6 +70,46 @@ void parsePacket(char* packet)
   int msgType = header.msg_type;
   switch (msgType)
   {
+    case SESSION_START:
+    {
+      cout << "Received SESSION_START Message" << endl;
+      break;
+    }
+
+    case SESSION_END:
+    {
+      cout << "Received SESSION_END Message" << endl;
+      break;
+    }
+
+    case TRIAL_START:
+    {
+      cout << "Received TRIAL_START Message" << endl;
+      break;
+    }
+
+    case TRIAL_END:
+    {
+      cout << "Received TRIAL_END Message" << endl;
+      break;
+    }
+
+    case START_RECORDING:
+    {
+      cout << "Received START_RECORDING Message" << endl;
+      M_START_RECORDING recInfo;
+      memcpy(&recInfo, packet, sizeof(recInfo));
+      char* fileName;
+      fileName = recInfo.filename;
+      break; 
+    }
+
+    case STOP_RECORDING:
+    {
+      cout << "Received STOP_RECORDING Message" << endl;
+      break;
+    }
+
     case HAPTICS_SET_ENABLED:
     {
       cout << "Received HAPTICS_SET_ENABLED Message" << endl;

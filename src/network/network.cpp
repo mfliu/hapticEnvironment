@@ -11,6 +11,7 @@ struct sockaddr_in messengerStruct, streamerStruct;
 int streamLen = sizeof(streamerStruct);
 int messengerLen = sizeof(messengerStruct);
 
+
 void openStreamingSocket(const char* ipAddr, int port) 
 {
   cout << "Opening streaming socket..." << endl;
@@ -41,10 +42,10 @@ void closeStreamingSocket()
 
 void openMessengerSocket(const char* ipAddr, int port)
 {
-  cout << "Opening listening socket..." << endl;
+  cout << "Opening messenger socket..." << endl;
   controlData.messenger_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
   if (controlData.messenger_socket < 0) {
-    cout << "Opening listening socket failed" << endl;
+    cout << "Opening messenger socket failed" << endl;
     exit(1);
   }
 
@@ -92,12 +93,11 @@ int readPacket(char* packetPointer)
     bytesRead = recvfrom(controlData.messenger_socket, packetPointer, MAX_PACKET_LENGTH, 0, (struct sockaddr*) &messengerStruct, (socklen_t *) &messengerLen);
     // cout << bytesRead << " bytes read from socket" << endl;
   }
-  //controlData.totalPackets++;
   return bytesRead;
 }
 
 void closeAllConnections()
 {
-  close(controlData.streamer_socket);
+  //close(controlData.streamer_socket);
   close(controlData.messenger_socket);
 }
