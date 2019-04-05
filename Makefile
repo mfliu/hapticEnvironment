@@ -42,12 +42,12 @@ CXX = clang++
 TOP_DIR = ./external/chai3d-3.2.0
 BASE_DIR = ./bin/$(OS)-$(ARCH)-$(COMPILER)
 include $(TOP_DIR)/Makefile.common
-
+RPCLIB_DIR = ./external/rpclib
 
 # GLFW dependency
-CXXFLAGS += -I$(GLFW_DIR)/include
-LDFLAGS  += -L$(GLFW_DIR)/lib/$(CFG)/$(OS)-$(ARCH)-$(COMPILER)
-LDLIBS   += $(LDLIBS_GLFW)
+CXXFLAGS += -I$(GLFW_DIR)/include -I$(RPCLIB_DIR)/include
+LDFLAGS  += -L$(GLFW_DIR)/lib/$(CFG)/$(OS)-$(ARCH)-$(COMPILER) -L$(RPCLIB_DIR)/build
+LDLIBS   += $(LDLIBS_GLFW) -lrpc 
 
 # platform-dependent adjustments
 ifeq ($(OS), mac)
@@ -65,7 +65,6 @@ OBJECTS   = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(SOURCES)))
 OUTPUT    = $(BASE_DIR)/$(PROG)
 
 # Message handling configuration 
-RPCLIB_DIR = ./external/rpclib
 MSG_DIR = ./messageHandler
 MSG_HDR = ./messageHandler
 MSG_OBJ = ./obj/$(CFG)/$(OS)-$(ARCH)-$(COMPILER)

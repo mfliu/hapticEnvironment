@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
   
   controlData.simulationRunning = false;
   controlData.simulationFinished = true;
-  controlData.totalPackets = 0;
+  //controlData.totalPackets = 0;
 
   // TODO: Set these IP addresses from a config file
   controlData.STREAMER_IP = "127.0.0.1";
@@ -25,7 +25,8 @@ int main(int argc, char* argv[])
   controlData.MESSENGER_IP = "127.0.0.1";
   controlData.MESSENGER_PORT = 2000;
   controlData.hapticsOnly = false;
-  
+  controlData.client = new rpc::client("127.0.0.1", 8080);
+
   if (controlData.hapticsOnly == false) {
     initDisplay();
     initScene();

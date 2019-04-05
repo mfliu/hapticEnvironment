@@ -1,4 +1,5 @@
 #include "MessageHandler.h"
+#include <typeinfo>
 
 MessageHandler::MessageHandler(const string& address, uint16_t port)
 {
@@ -26,7 +27,7 @@ double MessageHandler::getTimestamp()
 int main()
 {
   MessageHandler* mh = new MessageHandler("127.0.0.1", 8080);
-  mh->getServer()->bind("getMsgNum", [&](){mh->getMsgNum();});
-  mh->getServer()->bind("getTimestamp", [&](){mh->getTimestamp();});
+  mh->getServer()->bind("getMsgNum", [&mh](){return mh->getMsgNum();});
+  mh->getServer()->bind("getTimestamp", [&mh](){return mh->getTimestamp();});
   mh->getServer()->run();
 }

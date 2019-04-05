@@ -23,7 +23,6 @@ void streamClose()
 
 void streamUpdate(void)
 {
-  double currTime;
   cVector3d pos;
   cVector3d vel;
   cVector3d force;
@@ -35,7 +34,6 @@ void streamUpdate(void)
   cPrecisionClock clock;
   while (controlData.simulationRunning)
   {
-    currTime = clock.getCurrentTimeSeconds();  
     pos = hapticsData.tool->getDeviceGlobalPos();
     posX = pos.x();
     posY = pos.y();
@@ -53,7 +51,9 @@ void streamUpdate(void)
     
     M_HAPTIC_DATA_STREAM toolData;
     memset(&toolData, 0, sizeof(toolData));  
-    toolData.header.serial_no = (int) controlData.totalPackets;
+    auto packetNum = controlData.client->call("getMsgNum").as<int>();
+    auto currTime = controlData.client->call("getTimestamp").as<double>();
+    toolData.header.serial_no = packetNum;
     toolData.header.msg_type = HAPTIC_DATA_STREAM;
     toolData.header.timestamp = currTime;
     toolData.posX = posX;

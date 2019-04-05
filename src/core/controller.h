@@ -12,6 +12,7 @@
 #include "network/messenger.h"
 #include "haptics/haptics.h"
 #include "graphics/graphics.h"
+#include "rpc/client.h"
 
 using namespace chai3d;
 using namespace std;
@@ -20,7 +21,7 @@ struct ControlData
 {
   bool simulationRunning;
   bool simulationFinished;
-  atomic_int totalPackets;
+  rpc::client* client;
   const char* STREAMER_IP;
   const char* MESSENGER_IP;
   int MESSENGER_PORT;
@@ -34,7 +35,6 @@ struct ControlData
   unordered_map<string, cGenericObject*> objectMap;
   unordered_map<string, vector<string>> objectEffects;
   unordered_map<string, cGenericEffect*> worldEffects;
-  //vector<cGenericMovingObject*> movingObjects;
 };
 void close(void);
 void parsePacket(char* packet);

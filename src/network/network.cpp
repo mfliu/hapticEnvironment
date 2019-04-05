@@ -80,7 +80,7 @@ int sendPacket(char* packet, uint16_t lengthPacket, bool isData)
       return 0;
     }
   }
-  controlData.totalPackets++;
+  //controlData.totalPackets++;
   return 1;
 }
 
@@ -92,7 +92,7 @@ int readPacket(char* packetPointer)
     bytesRead = recvfrom(controlData.messenger_socket, packetPointer, MAX_PACKET_LENGTH, 0, (struct sockaddr*) &messengerStruct, (socklen_t *) &messengerLen);
     // cout << bytesRead << " bytes read from socket" << endl;
   }
-  controlData.totalPackets++;
+  //controlData.totalPackets++;
   return bytesRead;
 }
 
