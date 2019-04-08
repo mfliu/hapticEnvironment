@@ -19,12 +19,12 @@ int main(int argc, char* argv[])
   controlData.simulationFinished = true;
 
   // TODO: Set these IP addresses from a config file
-  controlData.STREAMER_IP = "127.0.0.1";
-  controlData.STREAMER_PORT = 10000;
-  controlData.MESSENGER_IP = "127.0.0.1";
-  controlData.MESSENGER_PORT = 2000;
+  controlData.SENDER_IP = "127.0.0.1";
+  controlData.SENDER_PORT = 8080;
+  controlData.LISTENER_IP = "127.0.0.1";
+  controlData.LISTENER_PORT = 7000;
   controlData.hapticsOnly = false;
-  controlData.client = new rpc::client("127.0.0.1", 8080);
+  //controlData.client = new rpc::client("127.0.0.1", 8080);
 
   if (controlData.hapticsOnly == false) {
     initDisplay();
@@ -32,8 +32,8 @@ int main(int argc, char* argv[])
   }
   initHaptics();
   startHapticsThread(); 
-  streamStart(); 
-  startMessenger();
+  startSender(); 
+  startListener();
   atexit(close);
   resizeWindowCallback(graphicsData.window, graphicsData.width, graphicsData.height);
   while (!glfwWindowShouldClose(graphicsData.window)) {

@@ -6,98 +6,106 @@ using namespace std;
 
 extern ControlData controlData;
 
+struct sockaddr_in senderStruct, listenerStruct;
+int senderLen = sizeof(senderStruct);
+int listenerLen = sizeof(listenerStruct);
 
-struct sockaddr_in messengerStruct, streamerStruct;
-int streamLen = sizeof(streamerStruct);
-int messengerLen = sizeof(messengerStruct);
-
-
-void openStreamingSocket(const char* ipAddr, int port) 
+void openMessageHandlerSendSocket(const char* ipAddr, int port) 
 {
-  cout << "Opening streaming socket..." << endl;
-  controlData.streamer_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  if (controlData.streamer_socket < 0) {
-    cout << "Opening streaming socket failed." << endl;
+  cout << "Opening sending socket..." << endl;
+  controlData.sender_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  if (controlData.sender_socket < 0) {
+    cout << "Opening sending socket failed." << endl;
     exit(1);
   }
 
-  memset((char *) &streamerStruct, 0, streamLen);
-  streamerStruct.sin_family = AF_INET;
-  streamerStruct.sin_port = htons(port);
-  if (inet_aton(ipAddr, &streamerStruct.sin_addr) == 0) {
+  memset((char *) &senderStruct, 0, senderLen);
+  senderStruct.sin_family = AF_INET;
+  senderStruct.sin_port = htons(port);
+  if (inet_aton(ipAddr, &senderStruct.sin_addr) == 0) {
     cout << "inet_aton failed" << endl;
     exit(1);
   }
 
-  int broadcast = 1;
-  if (setsockopt(controlData.streamer_socket, SOL_SOCKET, SO_BROADCAST, &broadcast, sizeof(broadcast)) < 0) {
+  int opt = 1;
+  if (setsockopt(controlData.sender_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt)) < 0) {
     cout << "setsockopt failed" << endl;
     exit(1);
   }
+  if (setsockopt(controlData.sender_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)) < 0) {
+    cout << "Setting reuse address and port socket options failed" << endl;
+    exit(1);
+  }
 }
-void closeStreamingSocket()
+void closeSendSocket()
 {
-  close(controlData.streamer_socket);
+  close(controlData.sender_socket);
 }
 
-void openMessengerSocket(const char* ipAddr, int port)
+void openMessageHandlerListenSocket(const char* ipAddr, int port)
 {
-  cout << "Opening messenger socket..." << endl;
-  controlData.messenger_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  if (controlData.messenger_socket < 0) {
-    cout << "Opening messenger socket failed" << endl;
+  cout << "Opening listener socket..." << endl;
+  controlData.listener_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  if (controlData.listener_socket < 0) {
+    cout << "Opening listener socket failed" << endl;
     exit(1);
   }
 
-  memset((char *) &messengerStruct, 0, messengerLen);
-  messengerStruct.sin_family = AF_INET;
-  messengerStruct.sin_port = htons(port);
-  messengerStruct.sin_addr.s_addr = inet_addr(ipAddr);
-  int bind_sock_in = bind(controlData.messenger_socket, (struct sockaddr*) &messengerStruct, messengerLen);
+  memset((char *) &listenerStruct, 0, listenerLen);
+  listenerStruct.sin_family = AF_INET;
+  listenerStruct.sin_port = htons(port);
+  listenerStruct.sin_addr.s_addr = inet_addr(ipAddr);
+
+  int opt = 1;
+  int broadcast = setsockopt(controlData.listener_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt)); 
+  if (broadcast < 0)
+  {
+    cout << "Failed to set broadcast option" << endl;
+    exit(1);
+  }
+  int reuseAddr = setsockopt(controlData.listener_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+  int reusePort = setsockopt(controlData.listener_socket, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
+  if (reuseAddr < 0 || reusePort < 0)
+  {
+    cout << "Failed to set reuse options" << endl;
+    exit(1);
+  }
+
+  int bind_sock_in = bind(controlData.listener_socket, (struct sockaddr*) &listenerStruct, listenerLen);
   if (bind_sock_in < 0) {
     cout << "Error binding listener socket" << endl;
     exit(1);
   }
 }
 
-void closeMessengerSocket()
+void closeListenSocket()
 {
-  close(controlData.messenger_socket);
+  close(controlData.listener_socket);
 }
 
-int sendPacket(char* packet, uint16_t lengthPacket, bool isData)
+int sendPacket(char* packet, uint16_t lengthPacket) //, bool isData)
 {
-  if (isData == true) {
-    if (sendto(controlData.streamer_socket, packet, lengthPacket, 0, (struct sockaddr*) &streamerStruct, streamLen) < 0)
+    if (sendto(controlData.sender_socket, packet, lengthPacket, 0, (struct sockaddr*) &senderStruct, senderLen) < 0)
     {
       cout << "Data streaming error" << endl;
       return 0;
     }
-  }
-  else if (isData == false) {
-    if (sendto(controlData.messenger_socket, packet, lengthPacket, 0, (struct sockaddr*) &messengerStruct, messengerLen) < 0)
-    {
-      cout << "Message sending error" << endl;
-      return 0;
-    }
-  }
-  //controlData.totalPackets++;
   return 1;
 }
 
 int readPacket(char* packetPointer)
 {
   int value = 0, bytesRead = 0;
-  ioctl(controlData.messenger_socket, FIONREAD, &value);
+  ioctl(controlData.listener_socket, FIONREAD, &value);
   if (value > 0) {
-    bytesRead = recvfrom(controlData.messenger_socket, packetPointer, MAX_PACKET_LENGTH, 0, (struct sockaddr*) &messengerStruct, (socklen_t *) &messengerLen);
-    // cout << bytesRead << " bytes read from socket" << endl;
+    bytesRead = recvfrom(controlData.listener_socket, packetPointer, MAX_PACKET_LENGTH, 0, (struct sockaddr*) &listenerStruct, (socklen_t *) &listenerLen);
+    //cout << bytesRead << " bytes read from socket" << endl;
   }
   return bytesRead;
 }
 
 void closeAllConnections()
 {
-  //close(controlData.streamer_socket);
-  close(controlData.messenger_socket);
+  close(controlData.sender_socket);
+  close(controlData.listener_socket);
 }

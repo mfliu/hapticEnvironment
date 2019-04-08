@@ -1,4 +1,4 @@
-#include "streamer.h"
+#include "sender.h"
 
 #include "haptics/haptics.h"
 #include "network.h"
@@ -9,19 +9,19 @@ using namespace std;
 extern ControlData controlData;
 extern HapticData hapticsData;
 
-void streamStart(void)
+void startSender(void)
 {
-  openStreamingSocket(controlData.STREAMER_IP, controlData.STREAMER_PORT);
-  controlData.streamerThread = new cThread();
-  controlData.streamerThread->start(streamUpdate, CTHREAD_PRIORITY_HAPTICS);
+  openMessageHandlerSendSocket(controlData.SENDER_IP, controlData.SENDER_PORT);
+  controlData.senderThread = new cThread();
+  controlData.senderThread->start(updateSender, CTHREAD_PRIORITY_HAPTICS);
 }
 
-void streamClose()
+void closeSender()
 {
- closeStreamingSocket(); 
+ closeSendSocket(); 
 }
 
-void streamUpdate(void)
+void updateSender(void)
 {
   cVector3d pos;
   cVector3d vel;
@@ -51,11 +51,11 @@ void streamUpdate(void)
     
     M_HAPTIC_DATA_STREAM toolData;
     memset(&toolData, 0, sizeof(toolData));  
-    auto packetNum = controlData.client->call("getMsgNum").as<int>();
-    auto currTime = controlData.client->call("getTimestamp").as<double>();
-    toolData.header.serial_no = packetNum;
+    //auto packetNum = controlData.client->call("getMsgNum").as<int>();
+    //auto currTime = controlData.client->call("getTimestamp").as<double>();
+    //toolData.header.serial_no = packetNum;
     toolData.header.msg_type = HAPTIC_DATA_STREAM;
-    toolData.header.timestamp = currTime;
+    //toolData.header.timestamp = currTime;
     toolData.posX = posX;
     toolData.posY = posY;
     toolData.posZ = posZ;
@@ -84,8 +84,8 @@ void streamUpdate(void)
     char* packet[sizeof(toolData)];
     memcpy(&packet, &toolData, sizeof(toolData));
    
-    sendPacket((char *) packet, sizeof(packet), true);
+    sendPacket((char *) packet, sizeof(packet)); //, true);
     usleep(250); // 1000 microseconds = 1 millisecond
   }
-  closeStreamingSocket();
+  closeSendSocket();
 }

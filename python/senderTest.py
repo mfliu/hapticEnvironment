@@ -6,7 +6,7 @@ import Messenger as MR
 from ctypes import * 
 
 UDP_IP = "127.0.0.1"
-UDP_PORT = 2000
+UDP_PORT = 8080
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -25,7 +25,7 @@ vField.header.timestamp = c_double(0.01)
 effectName = create_string_buffer(b"viscousField", md.MAX_STRING_LENGTH)
 effectNamePtr = (c_char_p) (addressof(effectName))
 vField.effectName = effectNamePtr.value 
-visc = -0.2
+visc = -1.0
 vField.viscosityMatrix = (c_double * 9) (visc, 0.0, 0.0, 0.0, visc, 0.0, 0.0, 0.0, visc)
 packet = MR.makeMessage(vField)
 sock.sendto(packet, (UDP_IP, UDP_PORT))

@@ -1,4 +1,4 @@
-#include "messenger.h"
+#include "listener.h"
 #include "haptics/haptics.h"
 #include "network.h"
 #include "core/controller.h"
@@ -9,14 +9,14 @@ using namespace std;
 extern ControlData controlData;
 extern HapticData hapticsData;
 
-void startMessenger()
+void startListener()
 {
-  openMessengerSocket(controlData.MESSENGER_IP, controlData.MESSENGER_PORT);
-  controlData.messengerThread = new cThread();
-  controlData.messengerThread->start(updateMessenger, CTHREAD_PRIORITY_HAPTICS);
+  openMessageHandlerListenSocket(controlData.LISTENER_IP, controlData.LISTENER_PORT);
+  controlData.listenerThread = new cThread();
+  controlData.listenerThread->start(updateListener, CTHREAD_PRIORITY_HAPTICS);
 }
 
-void updateMessenger()
+void updateListener()
 {
   //double currTime;
   //cPrecisionClock clock;
@@ -34,10 +34,10 @@ void updateMessenger()
     }
     usleep(1000); // 1000 microseconds = 1 millisecond
   }
- closeMessengerSocket();
+ closeListenSocket();
 }
 
-void closeMessenger()
+void closeListener()
 {
-  closeMessengerSocket();
+  closeListenSocket();
 }

@@ -42,12 +42,12 @@ CXX = clang++
 TOP_DIR = ./external/chai3d-3.2.0
 BASE_DIR = ./bin/$(OS)-$(ARCH)-$(COMPILER)
 include $(TOP_DIR)/Makefile.common
-RPCLIB_DIR = ./external/rpclib
+#RPCLIB_DIR = ./external/rpclib
 
 # GLFW dependency
-CXXFLAGS += -I$(GLFW_DIR)/include -I$(RPCLIB_DIR)/include
+CXXFLAGS += -I$(GLFW_DIR)/include -I./common
 LDFLAGS  += -L$(GLFW_DIR)/lib/$(CFG)/$(OS)-$(ARCH)-$(COMPILER) -L$(RPCLIB_DIR)/build
-LDLIBS   += $(LDLIBS_GLFW) -lrpc 
+LDLIBS   += $(LDLIBS_GLFW) #-lrpc 
 
 # platform-dependent adjustments
 ifeq ($(OS), mac)
@@ -73,8 +73,8 @@ MSG_SOURCES = $(wildcard $(MSG_DIR)/*.cpp)
 MSG_INCLUDES = $(wildcard $(MSG_DIR)/*.h)
 MSG_OBJECTS = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(MSG_SOURCES)))
 MSG_OUTPUT = $(BASE_DIR)/$(MSG_PROG)
-MSG_FLAGS = -DLINUX -Wno-deprecated -std=c++17 -I$(RPCLIB_DIR)/include/ 
-MSG_LDFLAGS = -L$(RPCLIB_DIR)/build -lrpc -lpthread
+MSG_FLAGS = -DLINUX -Wno-deprecated -std=c++17 -I./common #$(RPCLIB_DIR)/include/ 
+#MSG_LDFLAGS = -L$(RPCLIB_DIR)/build -lrpc -lpthread
 
 all: $(OUTPUT) $(MSG_OUTPUT)
 

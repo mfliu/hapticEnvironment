@@ -1,3 +1,5 @@
+#pragma once 
+
 #ifndef _NETWORK_H_
 #define _NETWORK_H_  
 
@@ -16,11 +18,11 @@
 #include <iostream>
 
 
-void openStreamingSocket(const char* ipAddr, int port);
-void openMessengerSocket(const char* ipAddr, int port);
-void closeStreamingSocket(void);
-void closeMessengerSocket(void);
-int sendPacket(char* packet, uint16_t lengthPacket, bool isData);
+void openMessageHandlerSendSocket(const char* ipAddr, int port);
+void openMessageHandlerListenSocket(const char* ipAddr, int port);
+void closeSendSocket(void);
+void closeListenSocket(void);
+int sendPacket(char* packet, uint16_t lengthPacket); //, bool isData);
 int readPacket(char* packet);
 void closeAllConnections(void);
 #endif
