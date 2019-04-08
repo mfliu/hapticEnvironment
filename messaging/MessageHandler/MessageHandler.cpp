@@ -1,5 +1,6 @@
 #include "MessageHandler.h"
 #include <typeinfo>
+#include <fcntl.h>
 
 MessageHandler::MessageHandler(const char* address, int iPort, int oPort)
 {
@@ -30,6 +31,7 @@ void MessageHandler::openInputSocket()
     cout << "Open listening socket failed." << endl;
     exit(1);
   }
+  fcntl(input_socket, F_SETFL, O_NONBLOCK);
 
   memset((char *) &inputStruct, 0, inputLen);
   inputStruct.sin_family = AF_INET;
@@ -67,6 +69,7 @@ void MessageHandler::openOutputSocket()
     cout << "Open sending socket failed." << endl;
     exit(1);
   }
+  fcntl(output_socket, F_SETFL, O_NONBLOCK);
 
   memset((char *) &outputStruct, 0, outputLen);
   outputStruct.sin_family = AF_INET;
@@ -143,16 +146,13 @@ int main()
       header.timestamp = mh->getTimestamp();
       memcpy(packetPointer, &header, sizeof(header));
       mh->sendPacket(packetPointer, bytesRead);
-      switch (msgType)
+      if (msgType == SESSION_END) 
       {
-        case SESSION_END:
-        {
-          running = false;
-          break;
-        }
+        running = false;
       }
     }
   }
+  
   mh->closeInputSocket();
   mh->closeOutputSocket();
 }

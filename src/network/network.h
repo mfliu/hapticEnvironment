@@ -16,7 +16,7 @@
 #include <math.h>
 #include <sstream>
 #include <iostream>
-
+#include <fcntl.h>
 
 void openMessageHandlerSendSocket(const char* ipAddr, int port);
 void openMessageHandlerListenSocket(const char* ipAddr, int port);

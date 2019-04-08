@@ -83,7 +83,7 @@ void updateSender(void)
     memcpy(&(toolData.collisions), collisions, sizeof(toolData.collisions));
     char* packet[sizeof(toolData)];
     memcpy(&packet, &toolData, sizeof(toolData));
-   
+    
     sendPacket((char *) packet, sizeof(packet)); //, true);
     usleep(250); // 1000 microseconds = 1 millisecond
   }

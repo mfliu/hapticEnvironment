@@ -18,21 +18,18 @@ void startListener()
 
 void updateListener()
 {
-  //double currTime;
-  //cPrecisionClock clock;
   char rawPacket[MAX_PACKET_LENGTH];
   char* packetPointer = rawPacket;
 
   while (controlData.simulationRunning)
   {
-    //currTime = clock.getCurrentTimeSeconds();
     memset(rawPacket, 0, MAX_PACKET_LENGTH);
     int bytesRead = readPacket(packetPointer);
     if (bytesRead > 0) {
       //cout << "Bytes read " << bytesRead << endl;
       parsePacket(packetPointer);
     }
-    usleep(1000); // 1000 microseconds = 1 millisecond
+    usleep(100); // 1000 microseconds = 1 millisecond
   }
  closeListenSocket();
 }

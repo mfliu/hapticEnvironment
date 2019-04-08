@@ -18,6 +18,8 @@ void openMessageHandlerSendSocket(const char* ipAddr, int port)
     cout << "Opening sending socket failed." << endl;
     exit(1);
   }
+  
+  fcntl(controlData.sender_socket, F_SETFL, O_NONBLOCK);
 
   memset((char *) &senderStruct, 0, senderLen);
   senderStruct.sin_family = AF_INET;
@@ -50,6 +52,7 @@ void openMessageHandlerListenSocket(const char* ipAddr, int port)
     cout << "Opening listener socket failed" << endl;
     exit(1);
   }
+  fcntl(controlData.listener_socket, F_SETFL, O_NONBLOCK);
 
   memset((char *) &listenerStruct, 0, listenerLen);
   listenerStruct.sin_family = AF_INET;
@@ -58,16 +61,11 @@ void openMessageHandlerListenSocket(const char* ipAddr, int port)
 
   int opt = 1;
   int broadcast = setsockopt(controlData.listener_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt)); 
-  if (broadcast < 0)
-  {
-    cout << "Failed to set broadcast option" << endl;
-    exit(1);
-  }
   int reuseAddr = setsockopt(controlData.listener_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
   int reusePort = setsockopt(controlData.listener_socket, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
-  if (reuseAddr < 0 || reusePort < 0)
+  if (broadcast < 0 || reuseAddr < 0 || reusePort < 0)
   {
-    cout << "Failed to set reuse options" << endl;
+    cout << "Failed to set socket options" << endl;
     exit(1);
   }
 

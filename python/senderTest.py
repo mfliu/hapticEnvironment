@@ -9,6 +9,31 @@ UDP_IP = "127.0.0.1"
 UDP_PORT = 8080
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+
+startRecording = md.M_START_RECORDING()
+startRecording.header.msg_type = c_int(md.START_RECORDING)
+filename = create_string_buffer(b"/home/mfl24/data/RnelShare/users/mfl24/Test/Data/testfile.data", md.MAX_STRING_LENGTH)
+filenamePtr = (c_char_p) (addressof(filename))
+startRecording.filename = filenamePtr.value
+packet = MR.makeMessage(startRecording)
+sock.sendto(packet, (UDP_IP, UDP_PORT))
+
+
+time.sleep(0.05)
+
+stopRecording = md.M_STOP_RECORDING()
+stopRecording.header.msg_type = c_int(md.STOP_RECORDING)
+packet = MR.makeMessage(stopRecording)
+sock.sendto(packet, (UDP_IP, UDP_PORT))
+
+time.sleep(1)
+
+sessionEnd = md.M_SESSION_END()
+sessionEnd.header.msg_type = c_int(md.SESSION_END)
+packet = MR.makeMessage(sessionEnd)
+sock.sendto(packet, (UDP_IP, UDP_PORT))
 
 #bgColor = md.M_GRAPHICS_CHANGE_BG_COLOR()
 #bgColor.header.serialNo = c_int(1)
@@ -18,27 +43,27 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #packet = MR.makeMessage(bgColor)
 #sock.sendto(packet, (UDP_IP, UDP_PORT))
 
-vField = md.M_HAPTICS_VISCOSITY_FIELD()
-vField.header.serialNo = c_int(1)
-vField.header.msg_type = c_int(md.HAPTICS_VISCOSITY_FIELD)
-vField.header.timestamp = c_double(0.01)
-effectName = create_string_buffer(b"viscousField", md.MAX_STRING_LENGTH)
-effectNamePtr = (c_char_p) (addressof(effectName))
-vField.effectName = effectNamePtr.value 
-visc = -1.0
-vField.viscosityMatrix = (c_double * 9) (visc, 0.0, 0.0, 0.0, visc, 0.0, 0.0, 0.0, visc)
-packet = MR.makeMessage(vField)
-sock.sendto(packet, (UDP_IP, UDP_PORT))
+#vField = md.M_HAPTICS_VISCOSITY_FIELD()
+#vField.header.serialNo = c_int(1)
+#vField.header.msg_type = c_int(md.HAPTICS_VISCOSITY_FIELD)
+#vField.header.timestamp = c_double(0.01)
+#effectName = create_string_buffer(b"viscousField", md.MAX_STRING_LENGTH)
+#effectNamePtr = (c_char_p) (addressof(effectName))
+#vField.effectName = effectNamePtr.value 
+#visc = -1.0
+#vField.viscosityMatrix = (c_double * 9) (visc, 0.0, 0.0, 0.0, visc, 0.0, 0.0, 0.0, visc)
+#packet = MR.makeMessage(vField)
+#sock.sendto(packet, (UDP_IP, UDP_PORT))
 
-time.sleep(10)
+#time.sleep(10)
 
-rmField = md.M_HAPTICS_REMOVE_FIELD_EFFECT()
-rmField.header.serialNo = c_int(1)
-rmField.header.msg_type = c_int(md.HAPTICS_REMOVE_FIELD_EFFECT)
-rmField.header.timestamp = c_double(0.01)
-rmField.effectName = effectNamePtr.value
-packet = MR.makeMessage(rmField)
-sock.sendto(packet, (UDP_IP, UDP_PORT)) 
+#rmField = md.M_HAPTICS_REMOVE_FIELD_EFFECT()
+#rmField.header.serialNo = c_int(1)
+#rmField.header.msg_type = c_int(md.HAPTICS_REMOVE_FIELD_EFFECT)
+#rmField.header.timestamp = c_double(0.01)
+#rmField.effectName = effectNamePtr.value
+#packet = MR.makeMessage(rmField)
+#sock.sendto(packet, (UDP_IP, UDP_PORT)) 
 
 #message = md.M_HAPTICS_BOUNDING_PLANE()
 #message.header.serialNo = c_int(1)

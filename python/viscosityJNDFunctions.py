@@ -12,17 +12,17 @@ import csv
 from mprpc import RPCClient 
 
 UDP_IP = "127.0.0.1"
-UDP_PORT = 2000
+UDP_PORT = 8080
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-client = RPCClient("127.0.0.1", 8080)
+#client = RPCClient("127.0.0.1", 8080)
 
 def enableGraphics(objectName, setVal):
     namePtr = (c_char_p) (addressof(objectName))
     message = md.M_GRAPHICS_SET_ENABLED()
-    message.header.serialNo = c_int(client.call("getMsgNum"))
+    message.header.serialNo = c_int(1)
     message.header.msg_type = c_int(md.GRAPHICS_SET_ENABLED)
-    message.header.timestamp = c_double(client.call("getTimestamp")) 
+    #message.header.timestamp = c_double(client.call("getTimestamp")) 
     message.objectName = namePtr.value 
     message.enabled = c_int(setVal)
     packet = MR.makeMessage(message)

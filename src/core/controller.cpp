@@ -24,7 +24,6 @@ int main(int argc, char* argv[])
   controlData.LISTENER_IP = "127.0.0.1";
   controlData.LISTENER_PORT = 7000;
   controlData.hapticsOnly = false;
-  //controlData.client = new rpc::client("127.0.0.1", 8080);
 
   if (controlData.hapticsOnly == false) {
     initDisplay();
@@ -101,15 +100,30 @@ void parsePacket(char* packet)
       memcpy(&recInfo, packet, sizeof(recInfo));
       char* fileName;
       fileName = recInfo.filename;
+      controlData.dataFile.open(fileName, fstream::binary | fstream::out);
+      controlData.dataFile.flush();
       break; 
     }
 
     case STOP_RECORDING:
     {
       cout << "Received STOP_RECORDING Message" << endl;
+      controlData.dataFile.flush();
+      controlData.dataFile.close();
       break;
     }
-
+    case HAPTIC_DATA_STREAM:
+    {
+      if (controlData.dataFile.is_open())
+      {
+        char packetData[sizeof(M_HAPTIC_DATA_STREAM)];
+        memcpy(&packetData, packet, sizeof(M_HAPTIC_DATA_STREAM));
+        M_HAPTIC_DATA_STREAM test;
+        memcpy(&test, &packetData, sizeof(M_HAPTIC_DATA_STREAM));
+        controlData.dataFile.write(packetData, sizeof(packetData));
+      }
+      break;
+    }
     case HAPTICS_SET_ENABLED:
     {
       cout << "Received HAPTICS_SET_ENABLED Message" << endl;

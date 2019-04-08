@@ -42,12 +42,11 @@ CXX = clang++
 TOP_DIR = ./external/chai3d-3.2.0
 BASE_DIR = ./bin/$(OS)-$(ARCH)-$(COMPILER)
 include $(TOP_DIR)/Makefile.common
-#RPCLIB_DIR = ./external/rpclib
 
 # GLFW dependency
 CXXFLAGS += -I$(GLFW_DIR)/include -I./common
 LDFLAGS  += -L$(GLFW_DIR)/lib/$(CFG)/$(OS)-$(ARCH)-$(COMPILER) -L$(RPCLIB_DIR)/build
-LDLIBS   += $(LDLIBS_GLFW) #-lrpc 
+LDLIBS   += $(LDLIBS_GLFW)  
 
 # platform-dependent adjustments
 ifeq ($(OS), mac)
@@ -65,22 +64,35 @@ OBJECTS   = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(SOURCES)))
 OUTPUT    = $(BASE_DIR)/$(PROG)
 
 # Message handling configuration 
-MSG_DIR = ./messageHandler
-MSG_HDR = ./messageHandler
+MSG_DIR = ./messaging/MessageHandler
+MSG_HDR = ./messaging/MessageHandler
 MSG_OBJ = ./obj/$(CFG)/$(OS)-$(ARCH)-$(COMPILER)
 MSG_PROG = messageHandler
 MSG_SOURCES = $(wildcard $(MSG_DIR)/*.cpp)
 MSG_INCLUDES = $(wildcard $(MSG_DIR)/*.h)
 MSG_OBJECTS = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(MSG_SOURCES)))
 MSG_OUTPUT = $(BASE_DIR)/$(MSG_PROG)
-MSG_FLAGS = -DLINUX -Wno-deprecated -std=c++17 -I./common #$(RPCLIB_DIR)/include/ 
-#MSG_LDFLAGS = -L$(RPCLIB_DIR)/build -lrpc -lpthread
+MSG_FLAGS = -DLINUX -Wno-deprecated -std=c++17 -I./common  
+#MSG_LDFLAGS = -L$(RPCLIB_DIR)/build -lpthread
 
-all: $(OUTPUT) $(MSG_OUTPUT)
+# Logging configuration 
+LOG_DIR = ./messaging/Logger
+LOG_HDR = ./messaging/Logger
+LOG_OBJ = ./obj/$(CFG)/$(OS)-$(ARCH)-$(COMPILER)
+LOG_PROG = logger
+LOG_SOURCES = $(wildcard $(LOG_DIR)/*.cpp)
+LOG_INCLUDES = $(wildcard $(LOG_DIR)/*.h)
+LOG_OBJECTS = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(LOG_SOURCES)))
+LOG_OUTPUT = $(BASE_DIR)/$(LOG_PROG)
+LOG_FLAGS = -DLINUX -Wno-deprecated -std=c++17 -I./common  
+
+
+all: $(OUTPUT) $(MSG_OUTPUT) $(LOG_OUTPUT)
 
 D_FILES = $(OBJECTS:.o=.d)
 -include $(D_FILES)
 
+#########################################################
 $(OBJECTS): $(INCLUDES) 
 
 $(OUTPUT): $(OBJ_DIR) $(BASE_DIR) $(LIB_TARGET) $(OBJECTS)
@@ -95,22 +107,33 @@ $(BASE_DIR):
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/*/%.cpp | $(OBJ_DIR) 
 	$(CXX) $(CXXFLAGS) -I$(HDR_DIR) -MD -MF $(OBJ_DIR)/$.d -c -o $@ $<
-
+#########################################################
 #########################################################
 $(MSG_OBJECTS): $(MSG_INCLUDES)
 
 $(MSG_OUTPUT): $(MSG_OBJ) $(BASE_DIR) $(MSG_OBJECTS)
-	$(CXX) $(MSG_FLAGS) -I$(MSG_HDR) $(MSG_OBJECTS) $(MSG_LDFLAGS) -o $(MSG_OUTPUT)
+	$(CXX) $(MSG_FLAGS) -I$(MSG_HDR) $(MSG_OBJECTS) -o $(MSG_OUTPUT)
 
 $(MSG_OBJ)/%.o: $(MSG_DIR)/%.cpp | $(MSG_OBJ)
 	$(CXX) $(MSG_FLAGS) -I$(MSG_HDR) -MD -MF $(MSG_OBJ)/$.d -c -o $@ $<
+#########################################################
+#########################################################
+$(LOG_OBJECTS): $(LOG_INCLUDES)
+
+$(LOG_OUTPUT): $(LOG_OBJ) $(BASE_DIR) $(LOG_OBJECTS)
+	$(CXX) $(LOG_FLAGS) -I$(LOG_HDR) $(LOG_OBJECTS) -o $(LOG_OUTPUT)
+
+$(LOG_OBJ)/%.o: $(LOG_DIR)/%.cpp | $(LOG_OBJ)
+	$(CXX) $(LOG_FLAGS) -I$(LOG_HDR) -MD -MF $(LOG_OBJ)/$.d -c -o $@ $<
 #########################################################
 
 clean:
 	rm -f $(OUTPUT) $(OBJECTS) *~
 	rm -f $(MSG_OUTPUT) $(MSG_OBJECTS) *~
+	rm -f $(LOG_OUTPUT) $(LOG_OBJECTS) *~
 	rm -rf $(OBJ_DIR)
 	rm -rf $(MSG_OBJ)
+	rm -rf $(LOG_OBJ)
 	rm -rf $(BASE_DIR)
 
 	
