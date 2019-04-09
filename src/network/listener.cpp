@@ -38,3 +38,33 @@ void closeListener()
 {
   closeListenSocket();
 }
+
+void startDataLogger(void)
+{
+  openDataSavingSocket(controlData.SENDER_IP, controlData.DATA_LOG_PORT);
+  controlData.dataLogThread = new cThread();
+  controlData.dataLogThread->start(updateDataLogger, CTHREAD_PRIORITY_HAPTICS);
+}
+
+void closeDataLogger()
+{
+ closeDataSavingSocket(); 
+}
+
+void updateDataLogger()
+{
+  char rawPacket[MAX_PACKET_LENGTH];
+  char* packetPointer = rawPacket;
+
+  while (controlData.dataFile.is_open())
+  {
+    memset(rawPacket, 0, MAX_PACKET_LENGTH);
+    int bytesRead = readData(packetPointer);
+    if (bytesRead > 0) {
+      controlData.dataFile.write(rawPacket, bytesRead);
+    }
+    usleep(50); // 1000 microseconds = 1 millisecond
+  }
+ closeDataSavingSocket();
+
+}

@@ -26,14 +26,17 @@ struct ControlData
   const char* SENDER_IP;
   const char* LISTENER_IP;
   int DATA_PORT;
+  int DATA_LOG_PORT;
   int SENDER_PORT;
   int LISTENER_PORT;
   int sender_socket;
   int listener_socket;
   int data_socket;
+  int dataLog_socket;
   // TODO: Make the hapticsOnly = true mode actually work
   bool hapticsOnly;
   cThread* dataThread; // for streaming haptic data only
+  cThread* dataLogThread;
   cThread* listenerThread;
   unordered_map<string, cGenericObject*> objectMap;
   unordered_map<string, vector<string>> objectEffects;

@@ -27,5 +27,8 @@ void closeDataSocket();
 int sendPacket(char* packet, uint16_t lengthPacket); //, bool isData);
 int readPacket(char* packet);
 int sendData(char* packet, uint16_t lengthPacket);
+void openDataSavingSocket(const char* ipAddr, int port);
+void closeDataSavingSocket();
+int readData(char* packet);
 void closeAllConnections(void);
 #endif

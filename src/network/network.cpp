@@ -6,10 +6,11 @@ using namespace std;
 
 extern ControlData controlData;
 
-struct sockaddr_in senderStruct, listenerStruct, dataStruct;
+struct sockaddr_in senderStruct, listenerStruct, dataStruct, dataLogStruct;
 int senderLen = sizeof(senderStruct);
 int listenerLen = sizeof(listenerStruct);
 int dataLen = sizeof(dataStruct);
+int dataLogLen = sizeof(dataLogStruct);
 
 void openMessageHandlerSendSocket(const char* ipAddr, int port) 
 {
@@ -147,7 +148,56 @@ int sendData(char* packet, uint16_t lengthPacket) //, bool isData)
   return 1;
 }
 
+void openDataSavingSocket(const char* ipAddr, int port) 
+{
+  cout << "Opening data logging socket..." << endl;
+  controlData.dataLog_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  if (controlData.dataLog_socket < 0) {
+    cout << "Opening data logging socket failed." << endl;
+    exit(1);
+  }
+  
+  //fcntl(controlData.data_socket, F_SETFL, O_NONBLOCK);
 
+  memset((char *) &dataLogStruct, 0, dataLogLen);
+  dataLogStruct.sin_family = AF_INET;
+  dataLogStruct.sin_port = htons(port);
+  if (inet_aton(ipAddr, &dataLogStruct.sin_addr) == 0) {
+    cout << "inet_aton failed" << endl;
+    exit(1);
+  }
+
+  int opt = 1;
+  if (setsockopt(controlData.dataLog_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt)) < 0) {
+    cout << "setsockopt failed" << endl;
+    exit(1);
+  }
+  if (setsockopt(controlData.dataLog_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)) < 0) {
+    cout << "Setting reuse address and port socket options failed" << endl;
+    exit(1);
+  }
+  int bind_sock_in = bind(controlData.dataLog_socket, (struct sockaddr*) &dataLogStruct, dataLogLen);
+  if (bind_sock_in < 0) {
+    cout << "Error binding data logging socket" << endl;
+    exit(1);
+  }
+}
+
+void closeDataSavingSocket()
+{
+  close(controlData.dataLog_socket);
+}
+
+int readData(char* packetPointer)
+{
+  int value = 0, bytesRead = 0;
+  ioctl(controlData.dataLog_socket, FIONREAD, &value);
+  if (value > 0) {
+    bytesRead = recvfrom(controlData.dataLog_socket, packetPointer, MAX_PACKET_LENGTH, 0, (struct sockaddr*) &dataLogStruct, (socklen_t *) &dataLogLen);
+    //cout << bytesRead << " bytes read from socket" << endl;
+  }
+  return bytesRead;
+}
 void closeAllConnections()
 {
   close(controlData.sender_socket);

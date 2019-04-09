@@ -63,8 +63,8 @@ def setup():
   obj1NamePtr = (c_char_p) (addressof(obj1Name))
   obj1.objectName = obj1NamePtr.value
   obj1.radius = c_double(0.1)
-  obj1.localPosition = (c_double * 3) (0.0, 1.1, 0.0)
-  obj1.color = (c_float * 4) (4, 133/250, 209/250, 1)
+  obj1.localPosition = (c_double * 3) (0.0, -1.1, 0.0)
+  obj1.color = (c_float * 4) (4/250, 133/250, 209/250, 1)
   packet = MR.makeMessage(obj1)
   sock.sendto(packet, (UDP_IP, UDP_PORT))
   enableGraphics(obj1Name, 0)
@@ -75,7 +75,7 @@ def setup():
   obj2NamePtr = (c_char_p) (addressof(obj2Name))
   obj2.objectName = obj2NamePtr.value
   obj2.radius = c_double(0.1)
-  obj2.localPosition = (c_double * 3) (0.0, -1.1, 0.0)
+  obj2.localPosition = (c_double * 3) (0.0, 1.1, 0.0)
   obj2.color = (c_float * 4) (250/250, 194/250, 5/250, 1)
   packet = MR.makeMessage(obj2)
   sock.sendto(packet, (UDP_IP, UDP_PORT))
@@ -188,11 +188,11 @@ def decisionEntry(options, taskVars):
   while decisionMade == False:
     if np.abs(Globals.CHAI_DATA.posY - 1.1) < 0.15 and np.abs(Globals.CHAI_DATA.posZ) < 0.15:
       decisionMade = True
-      taskVars["choice"] = 1 #"field2"
+      taskVars["choice"] = 2 
     elif np.abs(Globals.CHAI_DATA.posY + 1.1) < 0.15 and np.abs(Globals.CHAI_DATA.posZ) < 0.15:
       decisionMade = True
-      taskVars["choice"] = 0 #"field1"
-  #print("Decision: ", taskVars["choice"])
+      taskVars["choice"] = 1 
+  print("Decision: ", taskVars["choice"])
   with open(taskVars["filepath"], 'a') as f:
     fwrite = csv.writer(f)
     fwrite.writerow([taskVars["trialNum"], taskVars["field1Visc"],\
