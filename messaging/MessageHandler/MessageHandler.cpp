@@ -83,14 +83,10 @@ void MessageHandler::openOutputSocket()
 
   int opt = 1;
   int broadcast = setsockopt(output_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt));
-  if (broadcast < 0) {
-    cout << "Failed to set broadcast option" << endl;
-    exit(1);
-  }
   int reuseAddr = setsockopt(output_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
   int reusePort = setsockopt(output_socket, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
-  if (reuseAddr < 0 || reusePort < 0) {
-    cout << "Failed to set reuse address and port option" << endl;
+  if (broadcast < 0 || reuseAddr < 0 || reusePort < 0) {
+    cout << "Failed to set socket options" << endl;
     exit(1);
   }
 }

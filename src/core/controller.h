@@ -21,8 +21,15 @@ using namespace std;
 
 struct ControlData
 {
+  // State variables
   bool simulationRunning;
   bool simulationFinished;
+  bool hapticsUp;
+  bool listenerUp;
+  bool dataSenderUp;
+  bool dataLoggerUp;
+  
+  // Messaging and Data Logging Variables
   const char* SENDER_IP;
   const char* LISTENER_IP;
   int DATA_PORT;
@@ -33,16 +40,21 @@ struct ControlData
   int listener_socket;
   int data_socket;
   int dataLog_socket;
-  // TODO: Make the hapticsOnly = true mode actually work
-  bool hapticsOnly;
   cThread* dataThread; // for streaming haptic data only
   cThread* dataLogThread;
   cThread* listenerThread;
+  fstream dataFile;
+
+  // TODO: Make the hapticsOnly = true mode actually work
+  bool hapticsOnly;
+  
+  //Object Tracking
   unordered_map<string, cGenericObject*> objectMap;
   unordered_map<string, vector<string>> objectEffects;
   unordered_map<string, cGenericEffect*> worldEffects;
-  fstream dataFile;
 };
+
+bool allThreadsDown(void);
 void close(void);
 void parsePacket(char* packet);
 #endif

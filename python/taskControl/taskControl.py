@@ -30,12 +30,15 @@ class TaskControl(BoxLayout):
     super(TaskControl, self).__init__(**kwargs)
     self.sessionInfo = {}
     self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    
+    self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+   
   def setSubjectName(self, text):
     self.sessionInfo["subjectName"] = text 
   
   def initializeTreeView(self):
     self.tv = self.get_root_window().children[-1].ids["experimentRecords"]
+    self.tv.bind(minimum_height=self.tv.setter('height'))
     self.tvRoot = self.tv.add_node(TreeViewLabel(text="Session Log"))
 
   def addNode(self):
@@ -59,8 +62,17 @@ class TaskControl(BoxLayout):
     self.sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
     saveFilePrefix = os.path.join(self.sessionInfo["saveDir"], self.sessionInfo["subjectName"] + "-" +\
                                   time.ctime(time.time()).replace(" ", "_").replace(":", "-"))
-    taskSM = StateMachine(self.sessionInfo["configFile"], saveFilePrefix, True)
     
+    startRecording= md.M_START_RECORDING()
+    startRecording.header.msg_type = c_int(md.START_RECORDING)
+    fileName = create_string_buffer(str.encode(saveFilePrefix+"_trial.data"), md.MAX_STRING_LENGTH)
+    fileNamePtr = (c_char_p) (addressof(fileName))
+    startRecording.filename = fileNamePtr.value
+    packet = MR.makeMessage(startRecording)
+    self.sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
+
+
+    taskSM = StateMachine(self.sessionInfo["configFile"], saveFilePrefix, True)
     self.sm = taskSM
     self.smThread = Thread(target=self.sm.run)
     self.smThread.daemon = True
@@ -88,6 +100,11 @@ class TaskControl(BoxLayout):
     packet = MR.makeMessage(sessionStop)
     self.sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
     
+    stopRecording = md.M_STOP_RECORDING()
+    stopRecording.header.msg_type = c_int(md.STOP_RECORDING)
+    packet = MR.makeMessage(stopRecording)
+    self.sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
+
   def chooseSaveDir(self):
     filePopup = FilePopup(titleText="Choose Save Directory", canBeDir=True, buttonText="Select Folder")
     filePopup.open()
@@ -134,25 +151,6 @@ class FilePopup(Popup):
       self.get_root_window().children[-1].ids["saveDirText"].text = self.selectedFolder
     self.dismiss()
 
-"""
-class TreeViewSession(TreeView):
-  def init__(self, **kwargs):
-    super(TreeViewSession, self).__init__(**kwargs)
-    self.sessionLogRoot = TreeViewLabel(text="Session Log")
-    self.add_node(self.sessionLogRoot)
-    self.size_hint = 1, None
-    self.bind(minimum_height = self.setter('height'))
-
-  def addNote(self, sessionInfo):
-    parent = self.sessionLogRoot
-    trialNode = TreeViewLabel(text=str(sessionInfo["trialNum"]))
-    self.add_node(trialNode, parent)
-    for k in sessionInfo.keys():
-      if k != "trialNum":
-        node = TreeViewLabel(text=str(sessionInfo[k]))
-        print(node.text)
-        self.add_node(node, trialNode)
-"""
 class TaskControlApp(App):
   def __init__(self, **kwargs):
     super(TaskControlApp, self).__init__(**kwargs)

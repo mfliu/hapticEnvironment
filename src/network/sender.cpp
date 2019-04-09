@@ -14,6 +14,7 @@ void startSender(void)
   openDataSocket(controlData.SENDER_IP, controlData.DATA_PORT);
   controlData.dataThread = new cThread();
   controlData.dataThread->start(updateSender, CTHREAD_PRIORITY_HAPTICS);
+  controlData.dataSenderUp = true;
 }
 
 void closeSender()
@@ -88,6 +89,7 @@ void updateSender(void)
     usleep(250); // 1000 microseconds = 1 millisecond
   }
   closeDataSocket();
+  controlData.dataSenderUp = false;
 }
 
 

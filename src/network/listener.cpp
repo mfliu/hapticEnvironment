@@ -14,6 +14,7 @@ void startListener()
   openMessageHandlerListenSocket(controlData.LISTENER_IP, controlData.LISTENER_PORT);
   controlData.listenerThread = new cThread();
   controlData.listenerThread->start(updateListener, CTHREAD_PRIORITY_HAPTICS);
+  controlData.listenerUp = true;
 }
 
 void updateListener()
@@ -32,6 +33,7 @@ void updateListener()
     usleep(50); // 1000 microseconds = 1 millisecond
   }
  closeListenSocket();
+ controlData.listenerUp = false;
 }
 
 void closeListener()
@@ -44,6 +46,7 @@ void startDataLogger(void)
   openDataSavingSocket(controlData.SENDER_IP, controlData.DATA_LOG_PORT);
   controlData.dataLogThread = new cThread();
   controlData.dataLogThread->start(updateDataLogger, CTHREAD_PRIORITY_HAPTICS);
+  controlData.dataLoggerUp = true;
 }
 
 void closeDataLogger()
@@ -58,6 +61,11 @@ void updateDataLogger()
 
   while (controlData.dataFile.is_open())
   {
+    if (controlData.simulationRunning == false)
+    {
+      controlData.dataFile.close();
+      break;
+    }
     memset(rawPacket, 0, MAX_PACKET_LENGTH);
     int bytesRead = readData(packetPointer);
     if (bytesRead > 0) {
@@ -66,5 +74,5 @@ void updateDataLogger()
     usleep(50); // 1000 microseconds = 1 millisecond
   }
  closeDataSavingSocket();
-
+ controlData.dataLoggerUp = false;
 }

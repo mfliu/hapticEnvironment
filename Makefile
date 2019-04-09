@@ -85,7 +85,7 @@ LOG_INCLUDES = $(wildcard $(LOG_DIR)/*.h)
 LOG_OBJECTS = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(LOG_SOURCES)))
 LOG_OUTPUT = $(BASE_DIR)/$(LOG_PROG)
 LOG_FLAGS = -DLINUX -Wno-deprecated -std=c++17 -I./common  
-
+LOG_LDFLAGS = -lpthread
 
 all: $(OUTPUT) $(MSG_OUTPUT) $(LOG_OUTPUT)
 
@@ -121,7 +121,7 @@ $(MSG_OBJ)/%.o: $(MSG_DIR)/%.cpp | $(MSG_OBJ)
 $(LOG_OBJECTS): $(LOG_INCLUDES)
 
 $(LOG_OUTPUT): $(LOG_OBJ) $(BASE_DIR) $(LOG_OBJECTS)
-	$(CXX) $(LOG_FLAGS) -I$(LOG_HDR) $(LOG_OBJECTS) -o $(LOG_OUTPUT)
+	$(CXX) $(LOG_FLAGS) -I$(LOG_HDR) $(LOG_OBJECTS) $(LOG_LDFLAGS) -o $(LOG_OUTPUT)
 
 $(LOG_OBJ)/%.o: $(LOG_DIR)/%.cpp | $(LOG_OBJ)
 	$(CXX) $(LOG_FLAGS) -I$(LOG_HDR) -MD -MF $(LOG_OBJ)/$.d -c -o $@ $<

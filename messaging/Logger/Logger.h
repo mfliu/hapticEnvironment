@@ -23,19 +23,28 @@ class Logger
   private:
     const char* ipAddr;
     int port;
+    int data_port;
     const char* saveDir;
     const char* saveFile;
     int listener_socket;
+    int data_socket;
     struct sockaddr_in listenerStruct;
+    struct sockaddr_in dataStruct;
     int listenerLen = sizeof(listenerStruct);
+    int dataLen = sizeof(dataStruct);
     fstream logFile;
-  
+    fstream logDataFile;
+    bool running;
+
   public:
-    Logger(const char* address, int port, const char* logDirectory, const char* logFilePrefix);
+    Logger(const char* address, int port, int dataPort, const char* logDirectory, const char* logFilePrefix);
     void startLogger();
     void updateLogger();
-    void stopLogger();
+    void updateDataLogger();
+    void stopMsgLogger();
+    void stopDataLogger();
     int readPacket(char* packetPointer);
+    int readData(char* packetPointer);
 };
 
 #endif

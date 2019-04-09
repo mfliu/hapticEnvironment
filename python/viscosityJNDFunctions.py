@@ -10,10 +10,12 @@ import socket
 import numpy as np 
 import csv 
 
-UDP_IP = "127.0.0.1" #Globals.SENDER_IP
-UDP_PORT = 8080 #Globals.SENDER_PORT
+UDP_IP = Globals.SENDER_IP
+UDP_PORT = Globals.SENDER_PORT
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 
 def enableGraphics(objectName, setVal):
     namePtr = (c_char_p) (addressof(objectName))
@@ -42,7 +44,7 @@ def setup(saveFilePrefix):
   stepViscUp = np.arange(0.1, 1.5, 0.1)
   stepViscDown = -1*np.arange(0.05, 1.5, 0.1)
   steps = np.sort(np.concatenate([stepViscUp, stepViscDown]))
-  fileName = saveFilePrefix +  ".csv"
+  fileName = saveFilePrefix
   logFilePath = fileName
   trialNum = 0
   field1Visc = 0.0
@@ -93,6 +95,11 @@ def setBackground(red, green, blue):
   sock.sendto(packet, (UDP_IP, UDP_PORT))
 
 def startEntry(options, taskVars):
+  trialStart = md.M_TRIAL_START()
+  trialStart.header.msg_type = c_int(md.TRIAL_START)
+  packet = MR.makeMessage(trialStart)
+  sock.sendto(packet, (UDP_IP, UDP_PORT))
+  
   taskVars["trialNum"] = taskVars["trialNum"] + 1
   #print("Trial " + str(taskVars["trialNum"]))
   setBackground(0.0, 0.0, 0.0)
@@ -197,4 +204,9 @@ def decisionEntry(options, taskVars):
     fwrite = csv.writer(f)
     fwrite.writerow([taskVars["trialNum"], taskVars["field1Visc"],\
                     taskVars["field2Visc"], taskVars["choice"]])
+  
+  trialEnd = md.M_TRIAL_END()
+  trialEnd.header.msg_type = md.TRIAL_END
+  packet = MR.makeMessage(trialEnd)
+  sock.sendto(packet, (UDP_IP, UDP_PORT))
   return "next"

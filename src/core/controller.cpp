@@ -17,6 +17,10 @@ int main(int argc, char* argv[])
   
   controlData.simulationRunning = false;
   controlData.simulationFinished = true;
+  controlData.hapticsUp = false;
+  controlData.listenerUp = false;
+  controlData.dataSenderUp = false;
+  controlData.dataLoggerUp = false;
 
   // TODO: Set these IP addresses from a config file
   controlData.SENDER_IP = "127.0.0.1";
@@ -50,11 +54,17 @@ int main(int argc, char* argv[])
   return(0);
 }
 
+bool allThreadsDown()
+{
+  return (controlData.hapticsUp && controlData.listenerUp && controlData.dataSenderUp && controlData.dataLoggerUp);  
+}
+
 void close()
 {
   // TODO: Make thread exits more graceful, currently hangs
   controlData.simulationRunning = false;
   while (!controlData.simulationFinished) {
+    controlData.simulationFinished = allThreadsDown();
     cSleepMs(100);
   }
   hapticsData.tool->stop();
@@ -69,10 +79,6 @@ void parsePacket(char* packet)
   MSG_HEADER header;
   memcpy(&header, packet, sizeof(header));
   int msgType = header.msg_type;
-  if (msgType != 1000)
-  {
-    cout << msgType << endl;
-  }
   switch (msgType)
   {
     case SESSION_START:
@@ -84,6 +90,7 @@ void parsePacket(char* packet)
     case SESSION_END:
     {
       cout << "Received SESSION_END Message" << endl;
+      controlData.simulationRunning = false;
       break;
     }
 

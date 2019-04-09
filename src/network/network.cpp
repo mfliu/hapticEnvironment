@@ -32,12 +32,11 @@ void openMessageHandlerSendSocket(const char* ipAddr, int port)
   }
 
   int opt = 1;
-  if (setsockopt(controlData.sender_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt)) < 0) {
-    cout << "setsockopt failed" << endl;
-    exit(1);
-  }
-  if (setsockopt(controlData.sender_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)) < 0) {
-    cout << "Setting reuse address and port socket options failed" << endl;
+  int broadcast = setsockopt(controlData.sender_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt));
+  int reuseAddr = setsockopt(controlData.sender_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+  int reusePort = setsockopt(controlData.sender_socket, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
+  if (broadcast < 0 || reuseAddr < 0 || reusePort < 0) {
+    cout << "Setting socket options failed" << endl;
     exit(1);
   }
 }
@@ -92,8 +91,6 @@ void openDataSocket(const char* ipAddr, int port)
     exit(1);
   }
   
-  //fcntl(controlData.data_socket, F_SETFL, O_NONBLOCK);
-
   memset((char *) &dataStruct, 0, dataLen);
   dataStruct.sin_family = AF_INET;
   dataStruct.sin_port = htons(port);
@@ -103,12 +100,11 @@ void openDataSocket(const char* ipAddr, int port)
   }
 
   int opt = 1;
-  if (setsockopt(controlData.data_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt)) < 0) {
-    cout << "setsockopt failed" << endl;
-    exit(1);
-  }
-  if (setsockopt(controlData.data_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)) < 0) {
-    cout << "Setting reuse address and port socket options failed" << endl;
+  int broadcast = setsockopt(controlData.data_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt));
+  int reuseAddr = setsockopt(controlData.data_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+  int reusePort = setsockopt(controlData.data_socket, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
+  if (broadcast < 0 || reuseAddr < 0 || reusePort < 0) {
+    cout << "Setting socket options failed" << endl;
     exit(1);
   }
 }
@@ -117,7 +113,7 @@ void closeDataSocket()
   close(controlData.data_socket);
 }
 
-int sendPacket(char* packet, uint16_t lengthPacket) //, bool isData)
+int sendPacket(char* packet, uint16_t lengthPacket)
 {
     if (sendto(controlData.sender_socket, packet, lengthPacket, 0, (struct sockaddr*) &senderStruct, senderLen) < 0)
     {
@@ -168,12 +164,11 @@ void openDataSavingSocket(const char* ipAddr, int port)
   }
 
   int opt = 1;
-  if (setsockopt(controlData.dataLog_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt)) < 0) {
-    cout << "setsockopt failed" << endl;
-    exit(1);
-  }
-  if (setsockopt(controlData.dataLog_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)) < 0) {
-    cout << "Setting reuse address and port socket options failed" << endl;
+  int broadcast = setsockopt(controlData.dataLog_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt));
+  int reuseAddr = setsockopt(controlData.dataLog_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+  int reusePort = setsockopt(controlData.dataLog_socket, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
+  if (broadcast < 0 || reuseAddr < 0 || reusePort < 0) {
+    cout << "Setting socket options failed" << endl;
     exit(1);
   }
   int bind_sock_in = bind(controlData.dataLog_socket, (struct sockaddr*) &dataLogStruct, dataLogLen);

@@ -25,7 +25,7 @@ void startHapticsThread(void)
   hapticsData.hapticsThread->start(updateHaptics, CTHREAD_PRIORITY_HAPTICS);
   controlData.simulationRunning = true;
   controlData.simulationFinished = false;
-
+  controlData.hapticsUp = true;
 }
 
 void updateHaptics(void)
@@ -42,29 +42,6 @@ void updateHaptics(void)
     hapticsData.tool->updateFromDevice();
     hapticsData.tool->computeInteractionForces();
     hapticsData.tool->applyToDevice();
-
-    /*
-    cVector3d objectPos = graphicsData.object->getGlobalPos();
-    cVector3d v = cSub(toolPos, objectPos);
-    cVector3d angAcc(0, 0, 0);
-    if (v.length() > 0.0) {
-      cVector3d toolForce = cNegate(hapticsData.tool->getDeviceGlobalForce());
-      cVector3d force = toolForce - cProject(toolForce, v);
-      cVector3d torque = cMul(v.length(), cCross(cNormalize(v), force));
-      angAcc = (1.0 / INERTIA) * torque;
-    }
-    angVel.add(timeInterval * angAcc);
-    double vel = angVel.length();
-    if (vel > MAX_ANGLE_VEL) {
-      angAcc.mul(MAX_ANGLE_VEL / vel);
-    }
-    angVel.mul(1.0-DAMPING * timeInterval);
-    if (hapticsData.tool->getUserSwitch(0) == 1) {
-      angVel.zero();
-    }
-    if (angVel.length() > C_SMALL) {
-      graphicsData.object->rotateAboutGlobalAxisRad(cNormalize(angVel), timeInterval * angVel.length());
-    }
-    */
   }
+  controlData.hapticsUp = false;
 }
