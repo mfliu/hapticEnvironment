@@ -40,10 +40,10 @@ class TaskControl(BoxLayout):
 
   def addNode(self):
     trialNum = self.sessionInfo["trialNum"]
-    trialNode = self.tv.add_node(TreeViewLabel(text=str(trialNum)), self.tvRoot)
+    trialNode = self.tv.add_node(TreeViewLabel(text="Trial " + str(trialNum)), self.tvRoot)
     for k in self.sessionInfo.keys():
       if k!= "trialNum":
-        infoNode = self.tv.add_node(TreeViewLabel(text=str(self.sessionInfo[k])), trialNode)
+        infoNode = self.tv.add_node(TreeViewLabel(text=k + ": " + str(self.sessionInfo[k])), trialNode)
 
   def startSM(self):
     self.initializeTreeView()
@@ -71,7 +71,7 @@ class TaskControl(BoxLayout):
     self.trialThread.start()
   
   def trialInfoUpdate(self):
-    trialNum = self.sm.taskVars["trialNum"]
+    trialNum = 0 #self.sm.taskVars["trialNum"]
     while True:
       if self.sm.taskVars["trialNum"] == trialNum:
         continue
