@@ -36,14 +36,14 @@ def removeEffect(effectName):
   packet = MR.makeMessage(rmField)
   sock.sendto(packet, (UDP_IP, UDP_PORT)) 
 
-def setup():
+def setup(saveFilePrefix):
   
   refVisc = np.arange(1.5, 3.5, 0.5)
   stepViscUp = np.arange(0.1, 1.5, 0.1)
   stepViscDown = -1*np.arange(0.05, 1.5, 0.1)
   steps = np.sort(np.concatenate([stepViscUp, stepViscDown]))
-  fileName = "viscosityJND-Monica-" + time.ctime(time.time()).replace(" ", "_").replace(":", "-") + ".csv"
-  logFilePath = "/home/mfl24/data/RnelShare/users/mfl24/Test/" + fileName
+  fileName = saveFilePrefix +  ".csv"
+  logFilePath = fileName
   trialNum = 0
   field1Visc = 0.0
   field2Visc = 0.0 
@@ -94,7 +94,7 @@ def setBackground(red, green, blue):
 
 def startEntry(options, taskVars):
   taskVars["trialNum"] = taskVars["trialNum"] + 1
-  print("Trial " + str(taskVars["trialNum"]))
+  #print("Trial " + str(taskVars["trialNum"]))
   setBackground(0.0, 0.0, 0.0)
   obj1Name = create_string_buffer(b"field1Target", 128)
   obj2Name = create_string_buffer(b"field2Target", 128)
@@ -107,7 +107,7 @@ def field1Entry(options, taskVars):
   setBackground(4.0, 133.0, 209.0)
   field1Visc = random.choice(taskVars["refVisc"])
   taskVars["field1Visc"] = field1Visc
-  print("Reference Viscosity: ", field1Visc)
+  #print("Reference Viscosity: ", field1Visc)
   
   field1 = md.M_HAPTICS_VISCOSITY_FIELD()
   field1.header.serial_no = c_int(1)
@@ -149,7 +149,7 @@ def field2Entry(options, taskVars):
   else:
     field2Visc = round(taskVars["field1Visc"] + random.choice(taskVars["steps"]), 2)
   taskVars["field2Visc"] = field2Visc 
-  print("Field Viscosity: ", taskVars["field2Visc"])
+  #print("Field Viscosity: ", taskVars["field2Visc"])
   
   field2 = md.M_HAPTICS_VISCOSITY_FIELD()
   field2.header.msg_type = c_int(md.HAPTICS_VISCOSITY_FIELD)
@@ -192,7 +192,7 @@ def decisionEntry(options, taskVars):
     elif np.abs(Globals.CHAI_DATA.posY + 1.1) < 0.15 and np.abs(Globals.CHAI_DATA.posZ) < 0.15:
       decisionMade = True
       taskVars["choice"] = 1 
-  print("Decision: ", taskVars["choice"])
+  #print("Decision: ", taskVars["choice"])
   with open(taskVars["filepath"], 'a') as f:
     fwrite = csv.writer(f)
     fwrite.writerow([taskVars["trialNum"], taskVars["field1Visc"],\

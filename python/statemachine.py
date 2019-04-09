@@ -65,9 +65,9 @@ class State(object):
   #  senderSocket.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
 
 class StateMachine(object):
-  def __init__(self, configFile, top):
+  def __init__(self, configFile, saveFilePrefix, top):
     config = json.load(open(configFile))
-    self.build(config)
+    self.build(config, saveFilePrefix)
     
     if top == True:
       #self.setBoundingPlane()
@@ -89,7 +89,7 @@ class StateMachine(object):
 
 
   # Build should return the start state of the StateMachine
-  def build(self, config):
+  def build(self, config, saveFilePrefix):
     self.name = config["name"]
     self.states = {}
     self.startState = config["startState"]
@@ -101,7 +101,7 @@ class StateMachine(object):
     self.entryModule = __import__(self.entryFile, globals(), locals(), [], 0)
     
     self.setupFunc = getattr(self.entryModule, "setup")
-    self.taskVars = self.setupFunc()
+    self.taskVars = self.setupFunc(saveFilePrefix)
 
     for stateName in config["states"]:
       stateConfig = config[stateName]
@@ -136,7 +136,6 @@ class StateMachine(object):
         currentState.setTargetHaptics(currentState.objectName, 1)
 
       transition = currentState.entry(self.stateTree[self.currentState], self.taskVars)
-      #print(transition)      
       if len(currentState.graphics.keys()) > 0:
         currentState.setTargetGraphics(currentState.objectName, 0)
         currentState.setTargetHaptics(currentState.objectName, 0)
