@@ -23,8 +23,9 @@ int main(int argc, char* argv[])
   controlData.SENDER_PORT = 8080;
   controlData.LISTENER_IP = "127.0.0.1";
   controlData.LISTENER_PORT = 7000;
+  controlData.DATA_PORT = 10000;
   controlData.hapticsOnly = false;
-
+  
   if (controlData.hapticsOnly == false) {
     initDisplay();
     initScene();
@@ -67,6 +68,10 @@ void parsePacket(char* packet)
   MSG_HEADER header;
   memcpy(&header, packet, sizeof(header));
   int msgType = header.msg_type;
+  if (msgType != 1000)
+  {
+    cout << msgType << endl;
+  }
   switch (msgType)
   {
     case SESSION_START:
@@ -114,14 +119,14 @@ void parsePacket(char* packet)
     }
     case HAPTIC_DATA_STREAM:
     {
-      if (controlData.dataFile.is_open())
+      /*if (controlData.dataFile.is_open())
       {
         char packetData[sizeof(M_HAPTIC_DATA_STREAM)];
         memcpy(&packetData, packet, sizeof(M_HAPTIC_DATA_STREAM));
         M_HAPTIC_DATA_STREAM test;
         memcpy(&test, &packetData, sizeof(M_HAPTIC_DATA_STREAM));
         controlData.dataFile.write(packetData, sizeof(packetData));
-      }
+      }*/
       break;
     }
     case HAPTICS_SET_ENABLED:

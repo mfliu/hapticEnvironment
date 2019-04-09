@@ -6,9 +6,10 @@ using namespace std;
 
 extern ControlData controlData;
 
-struct sockaddr_in senderStruct, listenerStruct;
+struct sockaddr_in senderStruct, listenerStruct, dataStruct;
 int senderLen = sizeof(senderStruct);
 int listenerLen = sizeof(listenerStruct);
+int dataLen = sizeof(dataStruct);
 
 void openMessageHandlerSendSocket(const char* ipAddr, int port) 
 {
@@ -19,7 +20,7 @@ void openMessageHandlerSendSocket(const char* ipAddr, int port)
     exit(1);
   }
   
-  fcntl(controlData.sender_socket, F_SETFL, O_NONBLOCK);
+  //fcntl(controlData.sender_socket, F_SETFL, O_NONBLOCK);
 
   memset((char *) &senderStruct, 0, senderLen);
   senderStruct.sin_family = AF_INET;
@@ -52,7 +53,7 @@ void openMessageHandlerListenSocket(const char* ipAddr, int port)
     cout << "Opening listener socket failed" << endl;
     exit(1);
   }
-  fcntl(controlData.listener_socket, F_SETFL, O_NONBLOCK);
+  //fcntl(controlData.listener_socket, F_SETFL, O_NONBLOCK);
 
   memset((char *) &listenerStruct, 0, listenerLen);
   listenerStruct.sin_family = AF_INET;
@@ -81,11 +82,45 @@ void closeListenSocket()
   close(controlData.listener_socket);
 }
 
+void openDataSocket(const char* ipAddr, int port) 
+{
+  cout << "Opening data streaming socket..." << endl;
+  controlData.data_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  if (controlData.data_socket < 0) {
+    cout << "Opening data streaming socket failed." << endl;
+    exit(1);
+  }
+  
+  //fcntl(controlData.data_socket, F_SETFL, O_NONBLOCK);
+
+  memset((char *) &dataStruct, 0, dataLen);
+  dataStruct.sin_family = AF_INET;
+  dataStruct.sin_port = htons(port);
+  if (inet_aton(ipAddr, &dataStruct.sin_addr) == 0) {
+    cout << "inet_aton failed" << endl;
+    exit(1);
+  }
+
+  int opt = 1;
+  if (setsockopt(controlData.data_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt)) < 0) {
+    cout << "setsockopt failed" << endl;
+    exit(1);
+  }
+  if (setsockopt(controlData.data_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)) < 0) {
+    cout << "Setting reuse address and port socket options failed" << endl;
+    exit(1);
+  }
+}
+void closeDataSocket()
+{
+  close(controlData.data_socket);
+}
+
 int sendPacket(char* packet, uint16_t lengthPacket) //, bool isData)
 {
     if (sendto(controlData.sender_socket, packet, lengthPacket, 0, (struct sockaddr*) &senderStruct, senderLen) < 0)
     {
-      cout << "Data streaming error" << endl;
+      cout << "Sending error" << endl;
       return 0;
     }
   return 1;
@@ -102,8 +137,20 @@ int readPacket(char* packetPointer)
   return bytesRead;
 }
 
+int sendData(char* packet, uint16_t lengthPacket) //, bool isData)
+{
+    if (sendto(controlData.data_socket, packet, lengthPacket, 0, (struct sockaddr*) &dataStruct, dataLen) < 0)
+    {
+      cout << "Data streaming error" << endl;
+      return 0;
+    }
+  return 1;
+}
+
+
 void closeAllConnections()
 {
   close(controlData.sender_socket);
   close(controlData.listener_socket);
+  close(controlData.data_socket);
 }

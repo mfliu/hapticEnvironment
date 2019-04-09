@@ -25,13 +25,15 @@ struct ControlData
   bool simulationFinished;
   const char* SENDER_IP;
   const char* LISTENER_IP;
+  int DATA_PORT;
   int SENDER_PORT;
   int LISTENER_PORT;
   int sender_socket;
   int listener_socket;
+  int data_socket;
   // TODO: Make the hapticsOnly = true mode actually work
   bool hapticsOnly;
-  cThread* senderThread; // for streaming haptic data only
+  cThread* dataThread; // for streaming haptic data only
   cThread* listenerThread;
   unordered_map<string, cGenericObject*> objectMap;
   unordered_map<string, vector<string>> objectEffects;

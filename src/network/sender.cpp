@@ -11,14 +11,14 @@ extern HapticData hapticsData;
 
 void startSender(void)
 {
-  openMessageHandlerSendSocket(controlData.SENDER_IP, controlData.SENDER_PORT);
-  controlData.senderThread = new cThread();
-  controlData.senderThread->start(updateSender, CTHREAD_PRIORITY_HAPTICS);
+  openDataSocket(controlData.SENDER_IP, controlData.DATA_PORT);
+  controlData.dataThread = new cThread();
+  controlData.dataThread->start(updateSender, CTHREAD_PRIORITY_HAPTICS);
 }
 
 void closeSender()
 {
- closeSendSocket(); 
+ closeDataSocket(); 
 }
 
 void updateSender(void)
@@ -84,8 +84,8 @@ void updateSender(void)
     char* packet[sizeof(toolData)];
     memcpy(&packet, &toolData, sizeof(toolData));
     
-    sendPacket((char *) packet, sizeof(packet)); //, true);
+    sendData((char *) packet, sizeof(packet)); //, true);
     usleep(250); // 1000 microseconds = 1 millisecond
   }
-  closeSendSocket();
+  closeDataSocket();
 }

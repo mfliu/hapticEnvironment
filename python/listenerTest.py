@@ -6,7 +6,7 @@ import messageDefinitions as md
 import Messenger as MR
 from ctypes import * 
 UDP_IP = "127.0.0.1"
-UDP_PORT = 7000
+UDP_PORT = 20000
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)

@@ -29,7 +29,7 @@ void updateListener()
       //cout << "Bytes read " << bytesRead << endl;
       parsePacket(packetPointer);
     }
-    usleep(100); // 1000 microseconds = 1 millisecond
+    usleep(50); // 1000 microseconds = 1 millisecond
   }
  closeListenSocket();
 }

@@ -73,7 +73,7 @@ MSG_INCLUDES = $(wildcard $(MSG_DIR)/*.h)
 MSG_OBJECTS = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(MSG_SOURCES)))
 MSG_OUTPUT = $(BASE_DIR)/$(MSG_PROG)
 MSG_FLAGS = -DLINUX -Wno-deprecated -std=c++17 -I./common  
-#MSG_LDFLAGS = -L$(RPCLIB_DIR)/build -lpthread
+MSG_LDFLAGS = -lpthread
 
 # Logging configuration 
 LOG_DIR = ./messaging/Logger
@@ -112,7 +112,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/*/%.cpp | $(OBJ_DIR)
 $(MSG_OBJECTS): $(MSG_INCLUDES)
 
 $(MSG_OUTPUT): $(MSG_OBJ) $(BASE_DIR) $(MSG_OBJECTS)
-	$(CXX) $(MSG_FLAGS) -I$(MSG_HDR) $(MSG_OBJECTS) -o $(MSG_OUTPUT)
+	$(CXX) $(MSG_FLAGS) -I$(MSG_HDR) $(MSG_OBJECTS) $(MSG_LDFLAGS) -o $(MSG_OUTPUT)
 
 $(MSG_OBJ)/%.o: $(MSG_DIR)/%.cpp | $(MSG_OBJ)
 	$(CXX) $(MSG_FLAGS) -I$(MSG_HDR) -MD -MF $(MSG_OBJ)/$.d -c -o $@ $<

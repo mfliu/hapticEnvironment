@@ -20,9 +20,12 @@
 
 void openMessageHandlerSendSocket(const char* ipAddr, int port);
 void openMessageHandlerListenSocket(const char* ipAddr, int port);
+void openDataSocket(const char* ipAddr, int port);
 void closeSendSocket(void);
 void closeListenSocket(void);
+void closeDataSocket();
 int sendPacket(char* packet, uint16_t lengthPacket); //, bool isData);
 int readPacket(char* packet);
+int sendData(char* packet, uint16_t lengthPacket);
 void closeAllConnections(void);
 #endif

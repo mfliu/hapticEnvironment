@@ -22,47 +22,47 @@ class State(object):
     if len(graphics.keys()) > 0:
       self.makeStateGraphics(self.graphics)
   
-  def makeStateGraphics(self, graphics):
-    shape = graphics["shape"] 
-    if shape == "sphere":
-      radius = graphics["radius"]
-      color = graphics["color"]
-      position = graphics["position"]
-      stateShape = md.M_GRAPHICS_SHAPE_SPHERE()
-      stateShape.header.serial_no = c_int(1) # bullshit number for testing 
-      stateShape.header.msg_type = c_int(md.GRAPHICS_SHAPE_SPHERE)
-      stateShape.header.timestamp = c_double(0.01) # bullshit number for testing 
-      self.objectName = create_string_buffer(bytes(graphics["name"], 'utf-8'), 128)
-      objectNamePtr = (c_char_p) (addressof(self.objectName))
-      stateShape.objectName = objectNamePtr.value
-      stateShape.radius = c_double(radius) 
-      stateShape.localPosition = (c_double * 3) (position[0], position[1], position[2])
-      stateShape.color = (c_float * 4) (color[0], color[1], color[2], color[3])
-      stateShapePacket = MR.makeMessage(stateShape)
-      senderSocket.sendto(stateShapePacket, (Globals.SENDER_IP, Globals.SENDER_PORT))
-      self.setTargetGraphics(self.objectName, 0)
+  #def makeStateGraphics(self, graphics):
+  #  shape = graphics["shape"] 
+  #  if shape == "sphere":
+  #    radius = graphics["radius"]
+  #    color = graphics["color"]
+  #    position = graphics["position"]
+  #    stateShape = md.M_GRAPHICS_SHAPE_SPHERE()
+  #    stateShape.header.serial_no = c_int(1) # bullshit number for testing 
+  #    stateShape.header.msg_type = c_int(md.GRAPHICS_SHAPE_SPHERE)
+  #    stateShape.header.timestamp = c_double(0.01) # bullshit number for testing 
+  #    self.objectName = create_string_buffer(bytes(graphics["name"], 'utf-8'), 128)
+  #    objectNamePtr = (c_char_p) (addressof(self.objectName))
+  #    stateShape.objectName = objectNamePtr.value
+  #    stateShape.radius = c_double(radius) 
+  #    stateShape.localPosition = (c_double * 3) (position[0], position[1], position[2])
+  #    stateShape.color = (c_float * 4) (color[0], color[1], color[2], color[3])
+  #    stateShapePacket = MR.makeMessage(stateShape)
+  #    senderSocket.sendto(stateShapePacket, (Globals.SENDER_IP, Globals.SENDER_PORT))
+  #    self.setTargetGraphics(self.objectName, 0)
     
-  def setTargetGraphics(self, objectName, setVal):
-    namePtr = (c_char_p) (addressof(objectName))
-    message = md.M_GRAPHICS_SET_ENABLED()
-    message.header.serialNo = c_int(1)
-    message.header.msg_type = c_int(md.GRAPHICS_SET_ENABLED)
-    message.header.timestamp = c_double(0.01) 
-    message.objectName = namePtr.value 
-    message.enabled = c_int(setVal)
-    packet = MR.makeMessage(message)
-    senderSocket.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
+  #def setTargetGraphics(self, objectName, setVal):
+  #  namePtr = (c_char_p) (addressof(objectName))
+  #  message = md.M_GRAPHICS_SET_ENABLED()
+  #  message.header.serialNo = c_int(1)
+  #  message.header.msg_type = c_int(md.GRAPHICS_SET_ENABLED)
+  #  message.header.timestamp = c_double(0.01) 
+  #  message.objectName = namePtr.value 
+  #  message.enabled = c_int(setVal)
+  #  packet = MR.makeMessage(message)
+  #  senderSocket.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
 
-  def setTargetHaptics(self, objectName, setVal):
-    namePtr = (c_char_p) (addressof(objectName))
-    message = md.M_HAPTICS_SET_ENABLED()
-    message.header.serialNo = c_int(1)
-    message.header.msg_type = c_int(md.HAPTICS_SET_ENABLED)
-    message.header.timestamp = c_double(0.01) 
-    message.objectName = namePtr.value 
-    message.enabled = c_int(setVal)
-    packet = MR.makeMessage(message)
-    senderSocket.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
+  #def setTargetHaptics(self, objectName, setVal):
+  #  namePtr = (c_char_p) (addressof(objectName))
+  #  message = md.M_HAPTICS_SET_ENABLED()
+  #  message.header.serialNo = c_int(1)
+  #  message.header.msg_type = c_int(md.HAPTICS_SET_ENABLED)
+  #  message.header.timestamp = c_double(0.01) 
+  #  message.objectName = namePtr.value 
+  #  message.enabled = c_int(setVal)
+  #  packet = MR.makeMessage(message)
+  #  senderSocket.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
 
 class StateMachine(object):
   def __init__(self, configFile, top):
@@ -72,18 +72,20 @@ class StateMachine(object):
     if top == True:
       #self.setBoundingPlane()
       self.listenerSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-      self.listenerSocket.bind((Globals.LISTENER_IP, Globals.LISTENER_PORT))
+      self.listenerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+      self.listenerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+      self.listenerSocket.bind((Globals.DATA_LISTENER_IP, Globals.DATA_LISTENER_PORT))
       self.listenerThread = Thread(target=self.listener)
       self.listenerThread.daemon = True
       self.listenerThread.start()
 
-  def setBoundingPlane(self):
-    message = md.M_HAPTICS_BOUNDING_PLANE()
-    message.header.serialNo = c_int(1)
-    message.header.msg_type = c_int(md.HAPTICS_BOUNDING_PLANE)
-    message.header.timestamp = c_double(0.01) 
-    packet = MR.makeMessage(message)
-    senderSocket.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
+  #def setBoundingPlane(self):
+  #  message = md.M_HAPTICS_BOUNDING_PLANE()
+  #  message.header.serialNo = c_int(1)
+  #  message.header.msg_type = c_int(md.HAPTICS_BOUNDING_PLANE)
+  #  message.header.timestamp = c_double(0.01) 
+  #  packet = MR.makeMessage(message)
+  #  senderSocket.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
 
 
   # Build should return the start state of the StateMachine
