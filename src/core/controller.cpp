@@ -127,7 +127,7 @@ void parsePacket(char* packet)
     {
       cout << "Received STOP_RECORDING Message" << endl;
       controlData.dataFile.close();
-      controlData.dataLogThread.~thread();
+      controlData.dataLogThread->stop(); //~thread();
       break;
     }
     

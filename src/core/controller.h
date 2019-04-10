@@ -42,7 +42,7 @@ struct ControlData
   int data_socket;
   int dataLog_socket;
   cThread* dataThread; // for streaming haptic data only
-  thread dataLogThread;
+  cThread* dataLogThread;
   cThread* listenerThread;
   ofstream dataFile;
 
