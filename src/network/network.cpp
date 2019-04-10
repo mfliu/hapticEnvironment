@@ -42,7 +42,7 @@ void openMessageHandlerSendSocket(const char* ipAddr, int port)
 }
 void closeSendSocket()
 {
-  close(controlData.sender_socket);
+  shutdown(controlData.sender_socket, 2);
 }
 
 void openMessageHandlerListenSocket(const char* ipAddr, int port)
@@ -79,7 +79,7 @@ void openMessageHandlerListenSocket(const char* ipAddr, int port)
 
 void closeListenSocket()
 {
-  close(controlData.listener_socket);
+  shutdown(controlData.listener_socket, 2);
 }
 
 void openDataSocket(const char* ipAddr, int port) 
@@ -90,7 +90,8 @@ void openDataSocket(const char* ipAddr, int port)
     cout << "Opening data streaming socket failed." << endl;
     exit(1);
   }
-  
+  //fcntl(controlData.data_socket, F_SETFL, O_NONBLOCK);
+
   memset((char *) &dataStruct, 0, dataLen);
   dataStruct.sin_family = AF_INET;
   dataStruct.sin_port = htons(port);
@@ -110,7 +111,7 @@ void openDataSocket(const char* ipAddr, int port)
 }
 void closeDataSocket()
 {
-  close(controlData.data_socket);
+  shutdown(controlData.data_socket, 2);
 }
 
 int sendPacket(char* packet, uint16_t lengthPacket)
@@ -153,7 +154,7 @@ void openDataSavingSocket(const char* ipAddr, int port)
     exit(1);
   }
   
-  //fcntl(controlData.data_socket, F_SETFL, O_NONBLOCK);
+  //fcntl(controlData.dataLog_socket, F_SETFL, O_NONBLOCK);
 
   memset((char *) &dataLogStruct, 0, dataLogLen);
   dataLogStruct.sin_family = AF_INET;
@@ -180,7 +181,7 @@ void openDataSavingSocket(const char* ipAddr, int port)
 
 void closeDataSavingSocket()
 {
-  close(controlData.dataLog_socket);
+  shutdown(controlData.dataLog_socket, 2);
 }
 
 int readData(char* packetPointer)
@@ -198,4 +199,5 @@ void closeAllConnections()
   close(controlData.sender_socket);
   close(controlData.listener_socket);
   close(controlData.data_socket);
+  close(controlData.dataLog_socket);
 }

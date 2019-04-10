@@ -48,6 +48,7 @@ class MessageHandler
 
   public:
     MessageHandler(const char* address, int iPort, int oPort, int diPort, int doPort);
+    bool getRunning();
     int getMsgNum();
     double getTimestamp();
     void openInputSocket();

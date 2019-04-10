@@ -72,6 +72,7 @@ class StateMachine(object):
     if top == True:
       #self.setBoundingPlane()
       self.listenerSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+      #self.listenerSocket.setblocking(0)
       self.listenerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
       self.listenerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
       self.listenerSocket.bind((Globals.DATA_LISTENER_IP, Globals.DATA_LISTENER_PORT))
@@ -125,7 +126,7 @@ class StateMachine(object):
       msg_data = md.M_HAPTIC_DATA_STREAM()
       MR.readMessage(data, msg_data)
       Globals.CHAI_DATA = msg_data
-      time.sleep(0.001)
+      time.sleep(0.01)
   
   def run(self):
     #print(self.name)

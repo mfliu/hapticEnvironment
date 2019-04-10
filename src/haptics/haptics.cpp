@@ -17,6 +17,7 @@ void initHaptics(void)
   hapticsData.tool->setWorkspaceRadius(1.0);
   hapticsData.tool->setWaitForSmallForce(false);
   hapticsData.tool->start();
+  cout << "Haptics tool initialized" << endl;
 }
 
 void startHapticsThread(void)
@@ -26,6 +27,7 @@ void startHapticsThread(void)
   controlData.simulationRunning = true;
   controlData.simulationFinished = false;
   controlData.hapticsUp = true;
+  cout << "Haptics thread started" << endl;
 }
 
 void updateHaptics(void)
@@ -33,6 +35,7 @@ void updateHaptics(void)
   cPrecisionClock clock;
   clock.reset();
   cVector3d angVel(0.0, 0.0, 0.1);
+  usleep(500); // give some time for other threads to start up
   while (controlData.simulationRunning){
     clock.stop();
     double timeInterval = clock.getCurrentTimeSeconds();

@@ -45,7 +45,7 @@ def setup(saveFilePrefix):
   stepViscDown = -1*np.arange(0.05, 1.5, 0.1)
   steps = np.sort(np.concatenate([stepViscUp, stepViscDown]))
   fileName = saveFilePrefix
-  logFilePath = fileName
+  logFilePath = fileName + ".csv"
   trialNum = 0
   field1Visc = 0.0
   field2Visc = 0.0 

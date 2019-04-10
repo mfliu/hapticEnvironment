@@ -43,7 +43,7 @@ struct ControlData
   cThread* dataThread; // for streaming haptic data only
   cThread* dataLogThread;
   cThread* listenerThread;
-  fstream dataFile;
+  ofstream dataFile;
 
   // TODO: Make the hapticsOnly = true mode actually work
   bool hapticsOnly;

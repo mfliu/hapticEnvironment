@@ -61,16 +61,19 @@ bool allThreadsDown()
 
 void close()
 {
-  // TODO: Make thread exits more graceful, currently hangs
   controlData.simulationRunning = false;
   while (!controlData.simulationFinished) {
     controlData.simulationFinished = allThreadsDown();
     cSleepMs(100);
   }
   hapticsData.tool->stop();
+  cout << "Haptic tool stopped" << endl;
   delete hapticsData.hapticsThread;
+  cout << "Deleted haptics thread" << endl;
   delete graphicsData.world;
+  cout << "Deleted world" << endl;
   delete hapticsData.handler;
+  cout << "Deleted handler" << endl;
   closeAllConnections();
 }
 
@@ -91,6 +94,7 @@ void parsePacket(char* packet)
     {
       cout << "Received SESSION_END Message" << endl;
       controlData.simulationRunning = false;
+      close();
       break;
     }
 
@@ -113,7 +117,7 @@ void parsePacket(char* packet)
       memcpy(&recInfo, packet, sizeof(recInfo));
       char* fileName;
       fileName = recInfo.filename;
-      controlData.dataFile.open(fileName, fstream::binary | fstream::out);
+      controlData.dataFile.open(fileName, ofstream::binary);
       controlData.dataFile.flush();
       startDataLogger();
       break; 
@@ -122,9 +126,8 @@ void parsePacket(char* packet)
     case STOP_RECORDING:
     {
       cout << "Received STOP_RECORDING Message" << endl;
-      controlData.dataFile.flush();
       controlData.dataFile.close();
-      controlData.dataLogThread->stop();
+      //controlData.dataLogThread->stop();
       break;
     }
     

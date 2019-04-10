@@ -13,6 +13,11 @@ MessageHandler::MessageHandler(const char* address, int iPort, int oPort, int di
   running = true;
 }
 
+bool MessageHandler::getRunning()
+{
+  return running;
+}
+
 int MessageHandler::getMsgNum()
 {
   return msgNum++;
@@ -34,7 +39,7 @@ void MessageHandler::openInputSocket()
     cout << "Open listening socket failed." << endl;
     exit(1);
   }
-  fcntl(input_socket, F_SETFL, O_NONBLOCK);
+  //fcntl(input_socket, F_SETFL, O_NONBLOCK);
 
   memset((char *) &inputStruct, 0, inputLen);
   inputStruct.sin_family = AF_INET;
@@ -70,7 +75,7 @@ void MessageHandler::openOutputSocket()
     cout << "Open sending socket failed." << endl;
     exit(1);
   }
-  fcntl(output_socket, F_SETFL, O_NONBLOCK);
+  //fcntl(output_socket, F_SETFL, O_NONBLOCK);
 
   memset((char *) &outputStruct, 0, outputLen);
   outputStruct.sin_family = AF_INET;
@@ -100,6 +105,8 @@ void MessageHandler::openDataSockets()
     cout << "Open listening socket failed." << endl;
     exit(1);
   }
+  //fcntl(dataIn_socket, F_SETFL, O_NONBLOCK);
+
   memset((char *) &dataInStruct, 0, dataInLen);
   dataInStruct.sin_family = AF_INET;
   dataInStruct.sin_port = htons(dataInPort);
@@ -131,6 +138,8 @@ void MessageHandler::openDataSockets()
     cout << "Open data out socket failed." << endl;
     exit(1);
   }
+  //fcntl(dataOut_socket, F_SETFL, O_NONBLOCK);
+
   memset((char *) &dataOutStruct, 0, dataOutLen);
   dataOutStruct.sin_family = AF_INET;
   dataOutStruct.sin_port = htons(dataOutPort);
@@ -229,6 +238,7 @@ void MessageHandler::updateMessageHandler()
         running = false;
       }
     }
+    //usleep(50);
   }
   closeInputSocket();
   closeOutputSocket();
@@ -246,13 +256,13 @@ void MessageHandler::updateDataHandler()
     {
       MSG_HEADER header;
       memcpy(&header, packetPointer, sizeof(header));
-      //int msgType = header.msg_type;
+      int msgType = header.msg_type;
       header.serial_no = getMsgNum();
-      //header.msg_type = msgType;
       header.timestamp = getTimestamp();
       memcpy(packetPointer, &header, sizeof(header));
-      sendData(packetPointer, bytesRead);
+      sendData(packetPointer, sizeof(M_HAPTIC_DATA_STREAM));
     }
+    //usleep(50);
   }
   closeDataSockets();
 }
@@ -266,8 +276,6 @@ int main()
 
   thread mhThread(&MessageHandler::updateMessageHandler, mh);
   thread dataThread(&MessageHandler::updateDataHandler, mh);
-
   mhThread.join();
   dataThread.join();
-  
 }

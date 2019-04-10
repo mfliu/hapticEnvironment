@@ -58,20 +58,20 @@ void updateDataLogger()
 {
   char rawPacket[MAX_PACKET_LENGTH];
   char* packetPointer = rawPacket;
-
+    
   while (controlData.dataFile.is_open())
   {
-    if (controlData.simulationRunning == false)
-    {
-      controlData.dataFile.close();
-      break;
-    }
     memset(rawPacket, 0, MAX_PACKET_LENGTH);
     int bytesRead = readData(packetPointer);
     if (bytesRead > 0) {
-      controlData.dataFile.write(rawPacket, bytesRead);
+      controlData.dataFile.write(packetPointer, sizeof(M_HAPTIC_DATA_STREAM));
+      if (controlData.dataFile.fail() == true) {
+        cout << "Error writing" << endl;
+        continue;
+      }
+      controlData.dataFile.flush();
     }
-    usleep(50); // 1000 microseconds = 1 millisecond
+    usleep(500); // 1000 microseconds = 1 millisecond
   }
  closeDataSavingSocket();
  controlData.dataLoggerUp = false;

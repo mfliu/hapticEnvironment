@@ -95,14 +95,15 @@ class TaskControl(BoxLayout):
 
   def stopSM(self):
     self.sm.currentState = "end"
-    sessionStop = md.M_SESSION_END()
-    sessionStop.header.msg_type = c_int(md.SESSION_END)
-    packet = MR.makeMessage(sessionStop)
-    self.sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
     
     stopRecording = md.M_STOP_RECORDING()
     stopRecording.header.msg_type = c_int(md.STOP_RECORDING)
     packet = MR.makeMessage(stopRecording)
+    self.sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
+    
+    sessionStop = md.M_SESSION_END()
+    sessionStop.header.msg_type = c_int(md.SESSION_END)
+    packet = MR.makeMessage(sessionStop)
     self.sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
 
   def chooseSaveDir(self):

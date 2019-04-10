@@ -86,7 +86,7 @@ void updateSender(void)
     memcpy(&packet, &toolData, sizeof(toolData));
     
     sendData((char *) packet, sizeof(packet)); //, true);
-    usleep(250); // 1000 microseconds = 1 millisecond
+    usleep(50); // 1000 microseconds = 1 millisecond
   }
   closeDataSocket();
   controlData.dataSenderUp = false;
