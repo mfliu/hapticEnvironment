@@ -15,6 +15,7 @@
 #include "haptics/haptics.h"
 #include "graphics/graphics.h"
 #include <fstream>
+#include <thread>
 
 using namespace chai3d;
 using namespace std;
@@ -41,7 +42,7 @@ struct ControlData
   int data_socket;
   int dataLog_socket;
   cThread* dataThread; // for streaming haptic data only
-  cThread* dataLogThread;
+  thread dataLogThread;
   cThread* listenerThread;
   ofstream dataFile;
 

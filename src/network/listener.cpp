@@ -44,8 +44,10 @@ void closeListener()
 void startDataLogger(void)
 {
   openDataSavingSocket(controlData.SENDER_IP, controlData.DATA_LOG_PORT);
-  controlData.dataLogThread = new cThread();
-  controlData.dataLogThread->start(updateDataLogger, CTHREAD_PRIORITY_HAPTICS);
+  //controlData.dataLogThread = new cThread();
+  //controlData.dataLogThread->start(updateDataLogger, CTHREAD_PRIORITY_HAPTICS);
+  controlData.dataLogThread =  thread(updateDataLogger);
+  controlData.dataLogThread.detach();
   controlData.dataLoggerUp = true;
 }
 
