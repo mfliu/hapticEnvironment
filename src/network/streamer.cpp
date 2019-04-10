@@ -85,7 +85,7 @@ void streamUpdate(void)
     memcpy(&packet, &toolData, sizeof(toolData));
    
     sendPacket((char *) packet, sizeof(packet), true);
-    usleep(250); // 1000 microseconds = 1 millisecond
+    usleep(500); // 1000 microseconds = 1 millisecond
   }
   closeStreamingSocket();
 }
