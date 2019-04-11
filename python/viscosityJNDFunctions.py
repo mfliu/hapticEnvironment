@@ -199,4 +199,9 @@ def decisionEntry(options, taskVars):
   trialEnd.header.msg_type = md.TRIAL_END
   packet = MR.makeMessage(trialEnd)
   sock.sendto(packet, (UDP_IP, UDP_PORT))
+  taskControlPtr = taskVars["taskControl"]
+  for k in taskVars.keys():
+    if k != "taskControl":
+      taskControlPtr.sessionInfo[k] = taskVars[k]
+  taskControlPtr.addNode()
   return "next"

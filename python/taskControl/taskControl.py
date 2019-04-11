@@ -73,28 +73,25 @@ class TaskControl(BoxLayout):
 
     taskSM = StateMachine(self.sessionInfo["configFile"], saveFilePrefix, True)
     self.sm = taskSM
-    #print("Finished everything before thread")
+    self.sm.taskVars["taskControl"] = self
     self.smThread = Thread(target=self.sm.run)
     self.smThread.daemon = True
     self.smThread.start()
-    #print("thread started")
     
-    self.trialThread = Thread(target=self.trialInfoUpdate)
-    self.trialThread.daemon = True
-    self.trialThread.start()
-    #print("made trial info update thread")
+    #self.trialThread = Thread(target=self.trialInfoUpdate)
+    #self.trialThread.daemon = True
+    #self.trialThread.start()
 
-  def trialInfoUpdate(self):
-    trialNum = 0 #self.sm.taskVars["trialNum"]
-    while True:
-      #print("In trialInfoUpdate")
-      if self.sm.taskVars["trialNum"] == trialNum:
-        continue
-      else:
-        trialNum = self.sm.taskVars["trialNum"]
-        for k in self.sm.taskVars.keys():
-          self.sessionInfo[k] = self.sm.taskVars[k]
-        self.addNode()
+  #def trialInfoUpdate(self):
+  #  trialNum = 0 #self.sm.taskVars["trialNum"]
+  #  while True:
+  #    if self.sm.taskVars["trialNum"] == trialNum:
+  #      continue
+  #    else:
+  #      trialNum = self.sm.taskVars["trialNum"]
+  #      for k in self.sm.taskVars.keys():
+  #        self.sessionInfo[k] = self.sm.taskVars[k]
+  #      self.addNode()
 
   def stopSM(self):
     self.sm.currentState = "end"

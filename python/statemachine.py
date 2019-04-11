@@ -70,7 +70,6 @@ class StateMachine(object):
     self.build(config, saveFilePrefix)
     
     if top == True:
-      print("I get here")
       #self.setBoundingPlane()
       self.listenerSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
       #self.listenerSocket.setblocking(0)
@@ -80,7 +79,6 @@ class StateMachine(object):
       self.listenerThread = Thread(target=self.listener)
       self.listenerThread.daemon = True
       self.listenerThread.start()
-      print("I made the listener thread")
 
   #def setBoundingPlane(self):
   #  message = md.M_HAPTICS_BOUNDING_PLANE()
