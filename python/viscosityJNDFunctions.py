@@ -91,7 +91,6 @@ def setBackground(red, green, blue):
   sock.sendto(packet, (UDP_IP, UDP_PORT))
 
 def startEntry(options, taskVars):
-  print("Starting Trial")  
   trialStart = md.M_TRIAL_START()
   trialStart.header.msg_type = c_int(md.TRIAL_START)
   packet = MR.makeMessage(trialStart)
@@ -108,7 +107,6 @@ def startEntry(options, taskVars):
   return "next"
 
 def field1Entry(options, taskVars):
-  print("Entering field 1")
   setBackground(4.0, 133.0, 209.0)
   field1Visc = random.choice(taskVars["refVisc"])
   taskVars["field1Visc"] = field1Visc
@@ -138,7 +136,6 @@ def field1Entry(options, taskVars):
   return "next"
 
 def intermediateEntry(options, taskVars):
-  print("intermediate entry")
   setBackground(0.0, 0.0, 0.0)
   fieldName = create_string_buffer(b"field1", 128)
   removeEffect(fieldName)
@@ -146,13 +143,8 @@ def intermediateEntry(options, taskVars):
   return "next"
 
 def field2Entry(options, taskVars):
-  print("field2")
   setBackground(250.0, 194.0, 5.0)
-  same = np.random.uniform(0, 1) #random.choice([0, 1])
-  if same < 0.2:
-    field2Visc = taskVars["field1Visc"]
-  else:
-    field2Visc = round(taskVars["field1Visc"] + random.choice(taskVars["steps"]), 2)
+  field2Visc = round(taskVars["field1Visc"] + random.choice(taskVars["steps"]), 2)
   taskVars["field2Visc"] = field2Visc 
   #print("Field Viscosity: ", taskVars["field2Visc"])
   
@@ -180,7 +172,6 @@ def field2Entry(options, taskVars):
   return "next"
 
 def decisionEntry(options, taskVars):
-  print("decision time")
   setBackground(0.0, 0.0, 0.0)
   fieldName = create_string_buffer(b"field2", 128)
   removeEffect(fieldName)
