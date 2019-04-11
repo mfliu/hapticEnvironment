@@ -18,7 +18,8 @@
 #define HAPTICS_BOUNDING_PLANE 1009 
 #define HAPTICS_CONSTANT_FORCE_FIELD 1010
 #define HAPTICS_VISCOSITY_FIELD 1011
-#define HAPTICS_REMOVE_FIELD_EFFECT 1012
+#define HAPTICS_FREEZE_EFFECT 1012
+#define HAPTICS_REMOVE_WORLD_EFFECT 1013
 
 // Graphics Messages are 2000-3000 
 #define GRAPHICS_SET_ENABLED 2000
@@ -108,7 +109,12 @@ typedef struct {
 typedef struct {
   MSG_HEADER header;
   char effectName[MAX_STRING_LENGTH];
-} M_HAPTICS_REMOVE_FIELD_EFFECT;
+} M_HAPTICS_FREEZE_EFFECT;
+
+typedef struct {
+  MSG_HEADER header;
+  char effectName[MAX_STRING_LENGTH];
+} M_HAPTICS_REMOVE_WORLD_EFFECT;
 
 typedef struct {
   MSG_HEADER header;

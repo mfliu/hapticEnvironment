@@ -78,21 +78,6 @@ class TaskControl(BoxLayout):
     self.smThread.daemon = True
     self.smThread.start()
     
-    #self.trialThread = Thread(target=self.trialInfoUpdate)
-    #self.trialThread.daemon = True
-    #self.trialThread.start()
-
-  #def trialInfoUpdate(self):
-  #  trialNum = 0 #self.sm.taskVars["trialNum"]
-  #  while True:
-  #    if self.sm.taskVars["trialNum"] == trialNum:
-  #      continue
-  #    else:
-  #      trialNum = self.sm.taskVars["trialNum"]
-  #      for k in self.sm.taskVars.keys():
-  #        self.sessionInfo[k] = self.sm.taskVars[k]
-  #      self.addNode()
-
   def stopSM(self):
     self.sm.currentState = "end"
     
@@ -105,6 +90,9 @@ class TaskControl(BoxLayout):
     sessionStop.header.msg_type = c_int(md.SESSION_END)
     packet = MR.makeMessage(sessionStop)
     self.sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
+    
+    self.sm.taskVars["msgFile"].close()
+    self.sm.taskVars["logFilePtr"].close()
 
   def chooseSaveDir(self):
     filePopup = FilePopup(titleText="Choose Save Directory", canBeDir=True, buttonText="Select Folder")

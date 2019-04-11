@@ -216,10 +216,24 @@ void parsePacket(char* packet)
       break;
     }
     
-    case HAPTICS_REMOVE_FIELD_EFFECT:
+    case HAPTICS_FREEZE_EFFECT:
+    {
+      cout << "Received HAPTICS_FREEZE_EFFECT Message" << endl;
+      M_HAPTICS_FREEZE_EFFECT freeze;
+      memcpy(&freeze, packet, sizeof(freeze));
+      double workspaceScaleFactor = hapticsData.tool->getWorkspaceScaleFactor();
+      double maxStiffness = 1.2*hapticsData.hapticDeviceInfo.m_maxLinearStiffness/workspaceScaleFactor;
+      cVector3d currentPos = hapticsData.tool->getDeviceGlobalPos();
+      cFreezeEffect* freezeEff = new cFreezeEffect(graphicsData.world, maxStiffness, currentPos);
+      graphicsData.world->addEffect(freezeEff);
+      controlData.worldEffects[freeze.effectName] = freezeEff;
+      break;  
+    }
+
+    case HAPTICS_REMOVE_WORLD_EFFECT:
     {
       cout << "Received HAPTICS_REMOVE_FIELD_EFFECT Message" << endl;
-      M_HAPTICS_REMOVE_FIELD_EFFECT rmField;
+      M_HAPTICS_REMOVE_WORLD_EFFECT rmField;
       memcpy(&rmField, packet, sizeof(rmField));
       cGenericEffect* fieldEffect = controlData.worldEffects[rmField.effectName];
       graphicsData.world->removeEffect(fieldEffect);

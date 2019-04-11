@@ -1,3 +1,5 @@
+#pragma once 
+
 #ifndef _HAPTICS_H_INCLUDED_
 #define _HAPTICS_H_INCLUDED_
 
@@ -40,4 +42,5 @@ void updateHaptics(void);
 #include "cBoundingPlane.h"
 #include "cConstantForceFieldEffect.h"
 #include "cViscosityEffect.h"
+#include "cFreezeEffect.h"
 #endif
