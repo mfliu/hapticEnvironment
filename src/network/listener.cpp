@@ -11,7 +11,7 @@ extern HapticData hapticsData;
 
 void startListener()
 {
-  openMessageHandlerListenSocket(controlData.LISTENER_IP, controlData.LISTENER_PORT);
+  //openMessagingSocket(controlData.MESSAGING_IP, controlData.MESSAGING_PORT);
   controlData.listenerThread = new cThread();
   controlData.listenerThread->start(updateListener, CTHREAD_PRIORITY_HAPTICS);
   controlData.listenerUp = true;
@@ -32,15 +32,15 @@ void updateListener()
     }
     usleep(50); // 1000 microseconds = 1 millisecond
   }
- closeListenSocket();
+ closeMessagingSocket();
  controlData.listenerUp = false;
 }
 
-void closeListener()
-{
-  closeListenSocket();
-}
-
+//void closeListener()
+//{
+//  closeListenSocket();
+//}
+/*
 void startDataLogger(void)
 {
   openDataSavingSocket(controlData.SENDER_IP, controlData.DATA_LOG_PORT);
@@ -78,4 +78,4 @@ void updateDataLogger()
   }
  closeDataSavingSocket();
  controlData.dataLoggerUp = false;
-}
+}*/

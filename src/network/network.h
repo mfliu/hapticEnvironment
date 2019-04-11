@@ -18,17 +18,20 @@
 #include <iostream>
 #include <fcntl.h>
 
-void openMessageHandlerSendSocket(const char* ipAddr, int port);
-void openMessageHandlerListenSocket(const char* ipAddr, int port);
-void openDataSocket(const char* ipAddr, int port);
-void closeSendSocket(void);
-void closeListenSocket(void);
-void closeDataSocket();
+void openMessagingSocket(const char* ipAddr, int listenerPort, int senderPort);
+void closeMessagingSocket();
+
+//void openMessageHandlerSendSocket(const char* ipAddr, int port);
+//void openMessageHandlerListenSocket(const char* ipAddr, int port);
+//void openDataSocket(const char* ipAddr, int port);
+//void closeSendSocket(void);
+//void closeListenSocket(void);
+//void closeDataSocket();
 int sendPacket(char* packet, uint16_t lengthPacket); //, bool isData);
 int readPacket(char* packet);
-int sendData(char* packet, uint16_t lengthPacket);
-void openDataSavingSocket(const char* ipAddr, int port);
-void closeDataSavingSocket();
-int readData(char* packet);
-void closeAllConnections(void);
+//int sendData(char* packet, uint16_t lengthPacket);
+//void openDataSavingSocket(const char* ipAddr, int port);
+//void closeDataSavingSocket();
+//int readData(char* packet);
+//void closeAllConnections(void);
 #endif

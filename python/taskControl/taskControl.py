@@ -32,7 +32,7 @@ class TaskControl(BoxLayout):
     self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-   
+
   def setSubjectName(self, text):
     self.sessionInfo["subjectName"] = text 
   
@@ -71,20 +71,23 @@ class TaskControl(BoxLayout):
     packet = MR.makeMessage(startRecording)
     self.sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
 
-
     taskSM = StateMachine(self.sessionInfo["configFile"], saveFilePrefix, True)
     self.sm = taskSM
+    #print("Finished everything before thread")
     self.smThread = Thread(target=self.sm.run)
     self.smThread.daemon = True
     self.smThread.start()
+    #print("thread started")
     
     self.trialThread = Thread(target=self.trialInfoUpdate)
     self.trialThread.daemon = True
     self.trialThread.start()
-  
+    #print("made trial info update thread")
+
   def trialInfoUpdate(self):
     trialNum = 0 #self.sm.taskVars["trialNum"]
     while True:
+      #print("In trialInfoUpdate")
       if self.sm.taskVars["trialNum"] == trialNum:
         continue
       else:

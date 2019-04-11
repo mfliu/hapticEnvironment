@@ -19,16 +19,17 @@ int main(int argc, char* argv[])
   controlData.simulationFinished = true;
   controlData.hapticsUp = false;
   controlData.listenerUp = false;
-  controlData.dataSenderUp = false;
-  controlData.dataLoggerUp = false;
+  controlData.streamerUp = false;
+  controlData.loggingData = false;
 
   // TODO: Set these IP addresses from a config file
-  controlData.SENDER_IP = "127.0.0.1";
-  controlData.SENDER_PORT = 8080;
   controlData.LISTENER_IP = "127.0.0.1";
   controlData.LISTENER_PORT = 7000;
-  controlData.DATA_PORT = 10000;
-  controlData.DATA_LOG_PORT = 20000;
+  controlData.client = new rpc::client(controlData.LISTENER_IP, 8080);
+  controlData.SENDER_IP = "127.0.0.1";
+  controlData.SENDER_PORT = 9000;
+  //controlData.DATA_PORT = 10000;
+  //controlData.DATA_LOG_PORT = 20000;
   controlData.hapticsOnly = false;
   
   if (controlData.hapticsOnly == false) {
@@ -37,7 +38,8 @@ int main(int argc, char* argv[])
   }
   initHaptics();
   startHapticsThread(); 
-  startSender(); 
+  openMessagingSocket(controlData.LISTENER_IP, controlData.LISTENER_PORT, controlData.SENDER_PORT);
+  startStreamer(); 
   startListener();
   atexit(close);
   resizeWindowCallback(graphicsData.window, graphicsData.width, graphicsData.height);
@@ -56,7 +58,7 @@ int main(int argc, char* argv[])
 
 bool allThreadsDown()
 {
-  return (controlData.hapticsUp && controlData.listenerUp && controlData.dataSenderUp && controlData.dataLoggerUp);  
+  return (controlData.hapticsUp && controlData.listenerUp && controlData.streamerUp);  
 }
 
 void close()
@@ -74,7 +76,7 @@ void close()
   cout << "Deleted world" << endl;
   delete hapticsData.handler;
   cout << "Deleted handler" << endl;
-  closeAllConnections();
+  closeMessagingSocket();
 }
 
 void parsePacket(char* packet)
@@ -119,7 +121,7 @@ void parsePacket(char* packet)
       fileName = recInfo.filename;
       controlData.dataFile.open(fileName, ofstream::binary);
       controlData.dataFile.flush();
-      startDataLogger();
+      controlData.loggingData = true;
       break; 
     }
 
@@ -127,7 +129,7 @@ void parsePacket(char* packet)
     {
       cout << "Received STOP_RECORDING Message" << endl;
       controlData.dataFile.close();
-      controlData.dataLogThread->stop(); //~thread();
+      controlData.loggingData = false;
       break;
     }
     

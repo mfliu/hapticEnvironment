@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include "chai3d.h"
 
-void startSender(void);
-void closeSender(void);
-void updateSender(void);
+void startStreamer(void);
+//void closeStreamer(void);
+void updateStreamer(void);
 #endif

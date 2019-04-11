@@ -6,34 +6,34 @@ import Messenger as MR
 from ctypes import * 
 
 UDP_IP = "127.0.0.1"
-UDP_PORT = 8080
+UDP_PORT = 7000
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+sock.connect((UDP_IP, UDP_PORT))
+#startRecording = md.M_START_RECORDING()
+#startRecording.header.msg_type = c_int(md.START_RECORDING)
+#filename = create_string_buffer(b"/home/mfl24/data/RnelShare/users/mfl24/Test/Data/testfile.data", md.MAX_STRING_LENGTH)
+#filenamePtr = (c_char_p) (addressof(filename))
+#startRecording.filename = filenamePtr.value
+#packet = MR.makeMessage(startRecording)
+#sock.sendto(packet, (UDP_IP, UDP_PORT))
 
-startRecording = md.M_START_RECORDING()
-startRecording.header.msg_type = c_int(md.START_RECORDING)
-filename = create_string_buffer(b"/home/mfl24/data/RnelShare/users/mfl24/Test/Data/testfile.data", md.MAX_STRING_LENGTH)
-filenamePtr = (c_char_p) (addressof(filename))
-startRecording.filename = filenamePtr.value
-packet = MR.makeMessage(startRecording)
-sock.sendto(packet, (UDP_IP, UDP_PORT))
 
-
-time.sleep(0.05)
+#time.sleep(0.05)
 #
-stopRecording = md.M_STOP_RECORDING()
-stopRecording.header.msg_type = c_int(md.STOP_RECORDING)
-packet = MR.makeMessage(stopRecording)
-sock.sendto(packet, (UDP_IP, UDP_PORT))
+#stopRecording = md.M_STOP_RECORDING()
+#stopRecording.header.msg_type = c_int(md.STOP_RECORDING)
+#packet = MR.makeMessage(stopRecording)
+#sock.sendto(packet, (UDP_IP, UDP_PORT))
 
-time.sleep(1)
+#time.sleep(1)
 
-sessionEnd = md.M_SESSION_END()
-sessionEnd.header.msg_type = c_int(md.SESSION_END)
-packet = MR.makeMessage(sessionEnd)
-sock.sendto(packet, (UDP_IP, UDP_PORT))
+#sessionEnd = md.M_SESSION_END()
+#sessionEnd.header.msg_type = c_int(md.SESSION_END)
+#packet = MR.makeMessage(sessionEnd)
+#sock.sendto(packet, (UDP_IP, UDP_PORT))
 
 bgColor = md.M_GRAPHICS_CHANGE_BG_COLOR()
 bgColor.header.serialNo = c_int(1)
@@ -41,8 +41,9 @@ bgColor.header.msg_type = c_int(md.GRAPHICS_CHANGE_BG_COLOR)
 bgColor.header.timestamp = c_double(0.01)
 bgColor.color = (c_float * 4) (255, 0, 0, 1)
 packet = MR.makeMessage(bgColor)
-sock.sendto(packet, (UDP_IP, UDP_PORT))
-
+sock.send(packet) #, UDP_IP) #, UDP_PORT))
+sock.shutdown(socket.SHUT_RDWR)
+sock.close()
 #vField = md.M_HAPTICS_VISCOSITY_FIELD()
 #vField.header.serialNo = c_int(1)
 #vField.header.msg_type = c_int(md.HAPTICS_VISCOSITY_FIELD)

@@ -1,4 +1,4 @@
-#include "sender.h"
+#include "streamer.h"
 
 #include "haptics/haptics.h"
 #include "network.h"
@@ -9,20 +9,20 @@ using namespace std;
 extern ControlData controlData;
 extern HapticData hapticsData;
 
-void startSender(void)
+void startStreamer(void)
 {
-  openDataSocket(controlData.SENDER_IP, controlData.DATA_PORT);
-  controlData.dataThread = new cThread();
-  controlData.dataThread->start(updateSender, CTHREAD_PRIORITY_HAPTICS);
-  controlData.dataSenderUp = true;
+  //openStreamingSocket(controlData.STREAMER_IP, controlData.STREAMER_PORT);
+  controlData.streamerThread = new cThread();
+  controlData.streamerThread->start(updateStreamer, CTHREAD_PRIORITY_HAPTICS);
+  controlData.streamerUp = true;
 }
 
-void closeSender()
-{
- closeDataSocket(); 
-}
+//void closeStreamer()
+//{
+// closeMesSocket(); 
+//}
 
-void updateSender(void)
+void updateStreamer(void)
 {
   cVector3d pos;
   cVector3d vel;
@@ -52,11 +52,11 @@ void updateSender(void)
     
     M_HAPTIC_DATA_STREAM toolData;
     memset(&toolData, 0, sizeof(toolData));  
-    //auto packetNum = controlData.client->call("getMsgNum").as<int>();
-    //auto currTime = controlData.client->call("getTimestamp").as<double>();
-    //toolData.header.serial_no = packetNum;
+    auto packetNum = controlData.client->call("getMsgNum").as<int>();
+    auto currTime = controlData.client->call("getTimestamp").as<double>();
+    toolData.header.serial_no = packetNum;
     toolData.header.msg_type = HAPTIC_DATA_STREAM;
-    //toolData.header.timestamp = currTime;
+    toolData.header.timestamp = currTime;
     toolData.posX = posX;
     toolData.posY = posY;
     toolData.posZ = posZ;
@@ -84,12 +84,16 @@ void updateSender(void)
     memcpy(&(toolData.collisions), collisions, sizeof(toolData.collisions));
     char* packet[sizeof(toolData)];
     memcpy(&packet, &toolData, sizeof(toolData));
-    
-    sendData((char *) packet, sizeof(packet)); //, true);
-    usleep(50); // 1000 microseconds = 1 millisecond
+   
+    sendPacket((char *) packet, sizeof(packet)); //, true);
+    if (controlData.loggingData == true)
+    {
+      controlData.dataFile.write((const char*) packet, sizeof(toolData));
+    }
+    usleep(500); // 1000 microseconds = 1 millisecond
   }
-  closeDataSocket();
-  controlData.dataSenderUp = false;
+  closeMessagingSocket();
+  controlData.streamerUp = false;
 }
 
 

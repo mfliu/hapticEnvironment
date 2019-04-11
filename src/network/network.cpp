@@ -6,12 +6,75 @@ using namespace std;
 
 extern ControlData controlData;
 
-struct sockaddr_in senderStruct, listenerStruct, dataStruct, dataLogStruct;
-int senderLen = sizeof(senderStruct);
+struct sockaddr_in listenerStruct;
 int listenerLen = sizeof(listenerStruct);
+
+struct sockaddr_in senderStruct; //, listenerStruct, dataStruct, dataLogStruct;
+int senderLen = sizeof(senderStruct);
+/*int listenerLen = sizeof(listenerStruct);
 int dataLen = sizeof(dataStruct);
 int dataLogLen = sizeof(dataLogStruct);
+*/
 
+void openMessagingSocket(const char* ipAddr, int listenerPort, int senderPort)
+{
+  cout << "Opening listener socket..." << endl;
+  controlData.listener_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  if (controlData.listener_socket < 0) {
+    cout << "Opening listener socket failed" << endl;
+    exit(1);
+  }
+  //fcntl(controlData.listener_socket, F_SETFL, O_NONBLOCK);
+
+  memset((char *) &listenerStruct, 0, listenerLen);
+  listenerStruct.sin_family = AF_INET;
+  listenerStruct.sin_port = htons(listenerPort);
+  listenerStruct.sin_addr.s_addr = inet_addr(ipAddr);
+
+  int opt = 1;
+  int broadcast = setsockopt(controlData.listener_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt)); 
+  int reuseAddr = setsockopt(controlData.listener_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+  int reusePort = setsockopt(controlData.listener_socket, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
+  if (broadcast < 0 || reuseAddr < 0 || reusePort < 0)
+  {
+    cout << "Failed to set socket options" << endl;
+    exit(1);
+  }
+
+  int bind_sock_in = bind(controlData.listener_socket, (struct sockaddr*) &listenerStruct, listenerLen);
+  if (bind_sock_in < 0) {
+    cout << "Error binding listener socket" << endl;
+    exit(1);
+  }
+
+  cout << "Opening sender socket..." << endl;
+  controlData.sender_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  if (controlData.sender_socket < 0) {
+    cout << "Opening sender socket failed" << endl;
+    exit(1);
+  }
+  //fcntl(controlData.listener_socket, F_SETFL, O_NONBLOCK);
+
+  memset((char *) &senderStruct, 0, senderLen);
+  senderStruct.sin_family = AF_INET;
+  senderStruct.sin_port = htons(senderPort);
+  senderStruct.sin_addr.s_addr = inet_addr(ipAddr);
+
+  broadcast = setsockopt(controlData.sender_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt)); 
+  reuseAddr = setsockopt(controlData.sender_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+  reusePort = setsockopt(controlData.sender_socket, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
+  if (broadcast < 0 || reuseAddr < 0 || reusePort < 0)
+  {
+    cout << "Failed to set socket options" << endl;
+    exit(1);
+  }
+}
+
+void closeMessagingSocket()
+{
+  shutdown(controlData.listener_socket, 2);
+}
+/*
 void openMessageHandlerSendSocket(const char* ipAddr, int port) 
 {
   cout << "Opening sending socket..." << endl;
@@ -113,7 +176,7 @@ void closeDataSocket()
 {
   shutdown(controlData.data_socket, 2);
 }
-
+*/
 int sendPacket(char* packet, uint16_t lengthPacket)
 {
     if (sendto(controlData.sender_socket, packet, lengthPacket, 0, (struct sockaddr*) &senderStruct, senderLen) < 0)
@@ -134,7 +197,7 @@ int readPacket(char* packetPointer)
   }
   return bytesRead;
 }
-
+/*
 int sendData(char* packet, uint16_t lengthPacket) //, bool isData)
 {
     if (sendto(controlData.data_socket, packet, lengthPacket, 0, (struct sockaddr*) &dataStruct, dataLen) < 0)
@@ -194,10 +257,13 @@ int readData(char* packetPointer)
   }
   return bytesRead;
 }
+*/
 void closeAllConnections()
 {
-  close(controlData.sender_socket);
   close(controlData.listener_socket);
-  close(controlData.data_socket);
-  close(controlData.dataLog_socket);
+
+  //close(controlData.sender_socket);
+  //close(controlData.listener_socket);
+  //close(controlData.data_socket);
+  //close(controlData.dataLog_socket);
 }

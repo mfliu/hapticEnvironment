@@ -7,8 +7,8 @@
 
 void startListener(void);
 void updateListener(void);
-void closeListener(void);
-void startDataLogger(void);
-void closeDataLogger(void);
-void updateDataLogger(void);
+//void closeListener(void);
+//void startDataLogger(void);
+//void closeDataLogger(void);
+//void updateDataLogger(void);
 #endif

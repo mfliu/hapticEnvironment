@@ -21,8 +21,6 @@ def enableGraphics(objectName, setVal):
     namePtr = (c_char_p) (addressof(objectName))
     message = md.M_GRAPHICS_SET_ENABLED()
     message.header.msg_type = c_int(md.GRAPHICS_SET_ENABLED)
-    message.serial_no = c_int(1)
-    message.timestamp = c_double(0.1)
     message.objectName = namePtr.value 
     message.enabled = c_int(setVal)
     packet = MR.makeMessage(message)
@@ -31,8 +29,6 @@ def enableGraphics(objectName, setVal):
 def removeEffect(effectName):
   rmField = md.M_HAPTICS_REMOVE_FIELD_EFFECT()
   rmField.header.msg_type = c_int(md.HAPTICS_REMOVE_FIELD_EFFECT)
-  rmField.header.serial_no = c_int(1)
-  rmField.header.timestamp = c_double(0.1)
   fieldNamePtr = (c_char_p) (addressof(effectName))
   rmField.effectName = fieldNamePtr.value
   packet = MR.makeMessage(rmField)
@@ -95,6 +91,7 @@ def setBackground(red, green, blue):
   sock.sendto(packet, (UDP_IP, UDP_PORT))
 
 def startEntry(options, taskVars):
+  print("Starting Trial")  
   trialStart = md.M_TRIAL_START()
   trialStart.header.msg_type = c_int(md.TRIAL_START)
   packet = MR.makeMessage(trialStart)
@@ -107,18 +104,17 @@ def startEntry(options, taskVars):
   obj2Name = create_string_buffer(b"field2Target", 128)
   enableGraphics(obj1Name, 0)
   enableGraphics(obj2Name, 0)
-  time.sleep(2)
+  time.sleep(1)
   return "next"
 
 def field1Entry(options, taskVars):
+  print("Entering field 1")
   setBackground(4.0, 133.0, 209.0)
   field1Visc = random.choice(taskVars["refVisc"])
   taskVars["field1Visc"] = field1Visc
   #print("Reference Viscosity: ", field1Visc)
   
   field1 = md.M_HAPTICS_VISCOSITY_FIELD()
-  field1.header.serial_no = c_int(1)
-  field1.header.timestamp = c_double(0.1)
   field1.header.msg_type = c_int(md.HAPTICS_VISCOSITY_FIELD)
   field1Name = create_string_buffer(b"field1", md.MAX_STRING_LENGTH)
   field1NamePtr = (c_char_p) (addressof(field1Name))
@@ -142,6 +138,7 @@ def field1Entry(options, taskVars):
   return "next"
 
 def intermediateEntry(options, taskVars):
+  print("intermediate entry")
   setBackground(0.0, 0.0, 0.0)
   fieldName = create_string_buffer(b"field1", 128)
   removeEffect(fieldName)
@@ -149,6 +146,7 @@ def intermediateEntry(options, taskVars):
   return "next"
 
 def field2Entry(options, taskVars):
+  print("field2")
   setBackground(250.0, 194.0, 5.0)
   same = np.random.uniform(0, 1) #random.choice([0, 1])
   if same < 0.2:
@@ -182,6 +180,7 @@ def field2Entry(options, taskVars):
   return "next"
 
 def decisionEntry(options, taskVars):
+  print("decision time")
   setBackground(0.0, 0.0, 0.0)
   fieldName = create_string_buffer(b"field2", 128)
   removeEffect(fieldName)

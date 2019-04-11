@@ -70,15 +70,17 @@ class StateMachine(object):
     self.build(config, saveFilePrefix)
     
     if top == True:
+      print("I get here")
       #self.setBoundingPlane()
       self.listenerSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
       #self.listenerSocket.setblocking(0)
       self.listenerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
       self.listenerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-      self.listenerSocket.bind((Globals.DATA_LISTENER_IP, Globals.DATA_LISTENER_PORT))
+      self.listenerSocket.bind((Globals.LISTENER_IP, Globals.LISTENER_PORT))
       self.listenerThread = Thread(target=self.listener)
       self.listenerThread.daemon = True
       self.listenerThread.start()
+      print("I made the listener thread")
 
   #def setBoundingPlane(self):
   #  message = md.M_HAPTICS_BOUNDING_PLANE()
@@ -123,14 +125,20 @@ class StateMachine(object):
   def listener(self):
     while True:
       data, addr = self.listenerSocket.recvfrom(md.MAX_PACKET_LENGTH)
-      msg_data = md.M_HAPTIC_DATA_STREAM()
-      MR.readMessage(data, msg_data)
-      Globals.CHAI_DATA = msg_data
-      time.sleep(0.01)
+      header = md.MSG_HEADER()
+      MR.readMessage(data, header)
+      #print(header.msg_type)
+      if header.msg_type == md.HAPTIC_DATA_STREAM:
+        #print("Readin' haptic dayta")
+        msg_data = md.M_HAPTIC_DATA_STREAM()
+        MR.readMessage(data, msg_data)
+        msg_data.header.serial_no
+        Globals.CHAI_DATA = msg_data
+      time.sleep(0.001)
   
   def run(self):
-    #print(self.name)
     while self.currentState != "end":
+      #print("running")
       currentState = self.states[self.currentState]
       if len(currentState.graphics.keys()) > 0:
         currentState.setTargetGraphics(currentState.objectName, 1)
