@@ -1,4 +1,5 @@
 ## State machine for task control
+import importlib.util
 import warnings  
 import socket
 import time
@@ -9,8 +10,7 @@ from threading import Thread
 import struct 
 import json
 import Globals
-
-senderSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+import os 
 
 class State(object):
   def __init__(self, name, transitions, options, entry, graphics):
@@ -18,77 +18,12 @@ class State(object):
     self.transitions = transitions 
     self.options = options
     self.entry = entry
-    self.graphics = graphics 
-    if len(graphics.keys()) > 0:
-      self.makeStateGraphics(self.graphics)
   
-  #def makeStateGraphics(self, graphics):
-  #  shape = graphics["shape"] 
-  #  if shape == "sphere":
-  #    radius = graphics["radius"]
-  #    color = graphics["color"]
-  #    position = graphics["position"]
-  #    stateShape = md.M_GRAPHICS_SHAPE_SPHERE()
-  #    stateShape.header.serial_no = c_int(1) # bullshit number for testing 
-  #    stateShape.header.msg_type = c_int(md.GRAPHICS_SHAPE_SPHERE)
-  #    stateShape.header.timestamp = c_double(0.01) # bullshit number for testing 
-  #    self.objectName = create_string_buffer(bytes(graphics["name"], 'utf-8'), 128)
-  #    objectNamePtr = (c_char_p) (addressof(self.objectName))
-  #    stateShape.objectName = objectNamePtr.value
-  #    stateShape.radius = c_double(radius) 
-  #    stateShape.localPosition = (c_double * 3) (position[0], position[1], position[2])
-  #    stateShape.color = (c_float * 4) (color[0], color[1], color[2], color[3])
-  #    stateShapePacket = MR.makeMessage(stateShape)
-  #    senderSocket.sendto(stateShapePacket, (Globals.SENDER_IP, Globals.SENDER_PORT))
-  #    self.setTargetGraphics(self.objectName, 0)
-    
-  #def setTargetGraphics(self, objectName, setVal):
-  #  namePtr = (c_char_p) (addressof(objectName))
-  #  message = md.M_GRAPHICS_SET_ENABLED()
-  #  message.header.serialNo = c_int(1)
-  #  message.header.msg_type = c_int(md.GRAPHICS_SET_ENABLED)
-  #  message.header.timestamp = c_double(0.01) 
-  #  message.objectName = namePtr.value 
-  #  message.enabled = c_int(setVal)
-  #  packet = MR.makeMessage(message)
-  #  senderSocket.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
-
-  #def setTargetHaptics(self, objectName, setVal):
-  #  namePtr = (c_char_p) (addressof(objectName))
-  #  message = md.M_HAPTICS_SET_ENABLED()
-  #  message.header.serialNo = c_int(1)
-  #  message.header.msg_type = c_int(md.HAPTICS_SET_ENABLED)
-  #  message.header.timestamp = c_double(0.01) 
-  #  message.objectName = namePtr.value 
-  #  message.enabled = c_int(setVal)
-  #  packet = MR.makeMessage(message)
-  #  senderSocket.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
-
 class StateMachine(object):
-  def __init__(self, configFile, saveFilePrefix, top):
+  def __init__(self, configFile, saveFilePrefix):
     config = json.load(open(configFile))
     self.build(config, saveFilePrefix)
     
-    if top == True:
-      #self.setBoundingPlane()
-      self.listenerSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-      #self.listenerSocket.setblocking(0)
-      self.listenerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-      self.listenerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-      self.listenerSocket.bind((Globals.LISTENER_IP, Globals.LISTENER_PORT))
-      self.listenerThread = Thread(target=self.listener)
-      self.listenerThread.daemon = True
-      self.listenerThread.start()
-
-  #def setBoundingPlane(self):
-  #  message = md.M_HAPTICS_BOUNDING_PLANE()
-  #  message.header.serialNo = c_int(1)
-  #  message.header.msg_type = c_int(md.HAPTICS_BOUNDING_PLANE)
-  #  message.header.timestamp = c_double(0.01) 
-  #  packet = MR.makeMessage(message)
-  #  senderSocket.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
-
-
   # Build should return the start state of the StateMachine
   def build(self, config, saveFilePrefix):
     self.name = config["name"]
@@ -98,12 +33,14 @@ class StateMachine(object):
     self.transitionSymbols = config["transitionSymbols"]
     self.transitionTable = {}
     self.stateTree = {}
-    self.entryFile = config["entryFile"]
-    self.entryModule = __import__(self.entryFile, globals(), locals(), [], 0)
-    
+    self.entryFile = os.path.join(Globals.FUNCTIONS_PATH, config["entryFile"] + ".py")
+    moduleSpec = importlib.util.spec_from_file_location("entryModule", self.entryFile)
+    self.entryModule = importlib.util.module_from_spec(moduleSpec) 
+    moduleSpec.loader.exec_module(self.entryModule)
+
     self.setupFunc = getattr(self.entryModule, "setup")
     self.taskVars = self.setupFunc(saveFilePrefix)
-
+    self.running = False
     for stateName in config["states"]:
       stateConfig = config[stateName]
       stateTransitions = stateConfig["transitions"]
@@ -120,43 +57,20 @@ class StateMachine(object):
           nestedSM = StateMachine(option + "Config.json", False)
           self.stateTree[stateName].append(nestedSM)
 
-  def listener(self):
-    while True:
-      data, addr = self.listenerSocket.recvfrom(md.MAX_PACKET_LENGTH)
-      header = md.MSG_HEADER()
-      MR.readMessage(data, header)
-      #print(header.msg_type)
-      if header.msg_type == md.HAPTIC_DATA_STREAM:
-        #print("Readin' haptic dayta")
-        msg_data = md.M_HAPTIC_DATA_STREAM()
-        MR.readMessage(data, msg_data)
-        msg_data.header.serial_no
-        Globals.CHAI_DATA = msg_data
-      time.sleep(0.001)
-  
   def run(self):
-    while self.currentState != "end":
-      #print("running")
+    self.running = True
+    while self.currentState != "end" and self.running == True:
       currentState = self.states[self.currentState]
-      if len(currentState.graphics.keys()) > 0:
-        currentState.setTargetGraphics(currentState.objectName, 1)
-        currentState.setTargetHaptics(currentState.objectName, 1)
-
       transition = currentState.entry(self.stateTree[self.currentState], self.taskVars)
-      if len(currentState.graphics.keys()) > 0:
-        currentState.setTargetGraphics(currentState.objectName, 0)
-        currentState.setTargetHaptics(currentState.objectName, 0)
-
       nextState = self.transitionTable[(self.currentState, transition)]
       if nextState == "end":
         return transition
-
       self.currentState = nextState
-    return "something is wrong"
-  
+    return "done"
+ 
 if __name__ == "__main__":
   import sys
   taskConfig = sys.argv[1]
-  taskSM = StateMachine(taskConfig, True)
+  taskSM = StateMachine(taskConfig, "")
   taskSM.run()
 

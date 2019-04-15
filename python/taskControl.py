@@ -29,9 +29,11 @@ class TaskControl(BoxLayout):
   def __init__(self, **kwargs):
     super(TaskControl, self).__init__(**kwargs)
     self.sessionInfo = {}
-    self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    self.state = "running"
+    
+    self.listenerThread = Thread(target=self.listener)
+    self.listenerThread.daemon = True
+    self.listenerThread.start()
 
   def setSubjectName(self, text):
     self.sessionInfo["subjectName"] = text 
@@ -39,14 +41,33 @@ class TaskControl(BoxLayout):
   def initializeTreeView(self):
     self.tv = self.get_root_window().children[-1].ids["experimentRecords"]
     self.tv.bind(minimum_height=self.tv.setter('height'))
-    self.tvRoot = self.tv.add_node(TreeViewLabel(text="Session Log"))
+    #self.tvRoot = self.tv.add_node(TreeViewLabel(text="Session Log"))
 
   def addNode(self):
     trialNum = self.sessionInfo["trialNum"]
-    trialNode = self.tv.add_node(TreeViewLabel(text="Trial " + str(trialNum)), self.tvRoot)
-    for k in self.sessionInfo.keys():
-      if k!= "trialNum":
-        infoNode = self.tv.add_node(TreeViewLabel(text=k + ": " + str(self.sessionInfo[k])), trialNode)
+    trialNode = self.tv.add_node(TreeViewLabel(text="Trial " + str(trialNum)))
+    for k in self.sm.taskVars["GUITree"]:
+      infoNode = self.tv.add_node(TreeViewLabel(text=k + ": " + str(self.sm.taskVars[k])), trialNode)
+  
+  def chooseSaveDir(self):
+    filePopup = FilePopup(titleText="Choose Save Directory", canBeDir=True, buttonText="Select Folder")
+    filePopup.open()
+  
+  def chooseConfigFile(self):
+    filePopup = FilePopup(titleText="Choose Configuration File", canBeDir=False, buttonText="Select Configuration File")
+    filePopup.open()
+
+
+  def listener(self):
+    while self.state == "running":
+      data, addr = Globals.getListenerSocket().recvfrom(md.MAX_PACKET_LENGTH)
+      header = md.MSG_HEADER()
+      MR.readMessage(data, header)
+      if header.msg_type == md.HAPTIC_DATA_STREAM:
+        msg_data = md.M_HAPTIC_DATA_STREAM()
+        MR.readMessage(data, msg_data)
+        Globals.CHAI_DATA = msg_data
+      time.sleep(0.001)
 
   def startSM(self):
     self.initializeTreeView()
@@ -56,12 +77,13 @@ class TaskControl(BoxLayout):
         print("Need " + n)
         break
     
+    saveFilePrefix = os.path.join(self.sessionInfo["saveDir"], self.sessionInfo["subjectName"] + "-" +\
+                                  time.ctime(time.time()).replace(" ", "_").replace(":", "-"))
+
     sessionStart = md.M_SESSION_START()
     sessionStart.header.msg_type = c_int(md.SESSION_START)
     packet = MR.makeMessage(sessionStart)
-    self.sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
-    saveFilePrefix = os.path.join(self.sessionInfo["saveDir"], self.sessionInfo["subjectName"] + "-" +\
-                                  time.ctime(time.time()).replace(" ", "_").replace(":", "-"))
+    MR.sendMessage(packet)
     
     startRecording= md.M_START_RECORDING()
     startRecording.header.msg_type = c_int(md.START_RECORDING)
@@ -69,9 +91,9 @@ class TaskControl(BoxLayout):
     fileNamePtr = (c_char_p) (addressof(fileName))
     startRecording.filename = fileNamePtr.value
     packet = MR.makeMessage(startRecording)
-    self.sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
+    MR.sendMessage(packet)
 
-    taskSM = StateMachine(self.sessionInfo["configFile"], saveFilePrefix, True)
+    taskSM = StateMachine(self.sessionInfo["configFile"], saveFilePrefix)
     self.sm = taskSM
     self.sm.taskVars["taskControl"] = self
     self.smThread = Thread(target=self.sm.run)
@@ -79,28 +101,20 @@ class TaskControl(BoxLayout):
     self.smThread.start()
     
   def stopSM(self):
-    self.sm.currentState = "end"
-    
+    self.sm.running = False
+    self.state = "stopping"
     stopRecording = md.M_STOP_RECORDING()
     stopRecording.header.msg_type = c_int(md.STOP_RECORDING)
     packet = MR.makeMessage(stopRecording)
-    self.sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
+    MR.sendMessage(packet)
     
     sessionStop = md.M_SESSION_END()
     sessionStop.header.msg_type = c_int(md.SESSION_END)
     packet = MR.makeMessage(sessionStop)
-    self.sock.sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
+    MR.sendMessage(packet)
     
     self.sm.taskVars["msgFile"].close()
     self.sm.taskVars["logFilePtr"].close()
-
-  def chooseSaveDir(self):
-    filePopup = FilePopup(titleText="Choose Save Directory", canBeDir=True, buttonText="Select Folder")
-    filePopup.open()
-  
-  def chooseConfigFile(self):
-    filePopup = FilePopup(titleText="Choose Configuration File", canBeDir=False, buttonText="Select Configuration File")
-    filePopup.open()
 
 class FilePopup(Popup):
   def __init__(self, **kwargs):

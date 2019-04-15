@@ -1,9 +1,6 @@
-#from gevent import monkey 
-#monkey.patch_all()
-
 import messageDefinitions as md
 import msgpackrpc
-#from mprpc import RPCClient 
+import socket 
 
 LISTENER_IP = "127.0.0.1"
 LISTENER_PORT = 9000
@@ -20,5 +17,28 @@ def getClient():
   if client == None:
     client = msgpackrpc.Client(msgpackrpc.Address(RPC_IP, RPC_PORT))
   return client
+
+senderSocket = None
+def getSenderSocket():
+  global senderSocket
+  if senderSocket == None:
+    senderSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    senderSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    senderSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+  return senderSocket
+
+listenerSocket = None 
+def getListenerSocket():
+  global listenerSocket
+  if listenerSocket == None:
+    listenerSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    listenerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    listenerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    listenerSocket.bind((LISTENER_IP, LISTENER_PORT))
+  return listenerSocket 
+
+HOME_PATH = "/home/mfl24/Documents/chaiProjects/hapticControl/python/"
+UTILS_PATH = "/home/mfl24/Documents/chaiProjects/hapticControl/python/utils/"
+FUNCTIONS_PATH = "/home/mfl24/Documents/chaiProjects/hapticControl/python/trialControl/"
 
 CHAI_DATA = md.M_HAPTIC_DATA_STREAM() 

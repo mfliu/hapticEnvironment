@@ -1,13 +1,16 @@
-import ctypes
+from ctypes import *
 import Globals
 
 def readMessage(data, message):
-  ctypes.memmove(ctypes.addressof(message), data, ctypes.sizeof(message))
+  memmove(addressof(message), data, sizeof(message))
 
 def makeMessage(message):
   client = Globals.getClient()
   message.header.serial_no = client.call("getMsgNum")
   message.header.timestamp = client.call("getTimestamp")
-  data = ctypes.create_string_buffer(ctypes.sizeof(message))
-  ctypes.memmove(ctypes.addressof(data), ctypes.addressof(message), ctypes.sizeof(data))
+  data = create_string_buffer(sizeof(message))
+  memmove(addressof(data), addressof(message), sizeof(data))
   return data
+
+def sendMessage(packet):
+  Globals.getSenderSocket().sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))
