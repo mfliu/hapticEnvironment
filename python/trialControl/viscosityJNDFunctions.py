@@ -22,8 +22,9 @@ def setup(saveFilePrefix):
   trialNum = 0
   field1Visc = 0.0
   field2Visc = 0.0 
-  choice = ""
-  
+  choice = -1
+  arrowDir = "horizontalArrow"
+
   fmsg = open(msgFilePath, 'ab')
   csvFile = open(logFilePath, 'a')
   fdata = csv.writer(csvFile)
@@ -32,12 +33,17 @@ def setup(saveFilePrefix):
               "filepath": logFilePath, "msgFilePath": msgFilePath, "trialNum": trialNum,\
               "field1Visc": field1Visc, "field2Visc": field2Visc, "choice": choice,\
               "msgFile": fmsg, "logFile": fdata, "logFilePtr": csvFile, \
-              "GUITree": ["field1Visc", "field2Visc", "choice"]}
+              "arrowDir": arrowDir, "GUITree": ["field1Visc", "field2Visc", "choice"]}
   
   fdata.writerow(["Trial", "Reference Viscosity", "Compare Viscosity", "Choice"])
 
   makeSphere("field1Target", 0.1, [0.0, -0.5, 1.0], [4/250, 133/250, 209/250, 1], 0)
   makeSphere("field2Target", 0.1, [0.0, 0.5, 1.0], [250/250, 194/250, 5/250, 1], 0)
+  makeArrow("verticalArrow", 1.0, 0.01, 0.02, 0.02, 1, [0.0, 0.0, 1.0], [0.0, 0.0, -0.5],\
+            [66/256, 66/256, 66/256, 1.0], 0)
+  makeArrow("horizontalArrow", 1.0, 0.01, 0.02, 0.02, 1, [0.0, 1.0, 0.0], [0.0, -0.5, 0.0],\
+            [66/256, 66/256, 66/256, 1.0], 0)
+  
   return taskVars
 
 def startEntry(options, taskVars):
@@ -68,7 +74,8 @@ def field1Entry(options, taskVars):
                      0.0, -1*field1Visc, 0.0,\
                      0.0, 0.0, -1*field1Visc]
   packet = viscousField("field1", viscosityMatrix)
-  
+  enableGraphics(taskVars["arrowDir"], 1)
+
   taskVars["msgFile"].flush()
   taskVars["msgFile"].write(packet)
 
@@ -88,7 +95,11 @@ def field1Entry(options, taskVars):
 def intermediateEntry(options, taskVars):
   setBackground(0.0, 0.0, 0.0)
   removeEffect("field1")
-  time.sleep(0.5)
+  enableGraphics(taskVars["arrowDir"], 0)
+  makeSphere("holdSphere", 0.1, [Globals.CHAI_DATA.posX, Globals.CHAI_DATA.posY,
+                                 Globals.CHAI_DATA.posZ], [8/256, 84/256, 6/256, 1.0], 1)
+  time.sleep(1.0)
+  removeObject("holdSphere")
   return "next"
 
 def field2Entry(options, taskVars):
@@ -100,7 +111,8 @@ def field2Entry(options, taskVars):
                     0.0, -1*field2Visc, 0.0,\
                     0.0, 0.0, -1*field2Visc]
   packet = viscousField("field2", viscosityMatrix)
-  
+  enableGraphics(taskVars["arrowDir"], 1)
+
   taskVars["msgFile"].flush()
   taskVars["msgFile"].write(packet)
   
@@ -132,6 +144,7 @@ def field2Entry(options, taskVars):
 def decisionEntry(options, taskVars):
   removeEffect("field2")
   setBackground(0.0, 0.0, 0.0)
+  enableGraphics(taskVars["arrowDir"], 0)
 
   decisionMade = False
   if taskVars["choice"] != -1:

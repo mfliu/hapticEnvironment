@@ -133,6 +133,16 @@ void parsePacket(char* packet)
       break;
     }
     
+    case REMOVE_OBJECT:
+    {
+      cout << "Received REMOVE_OBJECT Message" << endl;
+      M_REMOVE_OBJECT rmObj;
+      memcpy(&rmObj, packet, sizeof(rmObj));
+      cGenericObject* objPtr = controlData.objectMap[rmObj.objectName];
+      graphicsData.world->deleteChild(objPtr);
+      controlData.objectMap.erase(rmObj.objectName);
+      break;
+    }
     case HAPTICS_SET_ENABLED:
     {
       cout << "Received HAPTICS_SET_ENABLED Message" << endl;
@@ -287,7 +297,7 @@ void parsePacket(char* packet)
       cColorf* color = new cColorf(pipe.color[0], pipe.color[1], pipe.color[2], pipe.color[3]);
       cPipe* myPipe = new cPipe(pipe.height, pipe.innerRadius, pipe.outerRadius, pipe.numSides, 
                                 pipe.numHeightSegments, position, rotation, color);
-      controlData.objectMap[pipe.objectName] = myPipe;
+      controlData.objectMap[pipe.objectName] = myPipe->getPipeObj();
       graphicsData.world->addChild(myPipe->getPipeObj());
       break;
     }
@@ -302,8 +312,9 @@ void parsePacket(char* packet)
       cColorf* color = new cColorf(arrow.color[0], arrow.color[1], arrow.color[2], arrow.color[3]);
       cArrow* myArrow = new cArrow(arrow.aLength, arrow.shaftRadius, arrow.lengthTip, arrow.radiusTip,
                                     arrow.bidirectional, arrow.numSides, direction, position, color);
-      controlData.objectMap[arrow.objectName] = myArrow;
+      controlData.objectMap[arrow.objectName] = myArrow->getArrowObj();
       graphicsData.world->addChild(myArrow->getArrowObj());
+      break;
     }
 
     case GRAPHICS_MOVING_DOTS:

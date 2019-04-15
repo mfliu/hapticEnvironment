@@ -10,6 +10,7 @@
 #define TRIAL_END 4
 #define START_RECORDING 5
 #define STOP_RECORDING 6
+#define REMOVE_OBJECT 7
 
 // Haptics Messages 1000-2000
 #define HAPTIC_DATA_STREAM 1000
@@ -62,6 +63,11 @@ typedef struct {
 typedef struct {
   MSG_HEADER header;
 } M_STOP_RECORDING;
+
+typedef struct {
+  MSG_HEADER header;
+  char objectName[MAX_STRING_LENGTH];
+} M_REMOVE_OBJECT;
 
 typedef struct {
   MSG_HEADER header;
