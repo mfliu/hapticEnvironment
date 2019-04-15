@@ -84,10 +84,6 @@ void initScene(void)
   graphicsData.light->setEnabled(true);
   graphicsData.light->setLocalPos(0.0, 0.5, 0.0);
   graphicsData.light->setDir(-3.0, -0.5, 0.0);
-  //graphicsData.light->setShadowMapEnabled(true);
-  //graphicsData.light->m_shadowMap->setQualityLow();
-  //graphicsData.light->setCutOffAngleDeg(20);
-
 }
 
 void resizeWindowCallback(GLFWwindow* a_window, int a_width, int a_height)

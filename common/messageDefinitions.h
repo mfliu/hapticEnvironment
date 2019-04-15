@@ -24,6 +24,8 @@
 // Graphics Messages are 2000-3000 
 #define GRAPHICS_SET_ENABLED 2000
 #define GRAPHICS_CHANGE_BG_COLOR 2001
+#define GRAPHICS_PIPE 2002
+#define GRAPHICS_ARROW 2003
 #define GRAPHICS_MOVING_DOTS 2014
 #define GRAPHICS_SHAPE_SPHERE 2050
 #define GRAPHICS_SHAPE_TORUS 2051
@@ -126,6 +128,33 @@ typedef struct {
   MSG_HEADER header;
   float color[4]; 
 } M_GRAPHICS_CHANGE_BG_COLOR;
+
+typedef struct {
+  MSG_HEADER header;
+  char objectName[MAX_STRING_LENGTH];
+  double height;
+  double innerRadius;
+  double outerRadius;
+  unsigned int numSides;
+  unsigned int numHeightSegments;
+  double position[3];
+  double rotation[9];
+  float color[4]; 
+} M_GRAPHICS_PIPE;
+
+typedef struct {
+  MSG_HEADER header;
+  char objectName[MAX_STRING_LENGTH];
+  double aLength;
+  double shaftRadius;
+  double lengthTip;
+  double radiusTip;
+  int bidirectional;
+  unsigned int numSides;
+  double direction[3];
+  double position[3];
+  float color[4];
+} M_GRAPHICS_ARROW;
 
 typedef struct {
   MSG_HEADER header;

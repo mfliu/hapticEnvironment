@@ -222,7 +222,7 @@ void parsePacket(char* packet)
       M_HAPTICS_FREEZE_EFFECT freeze;
       memcpy(&freeze, packet, sizeof(freeze));
       double workspaceScaleFactor = hapticsData.tool->getWorkspaceScaleFactor();
-      double maxStiffness = 1.2*hapticsData.hapticDeviceInfo.m_maxLinearStiffness/workspaceScaleFactor;
+      double maxStiffness = 1.5*hapticsData.hapticDeviceInfo.m_maxLinearStiffness/workspaceScaleFactor;
       cVector3d currentPos = hapticsData.tool->getDeviceGlobalPos();
       cFreezeEffect* freezeEff = new cFreezeEffect(graphicsData.world, maxStiffness, currentPos);
       graphicsData.world->addEffect(freezeEff);
@@ -273,6 +273,37 @@ void parsePacket(char* packet)
       float blue = bgColor.color[2]/250.0;
       graphicsData.world->setBackgroundColor(red, green, blue);
       break;
+    }
+    
+    case GRAPHICS_PIPE:
+    {
+      cout << "Received GRAPHICS_PIPE Message" << endl;
+      M_GRAPHICS_PIPE pipe;
+      memcpy(&pipe, packet, sizeof(pipe));
+      cVector3d* position = new cVector3d(pipe.position[0], pipe.position[1], pipe.position[2]);
+      cMatrix3d* rotation = new cMatrix3d(pipe.rotation[0], pipe.rotation[1], pipe.rotation[2],
+                                          pipe.rotation[3], pipe.rotation[4], pipe.rotation[5],
+                                          pipe.rotation[6], pipe.rotation[7], pipe.rotation[8]);
+      cColorf* color = new cColorf(pipe.color[0], pipe.color[1], pipe.color[2], pipe.color[3]);
+      cPipe* myPipe = new cPipe(pipe.height, pipe.innerRadius, pipe.outerRadius, pipe.numSides, 
+                                pipe.numHeightSegments, position, rotation, color);
+      controlData.objectMap[pipe.objectName] = myPipe;
+      graphicsData.world->addChild(myPipe->getPipeObj());
+      break;
+    }
+
+    case GRAPHICS_ARROW:
+    {
+      cout << "Received GRAPHICS_ARROW Message" << endl;
+      M_GRAPHICS_ARROW arrow;
+      memcpy(&arrow, packet, sizeof(arrow));
+      cVector3d* direction = new cVector3d(arrow.direction[0], arrow.direction[1], arrow.direction[2]);
+      cVector3d* position = new cVector3d(arrow.position[0], arrow.position[1], arrow.position[2]);
+      cColorf* color = new cColorf(arrow.color[0], arrow.color[1], arrow.color[2], arrow.color[3]);
+      cArrow* myArrow = new cArrow(arrow.aLength, arrow.shaftRadius, arrow.lengthTip, arrow.radiusTip,
+                                    arrow.bidirectional, arrow.numSides, direction, position, color);
+      controlData.objectMap[arrow.objectName] = myArrow;
+      graphicsData.world->addChild(myArrow->getArrowObj());
     }
 
     case GRAPHICS_MOVING_DOTS:

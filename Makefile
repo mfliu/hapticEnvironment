@@ -77,18 +77,18 @@ MSG_FLAGS = -DLINUX -Wno-deprecated -std=c++17 -I$(RPCLIB_DIR)/include/
 MSG_LDFLAGS = -L$(RPCLIB_DIR)/build -lrpc -lpthread
 
 # Logging configuration 
-LOG_DIR = ./messaging/Logger
-LOG_HDR = ./messaging/Logger
-LOG_OBJ = ./obj/$(CFG)/$(OS)-$(ARCH)-$(COMPILER)
-LOG_PROG = logger
-LOG_SOURCES = $(wildcard $(LOG_DIR)/*.cpp)
-LOG_INCLUDES = $(wildcard $(LOG_DIR)/*.h)
-LOG_OBJECTS = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(LOG_SOURCES)))
-LOG_OUTPUT = $(BASE_DIR)/$(LOG_PROG)
-LOG_FLAGS = -DLINUX -Wno-deprecated -std=c++17 -I./common  
-LOG_LDFLAGS = -lpthread
+#LOG_DIR = ./messaging/Logger
+#LOG_HDR = ./messaging/Logger
+#LOG_OBJ = ./obj/$(CFG)/$(OS)-$(ARCH)-$(COMPILER)
+#LOG_PROG = logger
+#LOG_SOURCES = $(wildcard $(LOG_DIR)/*.cpp)
+#LOG_INCLUDES = $(wildcard $(LOG_DIR)/*.h)
+#LOG_OBJECTS = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(LOG_SOURCES)))
+#LOG_OUTPUT = $(BASE_DIR)/$(LOG_PROG)
+#LOG_FLAGS = -DLINUX -Wno-deprecated -std=c++17 -I./common  
+#LOG_LDFLAGS = -lpthread
 
-all: $(OUTPUT) $(MSG_OUTPUT) $(LOG_OUTPUT)
+all: $(OUTPUT) $(MSG_OUTPUT) #$(LOG_OUTPUT)
 
 D_FILES = $(OBJECTS:.o=.d)
 -include $(D_FILES)
@@ -119,22 +119,22 @@ $(MSG_OBJ)/%.o: $(MSG_DIR)/%.cpp | $(MSG_OBJ)
 	$(CXX) $(MSG_FLAGS) -I$(MSG_HDR) -MD -MF $(MSG_OBJ)/$.d -c -o $@ $<
 #########################################################
 #########################################################
-$(LOG_OBJECTS): $(LOG_INCLUDES)
+#$(LOG_OBJECTS): $(LOG_INCLUDES)
 
-$(LOG_OUTPUT): $(LOG_OBJ) $(BASE_DIR) $(LOG_OBJECTS)
-	$(CXX) $(LOG_FLAGS) -I$(LOG_HDR) $(LOG_OBJECTS) $(LOG_LDFLAGS) -o $(LOG_OUTPUT)
+#$(LOG_OUTPUT): $(LOG_OBJ) $(BASE_DIR) $(LOG_OBJECTS)
+#	$(CXX) $(LOG_FLAGS) -I$(LOG_HDR) $(LOG_OBJECTS) $(LOG_LDFLAGS) -o $(LOG_OUTPUT)
 
-$(LOG_OBJ)/%.o: $(LOG_DIR)/%.cpp | $(LOG_OBJ)
-	$(CXX) $(LOG_FLAGS) -I$(LOG_HDR) -MD -MF $(LOG_OBJ)/$.d -c -o $@ $<
+#$(LOG_OBJ)/%.o: $(LOG_DIR)/%.cpp | $(LOG_OBJ)
+#	$(CXX) $(LOG_FLAGS) -I$(LOG_HDR) -MD -MF $(LOG_OBJ)/$.d -c -o $@ $<
 #########################################################
 
 clean:
 	rm -f $(OUTPUT) $(OBJECTS) *~
 	rm -f $(MSG_OUTPUT) $(MSG_OBJECTS) *~
-	rm -f $(LOG_OUTPUT) $(LOG_OBJECTS) *~
+	#rm -f $(LOG_OUTPUT) $(LOG_OBJECTS) *~
 	rm -rf $(OBJ_DIR)
 	rm -rf $(MSG_OBJ)
-	rm -rf $(LOG_OBJ)
+	#rm -rf $(LOG_OBJ)
 	rm -rf $(BASE_DIR)
 
 	

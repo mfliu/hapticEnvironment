@@ -57,12 +57,11 @@ def unfreezeTool():
 def setup(saveFilePrefix):
   
   refVisc = np.arange(1.5, 3.5, 0.5)
-  stepViscUp = np.array([0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.5]) #np.arange(0.1, 1.5, 0.1)
-  stepViscDown = -1*np.array([0.05, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95, 1.25])#np.arange(0.05, 1.5, 0.1)
+  stepViscUp = np.array([0.2, 0.4, 0.6, 0.8, 1.0, 1.5]) 
+  stepViscDown = -1*np.array([0.1, 0.3, 0.5, 0.7, 0.9, 1.25])
   steps = np.sort(np.concatenate([stepViscUp, stepViscDown]))
-  fileName = saveFilePrefix
-  logFilePath = fileName + "_data.csv"
-  msgFilePath = fileName + "_msg.log"
+  logFilePath = saveFilePrefix + "_data.csv"
+  msgFilePath = saveFilePrefix + "_msg.log"
   trialNum = 0
   field1Visc = 0.0
   field2Visc = 0.0 
@@ -85,7 +84,7 @@ def setup(saveFilePrefix):
   obj1NamePtr = (c_char_p) (addressof(obj1Name))
   obj1.objectName = obj1NamePtr.value
   obj1.radius = c_double(0.1)
-  obj1.localPosition = (c_double * 3) (0.0, -1.0, 0.75)
+  obj1.localPosition = (c_double * 3) (0.0, -0.5, 1.0)
   obj1.color = (c_float * 4) (4/250, 133/250, 209/250, 1)
   packet = MR.makeMessage(obj1)
   sock.sendto(packet, (UDP_IP, UDP_PORT))
@@ -97,7 +96,7 @@ def setup(saveFilePrefix):
   obj2NamePtr = (c_char_p) (addressof(obj2Name))
   obj2.objectName = obj2NamePtr.value
   obj2.radius = c_double(0.1)
-  obj2.localPosition = (c_double * 3) (0.0, 1.0, 0.75)
+  obj2.localPosition = (c_double * 3) (0.0, 0.5, 1.0)
   obj2.color = (c_float * 4) (250/250, 194/250, 5/250, 1)
   packet = MR.makeMessage(obj2)
   sock.sendto(packet, (UDP_IP, UDP_PORT))
@@ -123,7 +122,7 @@ def startEntry(options, taskVars):
   sock.sendto(packet, (UDP_IP, UDP_PORT))
   taskVars["msgFile"].write(packet)
   
-  freezeTool()
+  #freezeTool()
 
   taskVars["trialNum"] = taskVars["trialNum"] + 1
   taskVars["choice"] = -1
@@ -138,7 +137,7 @@ def startEntry(options, taskVars):
   return "next"
 
 def field1Entry(options, taskVars):
-  unfreezeTool()
+  #unfreezeTool()
   
   setBackground(4.0, 133.0, 209.0)
   field1Visc = random.choice(taskVars["refVisc"])
@@ -174,14 +173,14 @@ def field1Entry(options, taskVars):
 def intermediateEntry(options, taskVars):
   setBackground(0.0, 0.0, 0.0)
   time.sleep(0.001)
-  freezeTool()
+  #freezeTool()
   fieldName = create_string_buffer(b"field1", md.MAX_STRING_LENGTH)
   removeEffect(fieldName)
   time.sleep(0.5)
   return "next"
 
 def field2Entry(options, taskVars):
-  unfreezeTool()
+  #unfreezeTool()
   setBackground(250.0, 194.0, 5.0)
   field2Visc = round(taskVars["field1Visc"] + random.choice(taskVars["steps"]), 2)
   taskVars["field2Visc"] = field2Visc 
@@ -218,29 +217,29 @@ def field2Entry(options, taskVars):
       blueF = round(blue*increment, 2)
       setBackground(redF, greenF, blueF)
       prevTime = time.time()
-    if np.abs(Globals.CHAI_DATA.posY - 1.0) < 0.12 and np.abs(Globals.CHAI_DATA.posZ - 0.75) < 0.12:
+    if np.abs(Globals.CHAI_DATA.posY - 0.5) < 0.15 and np.abs(Globals.CHAI_DATA.posZ - 1.0) < 0.15:
       taskVars["choice"] = 2
       return "next"
-    elif np.abs(Globals.CHAI_DATA.posY + 1.0) < 0.12 and np.abs(Globals.CHAI_DATA.posZ - 0.75) < 0.12:
+    elif np.abs(Globals.CHAI_DATA.posY + 0.5) < 0.15 and np.abs(Globals.CHAI_DATA.posZ - 1.0) < 0.15:
       taskVars["choice"] = 1 
       return "next"
-    time.sleep(0.01)
+    time.sleep(0.005)
   return "next"
 
 def decisionEntry(options, taskVars):
   fieldName = create_string_buffer(b"field2", md.MAX_STRING_LENGTH)
   removeEffect(fieldName)
+  setBackground(0.0, 0.0, 0.0)
 
   decisionMade = False
   if taskVars["choice"] != -1:
     decisionMade = True
   
-  setBackground(0.0, 0.0, 0.0)
   while decisionMade == False:
-    if np.abs(Globals.CHAI_DATA.posY - 1.0) < 0.12 and np.abs(Globals.CHAI_DATA.posZ - 0.75) < 0.12:
+    if np.abs(Globals.CHAI_DATA.posY - 0.5) < 0.15 and np.abs(Globals.CHAI_DATA.posZ - 1.0) < 0.15:
       decisionMade = True
       taskVars["choice"] = 2 
-    elif np.abs(Globals.CHAI_DATA.posY + 1.0) < 0.12 and np.abs(Globals.CHAI_DATA.posZ - 0.75) < 0.12:
+    elif np.abs(Globals.CHAI_DATA.posY + 0.5) < 0.15 and np.abs(Globals.CHAI_DATA.posZ - 1.0) < 0.15:
       decisionMade = True
       taskVars["choice"] = 1 
     

@@ -12,140 +12,19 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 sock.connect((UDP_IP, UDP_PORT))
-#startRecording = md.M_START_RECORDING()
-#startRecording.header.msg_type = c_int(md.START_RECORDING)
-#filename = create_string_buffer(b"/home/mfl24/data/RnelShare/users/mfl24/Test/Data/testfile.data", md.MAX_STRING_LENGTH)
-#filenamePtr = (c_char_p) (addressof(filename))
-#startRecording.filename = filenamePtr.value
-#packet = MR.makeMessage(startRecording)
-#sock.sendto(packet, (UDP_IP, UDP_PORT))
 
-
-#time.sleep(0.05)
-#
-#stopRecording = md.M_STOP_RECORDING()
-#stopRecording.header.msg_type = c_int(md.STOP_RECORDING)
-#packet = MR.makeMessage(stopRecording)
-#sock.sendto(packet, (UDP_IP, UDP_PORT))
-
-time.sleep(2)
-freeze = md.M_HAPTICS_FREEZE_EFFECT()
-freeze.header.msg_type = c_int(md.HAPTICS_FREEZE_EFFECT)
-packet = MR.makeMessage(freeze)
+arrow = md.M_GRAPHICS_ARROW()
+arrow.header.msg_type = md.GRAPHICS_ARROW
+arrowName = create_string_buffer(b"arrow", md.MAX_STRING_LENGTH)
+arrowNamePtr = (c_char_p) (addressof(arrowName))
+arrow.objectName = arrowNamePtr.value
+arrow.aLength = c_double(1.0)
+arrow.shaftRadius = c_double(0.01)
+arrow.lengthTip = c_double(0.02)
+arrow.radiusTip = c_double(0.02)
+arrow.bidirectional = c_int(1)
+arrow.direction = (c_double * 3) (0.0, 0.0, 1.0)
+arrow.position = (c_double * 3) (0.0, 0.0, -0.5) 
+arrow.color = (c_float * 4) (255.0, 0.0, 0.0, 1.0)
+packet = MR.makeMessage(arrow)
 sock.sendto(packet, (UDP_IP, UDP_PORT))
-
-#sessionEnd = md.M_SESSION_END()
-#sessionEnd.header.msg_type = c_int(md.SESSION_END)
-#packet = MR.makeMessage(sessionEnd)
-#sock.sendto(packet, (UDP_IP, UDP_PORT))
-
-#bgColor = md.M_GRAPHICS_CHANGE_BG_COLOR()
-#bgColor.header.serialNo = c_int(1)
-#bgColor.header.msg_type = c_int(md.GRAPHICS_CHANGE_BG_COLOR)
-#bgColor.header.timestamp = c_double(0.01)
-#bgColor.color = (c_float * 4) (255, 0, 0, 1)
-#packet = MR.makeMessage(bgColor)
-#sock.send(packet) #, UDP_IP) #, UDP_PORT))
-#sock.shutdown(socket.SHUT_RDWR)
-#sock.close()
-#vField = md.M_HAPTICS_VISCOSITY_FIELD()
-#vField.header.serialNo = c_int(1)
-#vField.header.msg_type = c_int(md.HAPTICS_VISCOSITY_FIELD)
-#vField.header.timestamp = c_double(0.01)
-#effectName = create_string_buffer(b"viscousField", md.MAX_STRING_LENGTH)
-#effectNamePtr = (c_char_p) (addressof(effectName))
-#vField.effectName = effectNamePtr.value 
-#visc = -1.0
-#vField.viscosityMatrix = (c_double * 9) (visc, 0.0, 0.0, 0.0, visc, 0.0, 0.0, 0.0, visc)
-#packet = MR.makeMessage(vField)
-#sock.sendto(packet, (UDP_IP, UDP_PORT))
-
-#time.sleep(10)
-
-#rmField = md.M_HAPTICS_REMOVE_FIELD_EFFECT()
-#rmField.header.serialNo = c_int(1)
-#rmField.header.msg_type = c_int(md.HAPTICS_REMOVE_FIELD_EFFECT)
-#rmField.header.timestamp = c_double(0.01)
-#rmField.effectName = effectNamePtr.value
-#packet = MR.makeMessage(rmField)
-#sock.sendto(packet, (UDP_IP, UDP_PORT)) 
-
-#message = md.M_HAPTICS_BOUNDING_PLANE()
-#message.header.serialNo = c_int(1)
-#message.header.msg_type = c_int(md.HAPTICS_BOUNDING_PLANE)
-#message.header.timestamp = c_double(0.01) 
-#message.bWidth = c_double(3.0)
-#message.bHeight = c_double(3.0)
-#packet = MR.makeMessage(message)
-#sock.sendto(packet, (UDP_IP, UDP_PORT))
-
-#dots = md.M_GRAPHICS_MOVING_DOTS()
-#dots.header.serialNo = c_int(1)
-#dots.header.msg_type = c_int(md.GRAPHICS_MOVING_DOTS)
-#dots.header.timestamp = c_double(0.01)
-#dots.numDots = c_int(500)
-#dots.coherence = c_double(0.75)
-#dots.direction = c_double(250)
-#dots.magnitude = c_double(50)
-#packet = MR.makeMessage(dots)
-#sock.sendto(packet, (UDP_IP, UDP_PORT))
-
-#forcefield = md.M_HAPTICS_CONSTANT_FORCE_FIELD()
-#forcefield.header.serialNo = c_int(1)
-#forcefield.header.msg_type = c_int(md.HAPTICS_CONSTANT_FORCE_FIELD)
-#forcefield.header.timestamp = c_double(0.01)
-#forcefield.direction = c_double(250.0)
-#forcefield.magnitude = c_double(5.0)
-#packet = MR.makeMessage(forcefield)
-#sock.sendto(packet, (UDP_IP, UDP_PORT))
-"""
-sphereObj = md.M_GRAPHICS_SHAPE_SPHERE();
-sphereObj.header.serialNo = c_int(1);
-sphereObj.header.msg_type = c_int(md.GRAPHICS_SHAPE_SPHERE);
-sphereObj.header.timestamp = c_double(0.01);
-
-objectName = create_string_buffer(b"SphereObject", 128)
-objectNamePtr = (c_char_p) (addressof(objectName))
-
-sphereObj.objectName = objectNamePtr.value;
-sphereObj.radius = c_double(0.1);
-sphereObj.localPosition = (c_double * 3) (0.0, 0.0, 0.0) 
-sphereObj.color = (c_float * 4) (255, 0, 0, 1)
-
-packet = MR.makeMessage(sphereObj)
-sock.sendto(packet, (UDP_IP, UDP_PORT))
-
-
-sphereObj = md.M_GRAPHICS_SHAPE_SPHERE();
-sphereObj.header.serialNo = c_int(1);
-sphereObj.header.msg_type = c_int(md.GRAPHICS_SHAPE_SPHERE);
-sphereObj.header.timestamp = c_double(0.01);
-
-objectName = create_string_buffer(b"SphereObjectGreen", 128)
-objectNamePtr = (c_char_p) (addressof(objectName))
-
-sphereObj.objectName = objectNamePtr.value;
-sphereObj.radius = c_double(0.2);
-sphereObj.localPosition = (c_double * 3) (0.0, 0.0, 0.0) 
-sphereObj.color = (c_float * 4) (0, 255, 0, 1)
-
-packet = MR.makeMessage(sphereObj)
-sock.sendto(packet, (UDP_IP, UDP_PORT))
-"""
-
-"""
-time.sleep(1)
-
-sphereStiffness = md.M_HAPTICS_SET_STIFFNESS();
-sphereStiffness.header.serialNo = c_int(1);
-sphereStiffness.header.msg_type = c_int(md.HAPTICS_SET_STIFFNESS);
-sphereStiffness.header.timestamp = c_double(0.01);
-
-objectName = create_string_buffer(b"SphereObject", 128)
-objectNamePtr = (c_char_p) (addressof(objectName))
-
-sphereStiffness.objectName = objectNamePtr.value
-sphereStiffness.stiffness = (c_double) (5.0)
-packet = MR.makeMessage(sphereStiffness)
-sock.sendto(packet, (UDP_IP, UDP_PORT))
-"""

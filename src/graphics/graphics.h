@@ -1,3 +1,4 @@
+#pragma once 
 #ifndef _GRAPHICS_H_INCLUDED_
 #define _GRAPHICS_H_INCLUDED_ 
 
@@ -12,7 +13,8 @@
 // ------------------------------------------------------
 #include "cGenericMovingObject.h"
 #include "cMovingDots.h"
-
+#include "cPipe.h"
+#include "cArrow.h"
 
 using namespace chai3d; 
 using namespace std; 
