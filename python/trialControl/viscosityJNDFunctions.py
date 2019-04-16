@@ -13,9 +13,9 @@ import numpy as np
 import csv 
 
 def setup(saveFilePrefix):
-  refVisc = np.arange(1.5, 3.5, 0.5)
-  stepViscUp = np.array([0.2, 0.4, 0.6, 0.8, 1.0, 1.5]) 
-  stepViscDown = -1*np.array([0.1, 0.3, 0.5, 0.7, 0.9, 1.25])
+  refVisc = np.arange(1.5, 3.0, 0.5)
+  stepViscUp = np.array([0.01, 0.15, 0.2, 0.35, 0.45, 0.75, 1.5]) 
+  stepViscDown = -1*np.array([0.03, 0.05, 0.1, 0.25, 0.3, 0.6, 1.0])
   steps = np.sort(np.concatenate([stepViscUp, stepViscDown]))
   logFilePath = saveFilePrefix + "_data.csv"
   msgFilePath = saveFilePrefix + "_msg.log"
@@ -23,7 +23,7 @@ def setup(saveFilePrefix):
   field1Visc = 0.0
   field2Visc = 0.0 
   choice = -1
-  arrowDir = "horizontalArrow"
+  arrowDir = "verticalArrow"
 
   fmsg = open(msgFilePath, 'ab')
   csvFile = open(logFilePath, 'a')
@@ -93,13 +93,10 @@ def field1Entry(options, taskVars):
   return "next"
 
 def intermediateEntry(options, taskVars):
-  setBackground(0.0, 0.0, 0.0)
   removeEffect("field1")
   enableGraphics(taskVars["arrowDir"], 0)
-  makeSphere("holdSphere", 0.1, [Globals.CHAI_DATA.posX, Globals.CHAI_DATA.posY,
-                                 Globals.CHAI_DATA.posZ], [8/256, 84/256, 6/256, 1.0], 1)
-  time.sleep(1.0)
-  removeObject("holdSphere")
+  setBackground(132.0, 11.0, 11.0)
+  time.sleep(2.0)
   return "next"
 
 def field2Entry(options, taskVars):
