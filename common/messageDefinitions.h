@@ -11,6 +11,7 @@
 #define START_RECORDING 5
 #define STOP_RECORDING 6
 #define REMOVE_OBJECT 7
+#define KEYPRESS 8
 
 // Haptics Messages 1000-2000
 #define HAPTIC_DATA_STREAM 1000
@@ -68,6 +69,11 @@ typedef struct {
   MSG_HEADER header;
   char objectName[MAX_STRING_LENGTH];
 } M_REMOVE_OBJECT;
+
+typedef struct {
+  MSG_HEADER header;
+  char keyname[MAX_STRING_LENGTH];
+} M_KEYPRESS;
 
 typedef struct {
   MSG_HEADER header;

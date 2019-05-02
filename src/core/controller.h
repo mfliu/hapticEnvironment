@@ -30,23 +30,18 @@ struct ControlData
   bool listenerUp;
   bool streamerUp;
   bool loggingData;
-  //bool dataLoggerUp;
   
   // Messaging and Data Logging Variables
-  const char* SENDER_IP;
+  //const char* SENDER_IP;
+  vector<string> SENDER_IPS;
   rpc::client* client;
   const char* LISTENER_IP;
-  //int DATA_PORT;
-  //int DATA_LOG_PORT;
-  int SENDER_PORT;
+  //int SENDER_PORT;
+  vector<int> SENDER_PORTS;
   int LISTENER_PORT;
-  int sender_socket;
+  vector<int> sender_sockets;
   int listener_socket;
-  //int data_socket;
-  //int dataLog_socket;
-  //int messaging_socket;
   cThread* streamerThread; // for streaming haptic data only
-  //cThread* dataLogThread;
   cThread* listenerThread;
   ofstream dataFile;
 

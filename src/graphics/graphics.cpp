@@ -126,6 +126,20 @@ void keySelectCallback(GLFWwindow* window, int key, int scancode, int action, in
       glfwSwapInterval(graphicsData.swapInterval);
     }
   }
+  else {
+    const char* key_name = glfwGetKeyName(key, 0);
+    M_KEYPRESS keypressEvent;
+    memset(&keypressEvent, 0, sizeof(keypressEvent));
+    auto packetNum = controlData.client->call("getMsgNum").as<int>();
+    auto currTime = controlData.client->call("getTimestamp").as<double>();
+    keypressEvent.header.serial_no = packetNum;
+    keypressEvent.header.msg_type = KEYPRESS;
+    keypressEvent.header.timestamp = currTime;
+    memcpy(&(keypressEvent.keyname), key_name, sizeof(keypressEvent.keyname));
+    char* packet[sizeof(keypressEvent)];
+    memcpy(&packet, &keypressEvent, sizeof(keypressEvent));
+    sendPacket((char *) packet, sizeof(packet));
+  }
 }
 
 void updateGraphics(void)

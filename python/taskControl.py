@@ -67,6 +67,10 @@ class TaskControl(BoxLayout):
         msg_data = md.M_HAPTIC_DATA_STREAM()
         MR.readMessage(data, msg_data)
         Globals.CHAI_DATA = msg_data
+      elif header.msg_type == md.KEYPRESS:
+        msg_data = md.M_KEYPRESS()
+        MR.readMessage(data, msg_data)
+
       time.sleep(0.001)
 
   def startSM(self):

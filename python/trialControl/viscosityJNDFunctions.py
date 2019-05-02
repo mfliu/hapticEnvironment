@@ -14,8 +14,8 @@ import csv
 
 def setup(saveFilePrefix):
   refVisc = np.arange(1.5, 3.0, 0.5)
-  stepViscUp = np.array([0.01, 0.15, 0.2, 0.35, 0.45, 0.75, 1.5]) 
-  stepViscDown = -1*np.array([0.03, 0.05, 0.1, 0.25, 0.3, 0.6, 1.0])
+  stepViscUp = np.array([0.05, 0.1, 0.3, 0.5, 0.75, 1.0, 1.5]) 
+  stepViscDown = -1*stepViscUp #np.array([0.03, 0.05, 0.1, 0.25, 0.3, 0.6, 1.0])
   steps = np.sort(np.concatenate([stepViscUp, stepViscDown]))
   logFilePath = saveFilePrefix + "_data.csv"
   msgFilePath = saveFilePrefix + "_msg.log"
@@ -23,7 +23,7 @@ def setup(saveFilePrefix):
   field1Visc = 0.0
   field2Visc = 0.0 
   choice = -1
-  arrowDir = "verticalArrow"
+  arrowDir = "horizontalArrow"
 
   fmsg = open(msgFilePath, 'ab')
   csvFile = open(logFilePath, 'a')
@@ -60,7 +60,7 @@ def startEntry(options, taskVars):
   setBackground(0.0, 0.0, 0.0)
   enableGraphics("field1Target", 0)
   enableGraphics("field2Target", 0)
-  time.sleep(1)
+  time.sleep(0.5)
   
   return "next"
 
@@ -74,7 +74,7 @@ def field1Entry(options, taskVars):
                      0.0, -1*field1Visc, 0.0,\
                      0.0, 0.0, -1*field1Visc]
   packet = viscousField("field1", viscosityMatrix)
-  enableGraphics(taskVars["arrowDir"], 1)
+  #enableGraphics(taskVars["arrowDir"], 1)
 
   taskVars["msgFile"].flush()
   taskVars["msgFile"].write(packet)
@@ -96,7 +96,7 @@ def intermediateEntry(options, taskVars):
   removeEffect("field1")
   enableGraphics(taskVars["arrowDir"], 0)
   setBackground(132.0, 11.0, 11.0)
-  time.sleep(2.0)
+  time.sleep(1.5)
   return "next"
 
 def field2Entry(options, taskVars):
@@ -108,7 +108,7 @@ def field2Entry(options, taskVars):
                     0.0, -1*field2Visc, 0.0,\
                     0.0, 0.0, -1*field2Visc]
   packet = viscousField("field2", viscosityMatrix)
-  enableGraphics(taskVars["arrowDir"], 1)
+  #enableGraphics(taskVars["arrowDir"], 1)
 
   taskVars["msgFile"].flush()
   taskVars["msgFile"].write(packet)

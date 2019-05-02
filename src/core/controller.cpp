@@ -26,10 +26,8 @@ int main(int argc, char* argv[])
   controlData.LISTENER_IP = "127.0.0.1";
   controlData.LISTENER_PORT = 7000;
   controlData.client = new rpc::client(controlData.LISTENER_IP, 8080);
-  controlData.SENDER_IP = "127.0.0.1";
-  controlData.SENDER_PORT = 9000;
-  //controlData.DATA_PORT = 10000;
-  //controlData.DATA_LOG_PORT = 20000;
+  controlData.SENDER_IPS.push_back("127.0.0.1");
+  controlData.SENDER_PORTS.push_back(9000);
   controlData.hapticsOnly = false;
   
   if (controlData.hapticsOnly == false) {
@@ -38,7 +36,7 @@ int main(int argc, char* argv[])
   }
   initHaptics();
   startHapticsThread(); 
-  openMessagingSocket(controlData.LISTENER_IP, controlData.LISTENER_PORT, controlData.SENDER_PORT);
+  openMessagingSockets();
   startStreamer(); 
   startListener();
   atexit(close);

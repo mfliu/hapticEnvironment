@@ -11,16 +11,10 @@ extern HapticData hapticsData;
 
 void startStreamer(void)
 {
-  //openStreamingSocket(controlData.STREAMER_IP, controlData.STREAMER_PORT);
   controlData.streamerThread = new cThread();
   controlData.streamerThread->start(updateStreamer, CTHREAD_PRIORITY_HAPTICS);
   controlData.streamerUp = true;
 }
-
-//void closeStreamer()
-//{
-// closeMesSocket(); 
-//}
 
 void updateStreamer(void)
 {
