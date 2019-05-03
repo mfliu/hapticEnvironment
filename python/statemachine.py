@@ -11,6 +11,7 @@ import struct
 import json
 import Globals
 import os 
+from multiprocessing import Process 
 
 class State(object):
   def __init__(self, name, transitions, options, entry, graphics):
@@ -39,6 +40,7 @@ class StateMachine(object):
     moduleSpec.loader.exec_module(self.entryModule)
 
     self.setupFunc = getattr(self.entryModule, "setup")
+    self.messageFunc = getattr(self.entryModule, "readMessage")
     self.taskVars = self.setupFunc(saveFilePrefix)
     self.running = False
     for stateName in config["states"]:
@@ -67,7 +69,11 @@ class StateMachine(object):
         return transition
       self.currentState = nextState
     return "done"
- 
+  
+  def message(self, message):
+    options = self.states[self.currentState].options
+    self.messageFunc(message, options, self.taskVars)
+
 if __name__ == "__main__":
   import sys
   taskConfig = sys.argv[1]

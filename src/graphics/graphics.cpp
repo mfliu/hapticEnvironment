@@ -127,7 +127,13 @@ void keySelectCallback(GLFWwindow* window, int key, int scancode, int action, in
     }
   }
   else {
-    const char* key_name = glfwGetKeyName(key, 0);
+    const char* key_name;
+    if (key == 32) {
+      key_name = "space";
+    }
+    else {
+      key_name = glfwGetKeyName(key, 0);
+    }
     M_KEYPRESS keypressEvent;
     memset(&keypressEvent, 0, sizeof(keypressEvent));
     auto packetNum = controlData.client->call("getMsgNum").as<int>();

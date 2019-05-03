@@ -1,6 +1,7 @@
 import sys
 sys.path.append("/home/mfl24/Documents/chaiProjects/hapticControl/python/")
 from statemachine import *
+from multiprocessing import Queue
 import json
 import messageDefinitions as md
 import Messenger as MR
@@ -16,6 +17,7 @@ Config.set('graphics', 'width', 900)
 Config.set('graphics', 'height', 700)
 Config.set('graphics', 'resizable', False)
 from kivy.app import App
+from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button 
 from kivy.uix.treeview import TreeView, TreeViewLabel
@@ -30,7 +32,7 @@ class TaskControl(BoxLayout):
     super(TaskControl, self).__init__(**kwargs)
     self.sessionInfo = {}
     self.state = "running"
-    
+    self.sm = None 
     self.listenerThread = Thread(target=self.listener)
     self.listenerThread.daemon = True
     self.listenerThread.start()
@@ -41,7 +43,6 @@ class TaskControl(BoxLayout):
   def initializeTreeView(self):
     self.tv = self.get_root_window().children[-1].ids["experimentRecords"]
     self.tv.bind(minimum_height=self.tv.setter('height'))
-    #self.tvRoot = self.tv.add_node(TreeViewLabel(text="Session Log"))
 
   def addNode(self):
     trialNum = self.sessionInfo["trialNum"]
@@ -67,12 +68,10 @@ class TaskControl(BoxLayout):
         msg_data = md.M_HAPTIC_DATA_STREAM()
         MR.readMessage(data, msg_data)
         Globals.CHAI_DATA = msg_data
-      elif header.msg_type == md.KEYPRESS:
-        msg_data = md.M_KEYPRESS()
-        MR.readMessage(data, msg_data)
-
+      elif self.sm != None:
+        self.sm.message(data)
       time.sleep(0.001)
-
+  
   def startSM(self):
     self.initializeTreeView()
     needList = ["configFile", "saveDir", "subjectName", "taskName"]
@@ -103,7 +102,7 @@ class TaskControl(BoxLayout):
     self.smThread = Thread(target=self.sm.run)
     self.smThread.daemon = True
     self.smThread.start()
-    
+  
   def stopSM(self):
     self.sm.running = False
     self.state = "stopping"

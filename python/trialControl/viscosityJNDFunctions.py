@@ -23,28 +23,33 @@ def setup(saveFilePrefix):
   field1Visc = 0.0
   field2Visc = 0.0 
   choice = -1
-  arrowDir = "horizontalArrow"
 
   fmsg = open(msgFilePath, 'ab')
   csvFile = open(logFilePath, 'a')
   fdata = csv.writer(csvFile)
   fmsg.flush()
-  taskVars = { "refVisc": refVisc, "steps": steps,\
+  taskVars = { "refVisc": refVisc, "steps": steps, "choiceReady": False, \
               "filepath": logFilePath, "msgFilePath": msgFilePath, "trialNum": trialNum,\
               "field1Visc": field1Visc, "field2Visc": field2Visc, "choice": choice,\
               "msgFile": fmsg, "logFile": fdata, "logFilePtr": csvFile, \
-              "arrowDir": arrowDir, "GUITree": ["field1Visc", "field2Visc", "choice"]}
+              "GUITree": ["field1Visc", "field2Visc", "choice"]}
   
   fdata.writerow(["Trial", "Reference Viscosity", "Compare Viscosity", "Choice"])
 
   makeSphere("field1Target", 0.1, [0.0, -0.5, 1.0], [4/250, 133/250, 209/250, 1], 0)
   makeSphere("field2Target", 0.1, [0.0, 0.5, 1.0], [250/250, 194/250, 5/250, 1], 0)
-  makeArrow("verticalArrow", 1.0, 0.01, 0.02, 0.02, 1, [0.0, 0.0, 1.0], [0.0, 0.0, -0.5],\
-            [66/256, 66/256, 66/256, 1.0], 0)
-  makeArrow("horizontalArrow", 1.0, 0.01, 0.02, 0.02, 1, [0.0, 1.0, 0.0], [0.0, -0.5, 0.0],\
-            [66/256, 66/256, 66/256, 1.0], 0)
   
   return taskVars
+
+def readMessage(message, options, taskVars):
+  header = md.MSG_HEADER()
+  MR.readMessage(message, header)
+  if header.msg_type == md.KEYPRESS:
+    keypress = md.M_KEYPRESS()
+    MR.readMessage(message, keypress)
+    keyName = keypress.keyname.decode('utf-8')
+    if keyName == "space":
+      taskVars["choiceReady"] = True 
 
 def startEntry(options, taskVars):
   trialStart = md.M_TRIAL_START()
@@ -56,7 +61,21 @@ def startEntry(options, taskVars):
   taskVars["msgFile"].write(packet)
   taskVars["trialNum"] = taskVars["trialNum"] + 1
   taskVars["choice"] = -1
+  taskVars["choiceReady"] = False
   
+  ref = random.choice(taskVars["refVisc"])
+  step = round(ref + random.choice(taskVars["steps"]), 2)
+  getsRef = random.choice([1, 2])
+  if getsRef == 1:
+    field1Visc = ref
+    field2Visc = step 
+  else:
+    field1Visc = step
+    field2Visc = ref
+  
+  taskVars["field1Visc"] = field1Visc
+  taskVars["field2Visc"] = field2Visc 
+
   setBackground(0.0, 0.0, 0.0)
   enableGraphics("field1Target", 0)
   enableGraphics("field2Target", 0)
@@ -65,16 +84,12 @@ def startEntry(options, taskVars):
   return "next"
 
 def field1Entry(options, taskVars):
-  
   setBackground(4.0, 133.0, 209.0)
-  field1Visc = random.choice(taskVars["refVisc"])
-  taskVars["field1Visc"] = field1Visc
-  
+  field1Visc = taskVars["field1Visc"]  
   viscosityMatrix = [-1*field1Visc, 0.0, 0.0,\
                      0.0, -1*field1Visc, 0.0,\
                      0.0, 0.0, -1*field1Visc]
   packet = viscousField("field1", viscosityMatrix)
-  #enableGraphics(taskVars["arrowDir"], 1)
 
   taskVars["msgFile"].flush()
   taskVars["msgFile"].write(packet)
@@ -94,34 +109,27 @@ def field1Entry(options, taskVars):
 
 def intermediateEntry(options, taskVars):
   removeEffect("field1")
-  enableGraphics(taskVars["arrowDir"], 0)
   setBackground(132.0, 11.0, 11.0)
   time.sleep(1.5)
   return "next"
 
 def field2Entry(options, taskVars):
   setBackground(250.0, 194.0, 5.0)
-  field2Visc = round(taskVars["field1Visc"] + random.choice(taskVars["steps"]), 2)
-  taskVars["field2Visc"] = field2Visc 
-  
+  field2Visc = taskVars["field2Visc"]
   viscosityMatrix = [-1*field2Visc, 0.0, 0.0,\
                     0.0, -1*field2Visc, 0.0,\
                     0.0, 0.0, -1*field2Visc]
   packet = viscousField("field2", viscosityMatrix)
-  #enableGraphics(taskVars["arrowDir"], 1)
 
   taskVars["msgFile"].flush()
   taskVars["msgFile"].write(packet)
   
-  enableGraphics("field1Target", 1)
-  enableGraphics("field2Target", 1)
-
   red = 250.0 
   green = 194.0 
   blue = 5.0 
   startTime = time.time()
   prevTime = time.time()
-  while time.time() - startTime < 3:
+  while time.time() - startTime < 3 and taskVars["choiceReady"] == False:
     if time.time() - prevTime > 0.1:
       increment = round((3.0-(time.time()-startTime))/5.0, 3)
       redF = round(red*increment, 2)
@@ -129,30 +137,20 @@ def field2Entry(options, taskVars):
       blueF = round(blue*increment, 2)
       setBackground(redF, greenF, blueF)
       prevTime = time.time()
-    if np.abs(Globals.CHAI_DATA.posY - 0.5) < 0.15 and np.abs(Globals.CHAI_DATA.posZ - 1.0) < 0.15:
-      taskVars["choice"] = 2
-      return "next"
-    elif np.abs(Globals.CHAI_DATA.posY + 0.5) < 0.15 and np.abs(Globals.CHAI_DATA.posZ - 1.0) < 0.15:
-      taskVars["choice"] = 1 
-      return "next"
-    time.sleep(0.005)
+    time.sleep(0.1)
   return "next"
 
 def decisionEntry(options, taskVars):
   removeEffect("field2")
   setBackground(0.0, 0.0, 0.0)
-  enableGraphics(taskVars["arrowDir"], 0)
-
-  decisionMade = False
-  if taskVars["choice"] != -1:
-    decisionMade = True
   
-  while decisionMade == False:
+  enableGraphics("field1Target", 1)
+  enableGraphics("field2Target", 1)
+
+  while taskVars["choice"] == -1:
     if np.abs(Globals.CHAI_DATA.posY - 0.5) < 0.15 and np.abs(Globals.CHAI_DATA.posZ - 1.0) < 0.15:
-      decisionMade = True
       taskVars["choice"] = 2 
     elif np.abs(Globals.CHAI_DATA.posY + 0.5) < 0.15 and np.abs(Globals.CHAI_DATA.posZ - 1.0) < 0.15:
-      decisionMade = True
       taskVars["choice"] = 1 
     
   taskVars["logFile"].writerow([taskVars["trialNum"], taskVars["field1Visc"],\
