@@ -144,7 +144,14 @@ void keySelectCallback(GLFWwindow* window, int key, int scancode, int action, in
     memcpy(&(keypressEvent.keyname), key_name, sizeof(keypressEvent.keyname));
     char* packet[sizeof(keypressEvent)];
     memcpy(&packet, &keypressEvent, sizeof(keypressEvent));
-    sendPacket((char *) packet, sizeof(packet));
+    //auto res = controlData.client->call("sendMessage", (char* const) packet).as<int>();
+    sendPacket((char *) packet, sizeof(packet), false);
+    //if (res == 1) {
+    cout << "Sent KEYPRESS message" << endl;
+    //}
+    //else {
+    //  cout << "Error sending KEYPRESS message" << endl;
+    //}
   }
 }
 

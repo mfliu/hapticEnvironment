@@ -79,7 +79,7 @@ void updateStreamer(void)
     char* packet[sizeof(toolData)];
     memcpy(&packet, &toolData, sizeof(toolData));
    
-    sendPacket((char *) packet, sizeof(packet)); //, true);
+    sendPacket((char *) packet, sizeof(packet), true);
     if (controlData.loggingData == true)
     {
       controlData.dataFile.write((const char*) packet, sizeof(toolData));

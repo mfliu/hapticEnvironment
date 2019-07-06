@@ -36,6 +36,10 @@ class TaskControl(BoxLayout):
     self.listenerThread = Thread(target=self.listener)
     self.listenerThread.daemon = True
     self.listenerThread.start()
+    
+    self.messageThread = Thread(target=self.messageListener)
+    self.messageThread.daemon = True
+    self.messageThread.start()
 
   def setSubjectName(self, text):
     self.sessionInfo["subjectName"] = text 
@@ -68,10 +72,17 @@ class TaskControl(BoxLayout):
         msg_data = md.M_HAPTIC_DATA_STREAM()
         MR.readMessage(data, msg_data)
         Globals.CHAI_DATA = msg_data
-      elif self.sm != None:
-        self.sm.message(data)
+      #elif self.sm != None:
+      #  self.sm.message(data)
       time.sleep(0.001)
   
+  def messageListener(self):
+    while self.state == "running":
+      data, addr = Globals.getMessageSocket().recvfrom(md.MAX_PACKET_LENGTH)
+      if self.sm != None:
+        self.sm.message(data)
+      time.sleep(0.001)
+
   def startSM(self):
     self.initializeTreeView()
     needList = ["configFile", "saveDir", "subjectName", "taskName"]

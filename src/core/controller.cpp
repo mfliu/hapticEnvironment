@@ -27,7 +27,9 @@ int main(int argc, char* argv[])
   controlData.LISTENER_PORT = 7000;
   controlData.client = new rpc::client(controlData.LISTENER_IP, 8080);
   controlData.SENDER_IPS.push_back("127.0.0.1");
+  controlData.SENDER_IPS.push_back("127.0.0.1");
   controlData.SENDER_PORTS.push_back(9000);
+  controlData.SENDER_PORTS.push_back(10000);
   controlData.hapticsOnly = false;
   
   if (controlData.hapticsOnly == false) {

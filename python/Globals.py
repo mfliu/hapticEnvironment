@@ -5,6 +5,9 @@ import socket
 LISTENER_IP = "127.0.0.1"
 LISTENER_PORT = 9000
 
+MESSAGE_IP = "127.0.0.1"
+MESSAGE_PORT = 10000
+
 SENDER_IP = "127.0.0.1"
 SENDER_PORT = 7000
 
@@ -36,6 +39,16 @@ def getListenerSocket():
     listenerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
     listenerSocket.bind((LISTENER_IP, LISTENER_PORT))
   return listenerSocket 
+
+messageSocket = None
+def getMessageSocket():
+  global messageSocket
+  if messageSocket == None:
+    messageSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    messageSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    messageSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    messageSocket.bind((MESSAGE_IP, MESSAGE_PORT))
+  return messageSocket 
 
 HOME_PATH = "/home/mfl24/Documents/chaiProjects/hapticControl/python/"
 UTILS_PATH = "/home/mfl24/Documents/chaiProjects/hapticControl/python/utils/"

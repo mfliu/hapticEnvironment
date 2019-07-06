@@ -80,16 +80,27 @@ void closeMessagingSocket()
   shutdown(controlData.listener_socket, 2);
 }
 
-int sendPacket(char* packet, uint16_t lengthPacket)
+int sendPacket(char* packet, uint16_t lengthPacket, bool isData)
 {
-  for (int i = 0; i < controlData.sender_sockets.size(); i++)
+  if (isData == true)
   {
-    int senderLen = sizeof(senderStructs[i]);
-    if (sendto(controlData.sender_sockets[i], packet, lengthPacket, 0, (struct sockaddr*) &(senderStructs[i]), senderLen) < 0)
-      {
-        cout << "Sending error" << endl;
-        return 0;
-      }
+    int senderLen = sizeof(senderStructs[0]);
+    if (sendto(controlData.sender_sockets[0], packet, lengthPacket, 0, (struct sockaddr*) &(senderStructs[0]), senderLen) < 0)
+    {
+      cout << "Data Sending Error" << endl;
+      return 0;
+    }
+  }
+  else {
+    for (int i = 1; i < controlData.sender_sockets.size(); i++)
+    {
+      int senderLen = sizeof(senderStructs[i]);
+      if (sendto(controlData.sender_sockets[i], packet, lengthPacket, 0, (struct sockaddr*) &(senderStructs[i]), senderLen) < 0)
+        {
+          cout << "Sending error" << endl;
+          return 0;
+        }
+    }
   }
   return 1;
 }

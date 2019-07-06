@@ -21,6 +21,6 @@
 
 void openMessagingSockets();
 void closeMessagingSocket();
-int sendPacket(char* packet, uint16_t lengthPacket); //, bool isData);
+int sendPacket(char* packet, uint16_t lengthPacket, bool isData);
 int readPacket(char* packet);
 #endif
