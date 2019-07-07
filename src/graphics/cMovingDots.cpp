@@ -45,7 +45,7 @@ cMovingDots::cMovingDots(int n, double c, double d, double m) : cGenericMovingOb
   }
 }
 
-void cMovingDots::graphicsLoopFunction(double dt)
+void cMovingDots::graphicsLoopFunction(double dt, cVector3d toolPos, cVector3d toolVel)
 {
   uniform_real_distribution<double> distribution(-1.0, 1.0);
   uniform_real_distribution<double> vDist(0.0, 360.0);

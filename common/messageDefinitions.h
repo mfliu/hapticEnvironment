@@ -2,7 +2,7 @@
 #define MAX_PACKET_LENGTH 8192 // arbitrary 
 #define MAX_STRING_LENGTH 128  // also arbitrary
 
-// Experiment Control Messages 1-1000 
+// Experiment Control Messages 1-500 
 // Sometimes 0 is poorly parsed as a truncation signal
 #define SESSION_START 1
 #define SESSION_END 2
@@ -12,6 +12,14 @@
 #define STOP_RECORDING 6
 #define REMOVE_OBJECT 7
 #define KEYPRESS 8
+
+// Combined/Complex Object Messages 500-1000
+#define CST_CREATE 500
+#define CST_DESTRUCT 501 
+#define CST_START 502
+#define CST_STOP 503
+#define CST_SET_VISUAL 504
+#define CST_SET_HAPTIC 505
 
 // Haptics Messages 1000-2000
 #define HAPTIC_DATA_STREAM 1000
@@ -74,6 +82,42 @@ typedef struct {
   MSG_HEADER header;
   char keyname[MAX_STRING_LENGTH];
 } M_KEYPRESS;
+
+typedef struct {
+  MSG_HEADER header;
+  char cstName[MAX_STRING_LENGTH];
+  double lambdaVal;
+  double forceMagnitude;
+  int visionEnabled;
+  int hapticEnabled;
+} M_CST_CREATE;
+
+typedef struct {
+  MSG_HEADER header;
+  char cstName[MAX_STRING_LENGTH];
+} M_CST_DESTRUCT;
+
+typedef struct {
+  MSG_HEADER header;
+  char cstName[MAX_STRING_LENGTH];
+} M_CST_START;
+
+typedef struct {
+  MSG_HEADER header;
+  char cstName[MAX_STRING_LENGTH];
+} M_CST_STOP;
+
+typedef struct {
+  MSG_HEADER header;
+  char cstName[MAX_STRING_LENGTH];
+  int visionEnabled;
+} M_CST_SET_VISUAL;
+
+typedef struct {
+  MSG_HEADER header;
+  char cstName[MAX_STRING_LENGTH];
+  int hapticEnabled;
+} M_CST_SET_HAPTIC;
 
 typedef struct {
   MSG_HEADER header;

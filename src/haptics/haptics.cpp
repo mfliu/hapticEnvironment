@@ -14,7 +14,8 @@ void initHaptics(void)
   graphicsData.world->addChild(hapticsData.tool);
   hapticsData.tool->setHapticDevice(hapticsData.hapticDevice);
   hapticsData.tool->setRadius(HAPTIC_TOOL_RADIUS);
-  hapticsData.tool->setWorkspaceRadius(1.0);
+  hapticsData.tool->setWorkspaceRadius(100.0);
+  hapticsData.tool->setWorkspaceScaleFactor(WORKSPACE_SCALE_FACTOR);
   hapticsData.tool->setWaitForSmallForce(false);
   hapticsData.tool->start();
   cout << "Haptics tool initialized" << endl;

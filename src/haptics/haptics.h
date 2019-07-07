@@ -22,13 +22,8 @@ struct HapticData
   double toolRadius;
 };
 
-#define HAPTIC_DEVICE_ANGLE_DEG 45.0
-#define GAIN_HAPTIC_TO_RIG 1000.0
-#define HAPTIC_WORKSPACE_ANGLE_DEG 0.00
-#define WORKSPACE_WIDTH 250
-#define WORKSPACE_HEIGHT 250 
-#define DRAG_COEFF .02
-#define HAPTIC_TOOL_RADIUS 0.04
+#define HAPTIC_TOOL_RADIUS 0.5
+#define WORKSPACE_SCALE_FACTOR 1000 
 
 void initHaptics(void);
 void startHapticsThread(void);
@@ -43,4 +38,5 @@ void updateHaptics(void);
 #include "cConstantForceFieldEffect.h"
 #include "cViscosityEffect.h"
 #include "cFreezeEffect.h"
+#include "cPositionForceFieldEffect.h"
 #endif

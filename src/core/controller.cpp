@@ -143,6 +143,76 @@ void parsePacket(char* packet)
       controlData.objectMap.erase(rmObj.objectName);
       break;
     }
+    case CST_CREATE:
+    {
+      cout << "Received CST_CREATE Message" << endl;
+      M_CST_CREATE cstObj;
+      memcpy(&cstObj, packet, sizeof(cstObj));
+      cCST* cst = new cCST(graphicsData.world,cstObj.lambdaVal,cstObj.forceMagnitude,cstObj.visionEnabled,cstObj.hapticEnabled);
+      char* cstName = cstObj.cstName;
+      controlData.objectMap[cstName] = cst;
+      graphicsData.movingObjects.push_back(cst);
+      graphicsData.world->addEffect(cst);
+      controlData.worldEffects[cstName] = cst;
+      break;
+    }
+    case CST_DESTRUCT:
+    {
+      cout << "Received CST_DESTRUCT Message" << endl;
+      M_CST_DESTRUCT cstObj;
+      memcpy(&cstObj, packet, sizeof(cstObj));
+      if (controlData.objectMap.find(cstObj.cstName) == controlData.objectMap.end()) {
+        cout << cstObj.cstName << " not found" << endl;
+      }
+      else {
+        cCST* cst = dynamic_cast<cCST*>(controlData.objectMap[cstObj.cstName]);
+        cst->destructCST();
+        remove(graphicsData.movingObjects.begin(), graphicsData.movingObjects.end(), cst);
+        controlData.objectMap.erase(cstObj.cstName);
+        graphicsData.world->deleteChild(cst);
+      }
+      break;
+    }
+    case CST_START:
+    {
+      cout << "Received CST_START Message" << endl;
+      M_CST_START cstObj;
+      memcpy(&cstObj, packet, sizeof(cstObj));
+      cCST* cst = dynamic_cast<cCST*>(controlData.objectMap[cstObj.cstName]);
+      cst->startCST();
+
+      break;
+    }
+    case CST_STOP:
+    {
+      cout << "Received CST_STOP Message" << endl;
+      M_CST_STOP cstObj;
+      memcpy(&cstObj, packet, sizeof(cstObj));
+      cCST* cst = dynamic_cast<cCST*>(controlData.objectMap[cstObj.cstName]);
+      cst->stopCST();
+      hapticsData.tool->setShowEnabled(true);
+      break;
+    }
+    case CST_SET_VISUAL:
+    {
+      cout << "Received CST_SET_VISUAL Message" << endl;
+      M_CST_SET_VISUAL cstObj;
+      memcpy(&cstObj, packet, sizeof(cstObj));
+      bool visual = cstObj.visionEnabled;
+      cCST* cst = dynamic_cast<cCST*>(controlData.objectMap[cstObj.cstName]);
+      cst->setVisionEnabled(visual);
+      break;
+    }
+    case CST_SET_HAPTIC:
+    {
+      cout << "Received CST_SET_HAPTIC Message" << endl;
+      M_CST_SET_HAPTIC cstObj;
+      memcpy(&cstObj, packet, sizeof(cstObj));
+      bool haptic = cstObj.hapticEnabled;
+      cCST* cst = dynamic_cast<cCST*>(controlData.objectMap[cstObj.cstName]);
+      cst->setHapticEnabled(haptic);
+      break;
+    }
     case HAPTICS_SET_ENABLED:
     {
       cout << "Received HAPTICS_SET_ENABLED Message" << endl;

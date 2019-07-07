@@ -2,7 +2,7 @@ import socket
 import time
 import struct
 import sys 
-sys.path.append("/home/mfl24/Documents/chaiProjects/hapticControl/python")
+sys.path.append("/home/mfl24/Documents/chaiProjects/hapticEnvironment/python")
 import messageDefinitions as md
 import Messenger as MR
 from ctypes import * 
@@ -15,18 +15,24 @@ sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 sock.connect((UDP_IP, UDP_PORT))
 
-arrow = md.M_GRAPHICS_ARROW()
-arrow.header.msg_type = md.GRAPHICS_ARROW
-arrowName = create_string_buffer(b"arrow", md.MAX_STRING_LENGTH)
-arrowNamePtr = (c_char_p) (addressof(arrowName))
-arrow.objectName = arrowNamePtr.value
-arrow.aLength = c_double(1.0)
-arrow.shaftRadius = c_double(0.01)
-arrow.lengthTip = c_double(0.02)
-arrow.radiusTip = c_double(0.02)
-arrow.bidirectional = c_int(1)
-arrow.direction = (c_double * 3) (0.0, 0.0, 1.0)
-arrow.position = (c_double * 3) (0.0, 0.0, -0.5) 
-arrow.color = (c_float * 4) (255.0, 0.0, 0.0, 1.0)
-packet = MR.makeMessage(arrow)
+cst = md.M_CST_CREATE()
+cst.header.msg_type = md.CST_CREATE 
+name = create_string_buffer(b"cst", md.MAX_STRING_LENGTH)
+namePtr = (c_char_p) (addressof(name))
+cst.cstName = namePtr.value
+cst.lambdaVal = c_double(1.01)
+cst.forceMagnitude = c_double(1e-20)
+cst.visionEnabled = c_int(0)
+cst.hapticEnabled = c_int(1)
+packet = MR.makeMessage(cst)
 sock.sendto(packet, (UDP_IP, UDP_PORT))
+
+
+cstStart = md.M_CST_START()
+cstStart.header.msg_type = md.CST_START 
+name = create_string_buffer(b"cst", md.MAX_STRING_LENGTH)
+namePtr = (c_char_p) (addressof(name))
+cstStart.cstName = namePtr.value
+packet = MR.makeMessage(cstStart)
+sock.sendto(packet, (UDP_IP, UDP_PORT))
+

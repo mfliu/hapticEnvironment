@@ -50,8 +50,8 @@ def getMessageSocket():
     messageSocket.bind((MESSAGE_IP, MESSAGE_PORT))
   return messageSocket 
 
-HOME_PATH = "/home/mfl24/Documents/chaiProjects/hapticControl/python/"
-UTILS_PATH = "/home/mfl24/Documents/chaiProjects/hapticControl/python/utils/"
-FUNCTIONS_PATH = "/home/mfl24/Documents/chaiProjects/hapticControl/python/trialControl/"
+HOME_PATH = "/home/mfl24/Documents/chaiProjects/hapticEnvironment/python/"
+UTILS_PATH = "/home/mfl24/Documents/chaiProjects/hapticEnvironment/python/utils/"
+FUNCTIONS_PATH = "/home/mfl24/Documents/chaiProjects/hapticEnvironment/python/trialControl/"
 
 CHAI_DATA = md.M_HAPTIC_DATA_STREAM() 

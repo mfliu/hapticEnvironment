@@ -17,7 +17,7 @@ class cMovingDots : public cGenericMovingObject
 
   public:
     cMovingDots(int n, double c, double d, double m);
-    virtual void graphicsLoopFunction(double dt); 
+    virtual void graphicsLoopFunction(double dt, cVector3d toolPos, cVector3d toolVel); 
     cMultiPoint* getMovingPoints();
     cMultiPoint* getRandomPoints();
 };

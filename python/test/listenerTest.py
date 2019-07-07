@@ -2,7 +2,7 @@ import socket
 import time 
 import struct 
 import sys 
-sys.path.append("/home/mfl24/Documents/chaiProjects/hapticControl/python")
+sys.path.append("/home/mfl24/Documents/chaiProjects/hapticEnvironment/python")
 import messageDefinitions as md
 import Messenger as MR
 from ctypes import * 

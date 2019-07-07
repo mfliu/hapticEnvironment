@@ -4,14 +4,14 @@
 using namespace chai3d;
 using namespace std;
 
-class cConstantForceFieldEffect : public cGenericEffect 
+class cPositionForceFieldEffect : public cGenericEffect
 {
-  public:
+  private:
     double magnitude;
     double direction;
 
   public:
-    cConstantForceFieldEffect(cWorld* worldPtr, double d, double m);
-    bool computeForce(const cVector3d& a_toolPos, const cVector3d& a_toolVel, 
+    cPositionForceFieldEffect(cWorld* worldPtr, double m, double d);
+    bool computeForce(const cVector3d& a_toolPos, const cVector3d& a_toolVel,
                       const unsigned int& a_toolID, cVector3d& a_reactionForce);
 };

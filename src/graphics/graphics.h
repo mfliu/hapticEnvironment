@@ -23,7 +23,7 @@ struct GraphicsData {
   cStereoMode stereoMode;
   bool fullscreen;
   bool mirroredDisplay;
-  cWorld* world;
+  cWorld* world; // TODO: Move this to controller.cpp
   cCamera* camera;
   cDirectionalLight* light;
   GLFWwindow* window;

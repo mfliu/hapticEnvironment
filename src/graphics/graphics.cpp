@@ -69,13 +69,13 @@ void initScene(void)
   graphicsData.world->m_backgroundColor.setBlack();
   graphicsData.camera = new cCamera(graphicsData.world);
   graphicsData.world->addChild(graphicsData.camera);
-  graphicsData.camera->set(cVector3d(3.0, 0.0, 0.0),
+  graphicsData.camera->set(cVector3d(100.0, 0.0, 0.0),
                        cVector3d(0.0, 0.0, 0.0),
                        cVector3d(0.0, 0.0, 1.0));
-  graphicsData.camera->setClippingPlanes(1.0, 10.0);
+  graphicsData.camera->setClippingPlanes(10.0, -10.0);
   graphicsData.camera->setStereoMode(graphicsData.stereoMode);
   graphicsData.camera->setStereoEyeSeparation(0.03);
-  graphicsData.camera->setStereoFocalLength(3.0);
+  graphicsData.camera->setStereoFocalLength(50.0);
   graphicsData.camera->setMirrorVertical(graphicsData.mirroredDisplay);
   
 
@@ -163,7 +163,7 @@ void updateGraphics(void)
   {
     double dt = (clock() - graphicsData.graphicsClock)/double(CLOCKS_PER_SEC);
     graphicsData.graphicsClock = clock();
-    (*it)->graphicsLoopFunction(dt);
+    (*it)->graphicsLoopFunction(dt, hapticsData.tool->getDeviceGlobalPos(), hapticsData.tool->getDeviceGlobalLinVel());
   }
   glFinish();
   GLenum err = glGetError();

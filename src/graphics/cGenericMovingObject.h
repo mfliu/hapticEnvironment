@@ -9,6 +9,6 @@ class cGenericMovingObject : public cGenericObject
   public:
     cGenericMovingObject();
     ~cGenericMovingObject();
-    virtual void graphicsLoopFunction(double dt) {};
+    virtual void graphicsLoopFunction(double dt, cVector3d toolPos, cVector3d toolVel) {};
 };
 

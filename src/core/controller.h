@@ -14,6 +14,7 @@
 #include "network/listener.h"
 #include "haptics/haptics.h"
 #include "graphics/graphics.h"
+#include "combined/combined.h"
 #include <fstream>
 #include <thread>
 #include "rpc/client.h"
