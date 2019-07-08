@@ -148,7 +148,8 @@ void parsePacket(char* packet)
       cout << "Received CST_CREATE Message" << endl;
       M_CST_CREATE cstObj;
       memcpy(&cstObj, packet, sizeof(cstObj));
-      cCST* cst = new cCST(graphicsData.world,cstObj.lambdaVal,cstObj.forceMagnitude,cstObj.visionEnabled,cstObj.hapticEnabled);
+      cCST* cst = new cCST(graphicsData.world, cstObj.lambdaVal, 
+          cstObj.forceMagnitude, cstObj.visionEnabled, cstObj.hapticEnabled);
       char* cstName = cstObj.cstName;
       controlData.objectMap[cstName] = cst;
       graphicsData.movingObjects.push_back(cst);
@@ -179,8 +180,8 @@ void parsePacket(char* packet)
       M_CST_START cstObj;
       memcpy(&cstObj, packet, sizeof(cstObj));
       cCST* cst = dynamic_cast<cCST*>(controlData.objectMap[cstObj.cstName]);
+      hapticsData.tool->setShowEnabled(false);
       cst->startCST();
-
       break;
     }
     case CST_STOP:
@@ -211,6 +212,16 @@ void parsePacket(char* packet)
       bool haptic = cstObj.hapticEnabled;
       cCST* cst = dynamic_cast<cCST*>(controlData.objectMap[cstObj.cstName]);
       cst->setHapticEnabled(haptic);
+      break;
+    }
+    case CST_SET_LAMBDA:
+    {
+      cout << "Received CST_SET_LAMBDA Message" << endl;
+      M_CST_SET_LAMBDA cstObj;
+      memcpy(&cstObj, packet, sizeof(cstObj));
+      double lambda = cstObj.lambdaVal;
+      cCST* cst = dynamic_cast<cCST*>(controlData.objectMap[cstObj.cstName]);
+      cst->setLambda(lambda);
       break;
     }
     case HAPTICS_SET_ENABLED:
@@ -386,7 +397,16 @@ void parsePacket(char* packet)
       graphicsData.world->addChild(myArrow->getArrowObj());
       break;
     }
-
+    
+    case GRAPHICS_CHANGE_OBJECT_COLOR:
+    {
+      cout << "Received GRAPHICS_CHANGE_OBJECT_COLOR Message" << endl;
+      M_GRAPHICS_CHANGE_OBJECT_COLOR color;
+      memcpy(&color, packet, sizeof(color));
+      cGenericObject* obj = controlData.objectMap[color.objectName];
+      obj->m_material->setColorf(color.color[0], color.color[1], color.color[2], color.color[3]);
+      break;
+    }
     case GRAPHICS_MOVING_DOTS:
     {
       cout << "Received GRAPHICS_MOVING_DOTS Message" << endl;
@@ -402,7 +422,18 @@ void parsePacket(char* packet)
       graphicsData.world->addChild(md->getRandomPoints());
       break;
     }
-    
+    case GRAPHICS_SHAPE_BOX:
+    {
+      cout << "Received GRAPHICS_SHAPE_BOX Message" << endl;
+      M_GRAPHICS_SHAPE_BOX box;
+      memcpy(&box, packet, sizeof(box));
+      cShapeBox* boxObj = new cShapeBox(box.sizeX, box.sizeY, box.sizeZ);
+      boxObj->setLocalPos(box.localPosition[0], box.localPosition[1], box.localPosition[2]);
+      boxObj->m_material->setColorf(box.color[0], box.color[1], box.color[2], box.color[3]);
+      controlData.objectMap[box.objectName] = boxObj;
+      graphicsData.world->addChild(boxObj);
+      break;
+    }
     case GRAPHICS_SHAPE_SPHERE: 
     {
       cout << "Received GRAPHICS_SHAPE_SPHERE Message" << endl;

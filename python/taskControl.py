@@ -1,5 +1,5 @@
 import sys
-sys.path.append("/home/mfl24/Documents/chaiProjects/hapticControl/python/")
+sys.path.append("/home/mfl24/Documents/chaiProjects/hapticEnvironment/python/")
 from statemachine import *
 from multiprocessing import Queue
 import json

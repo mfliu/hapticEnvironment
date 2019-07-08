@@ -8,14 +8,33 @@ void initHaptics(void)
   hapticsData.handler = new cHapticDeviceHandler();
   hapticsData.handler->getDevice(hapticsData.hapticDevice, 0);
   hapticsData.hapticDeviceInfo = hapticsData.hapticDevice->getSpecifications();
-  hapticsData.toolRadius = HAPTIC_TOOL_RADIUS;
 
+  double workspaceScaleFactor;
+  double forceScaleFactor;
+
+  if (hapticsData.hapticDeviceInfo.m_model == C_HAPTIC_DEVICE_FALCON) {
+    workspaceScaleFactor = 3000;
+    forceScaleFactor = 3000;
+    cout << "Falcon Detected." << endl;
+  }
+  else if (hapticsData.hapticDeviceInfo.m_model == C_HAPTIC_DEVICE_DELTA_3) {
+    workspaceScaleFactor = 1000;
+    forceScaleFactor = 1000;
+    cout << "Delta Detected." << endl;
+  }
+  else {
+    workspaceScaleFactor = 1000;
+    forceScaleFactor = 1000;
+    //hapticsData.hapticDevice->close();
+    cout << "Device not recognized." << endl;
+  }
+  
   hapticsData.tool = new cToolCursor(graphicsData.world);
+  hapticsData.tool->m_hapticPoint->m_sphereProxy->m_material->setRed();
   graphicsData.world->addChild(hapticsData.tool);
   hapticsData.tool->setHapticDevice(hapticsData.hapticDevice);
   hapticsData.tool->setRadius(HAPTIC_TOOL_RADIUS);
-  hapticsData.tool->setWorkspaceRadius(100.0);
-  hapticsData.tool->setWorkspaceScaleFactor(WORKSPACE_SCALE_FACTOR);
+  hapticsData.tool->setWorkspaceScaleFactor(workspaceScaleFactor);
   hapticsData.tool->setWaitForSmallForce(false);
   hapticsData.tool->start();
   cout << "Haptics tool initialized" << endl;
@@ -43,6 +62,8 @@ void updateHaptics(void)
     clock.reset();
     clock.start();
     graphicsData.world->computeGlobalPositions(true);
+    cVector3d pos = hapticsData.tool->getDeviceLocalPos();
+    //cout << pos.x() << ", " << pos.y() << ", " << pos.z() << endl;
     hapticsData.tool->updateFromDevice();
     hapticsData.tool->computeInteractionForces();
     hapticsData.tool->applyToDevice();

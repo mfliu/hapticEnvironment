@@ -20,6 +20,8 @@
 #define CST_STOP 503
 #define CST_SET_VISUAL 504
 #define CST_SET_HAPTIC 505
+#define CST_SET_LAMBDA 506
+#define CST_DATA 507
 
 // Haptics Messages 1000-2000
 #define HAPTIC_DATA_STREAM 1000
@@ -36,7 +38,9 @@
 #define GRAPHICS_CHANGE_BG_COLOR 2001
 #define GRAPHICS_PIPE 2002
 #define GRAPHICS_ARROW 2003
+#define GRAPHICS_CHANGE_OBJECT_COLOR 2004
 #define GRAPHICS_MOVING_DOTS 2014
+#define GRAPHICS_SHAPE_BOX 2046
 #define GRAPHICS_SHAPE_SPHERE 2050
 #define GRAPHICS_SHAPE_TORUS 2051
 
@@ -118,6 +122,19 @@ typedef struct {
   char cstName[MAX_STRING_LENGTH];
   int hapticEnabled;
 } M_CST_SET_HAPTIC;
+
+typedef struct {
+  MSG_HEADER header;
+  char cstName[MAX_STRING_LENGTH];
+  double lambdaVal;
+} M_CST_SET_LAMBDA;
+
+typedef struct {
+  MSG_HEADER header;
+  double cursorX;
+  double cursorY;
+  double cursorZ;
+} M_CST_DATA;
 
 typedef struct {
   MSG_HEADER header;
@@ -215,11 +232,27 @@ typedef struct {
 typedef struct {
   MSG_HEADER header;
   char objectName[MAX_STRING_LENGTH];
+  float color[4];
+} M_GRAPHICS_CHANGE_OBJECT_COLOR;
+
+typedef struct {
+  MSG_HEADER header;
+  char objectName[MAX_STRING_LENGTH];
   int numDots;
   double coherence;
   double direction;
   double magnitude;
 } M_GRAPHICS_MOVING_DOTS;
+
+typedef struct {
+  MSG_HEADER header;
+  char objectName[MAX_STRING_LENGTH];
+  double sizeX;
+  double sizeY;
+  double sizeZ;
+  double localPosition[3];
+  float color[4];
+} M_GRAPHICS_SHAPE_BOX;
 
 typedef struct {
   MSG_HEADER header;

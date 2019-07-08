@@ -69,21 +69,21 @@ void initScene(void)
   graphicsData.world->m_backgroundColor.setBlack();
   graphicsData.camera = new cCamera(graphicsData.world);
   graphicsData.world->addChild(graphicsData.camera);
-  graphicsData.camera->set(cVector3d(100.0, 0.0, 0.0),
+  graphicsData.camera->set(cVector3d(400.0, 0.0, 0.0),
                        cVector3d(0.0, 0.0, 0.0),
                        cVector3d(0.0, 0.0, 1.0));
-  graphicsData.camera->setClippingPlanes(10.0, -10.0);
-  graphicsData.camera->setStereoMode(graphicsData.stereoMode);
-  graphicsData.camera->setStereoEyeSeparation(0.03);
-  graphicsData.camera->setStereoFocalLength(50.0);
+  //graphicsData.camera->setClippingPlanes(10.0, -10.0);
+  //graphicsData.camera->setStereoMode(graphicsData.stereoMode);
+  //graphicsData.camera->setStereoEyeSeparation(0.03);
+  //graphicsData.camera->setStereoFocalLength(50.0);
   graphicsData.camera->setMirrorVertical(graphicsData.mirroredDisplay);
   
 
   graphicsData.light = new cDirectionalLight(graphicsData.world);
   graphicsData.camera->addChild(graphicsData.light); 
   graphicsData.light->setEnabled(true);
-  graphicsData.light->setLocalPos(0.0, 0.5, 0.0);
-  graphicsData.light->setDir(-3.0, -0.5, 0.0);
+  graphicsData.light->setLocalPos(0.0, 500.0, 0.0);
+  graphicsData.light->setDir(0.0, -1.0, 0.0);
 }
 
 void resizeWindowCallback(GLFWwindow* a_window, int a_width, int a_height)

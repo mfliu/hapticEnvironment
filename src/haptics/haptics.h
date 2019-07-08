@@ -22,8 +22,7 @@ struct HapticData
   double toolRadius;
 };
 
-#define HAPTIC_TOOL_RADIUS 0.5
-#define WORKSPACE_SCALE_FACTOR 1000 
+#define HAPTIC_TOOL_RADIUS 2
 
 void initHaptics(void);
 void startHapticsThread(void);

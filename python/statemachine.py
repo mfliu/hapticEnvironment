@@ -64,6 +64,7 @@ class StateMachine(object):
     while self.currentState != "end" and self.running == True:
       currentState = self.states[self.currentState]
       transition = currentState.entry(self.stateTree[self.currentState], self.taskVars)
+      print(self.currentState, transition)
       nextState = self.transitionTable[(self.currentState, transition)]
       if nextState == "end":
         return transition
