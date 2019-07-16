@@ -25,7 +25,7 @@ def setup(saveFilePrefix):
   fmsg.flush()
   fcursor.flush()
   fmetricsWriter = csv.writer(fmetrics)
-  fmetricsWriter.writerow(["Trial", "Lambda", "Succeeded"])
+  fmetricsWriter.writerow(["Trial", "Vision", "Haptic", "Lambda", "Succeeded"])
   
   
   trialNum = 0
@@ -35,12 +35,13 @@ def setup(saveFilePrefix):
   haptic = 1
   
   ## starting lambdas based on sensory modality for day 1
-  if haptic == 1:
-    startLambda = 1.01
+  if haptic == 1 and vision == 1:
+    startLambda = 1.1
   else:
     startLambda = 1.50
   
   taskVars = {"lambda": startLambda, "success": -1, "lambdaTrials": 0,\
+              "vision": vision, "haptic": haptic,\
               "correctTrials": 0, "running":False, "trialNum": trialNum,\
               "logFile": fmetricsWriter, "logFilePtr": fmetrics, "fcursor": fcursor, "msgFile": fmsg,\
               "GUITree": ["lambda", "success", "correctTrials", "lambdaTrials"]}
@@ -65,7 +66,7 @@ def setup(saveFilePrefix):
   namePtr = (c_char_p) (addressof(name))
   cst.cstName = namePtr.value
   cst.lambdaVal = c_double(startLambda)
-  cst.forceMagnitude = c_double(2.0)
+  cst.forceMagnitude = c_double(1)
   cst.visionEnabled = c_int(vision)
   cst.hapticEnabled = c_int(haptic)
   packet = MR.makeMessage(cst)
@@ -117,7 +118,7 @@ def readMessage(message, options, taskVars):
   if header.msg_type == md.CST_DATA:
     cstData = md.M_CST_DATA()
     MR.readMessage(message, cstData)
-    if np.abs(cstData.cursorY) > 100 and taskVars["running"] == True:
+    if np.abs(cstData.cursorY) > 120 and taskVars["running"] == True:
       taskVars["success"] = 0
 
 def startEntry(options, taskVars):
@@ -126,6 +127,22 @@ def startEntry(options, taskVars):
   #packet = MR.makeMessage(trialStart)
   #MR.sendMessage(packet)
   enableGraphics("center", 1)
+  
+  if taskVars["trialNum"] >= 30 and taskVars["vision"] == 1:
+    visionOff = md.M_CST_SET_VISUAL()
+    visionOff.header.msg_type = md.CST_SET_VISUAL
+    name = create_string_buffer(b"cst", md.MAX_STRING_LENGTH)
+    namePtr = (c_char_p) (addressof(name))
+    visionOff.cstName = namePtr.value 
+    visionOff.visionEnabled = c_int(0)
+    packet = MR.makeMessage(visionOff)
+    MR.sendMessage(packet)
+    taskVars["vision"] = 0
+    taskVars["lambda"] = 1.01
+    taskVars["lambdaTrials"] = 0 
+    taskVars["correctTrials"] = 0
+    setLambda(taskVars["lambda"])
+  
   time.sleep(1.5)
   changeCenterColor(0.83, 0.83, 0.83, 1.0)
 
@@ -172,13 +189,15 @@ def runningEntry(options, taskVars):
 
   if taskVars["success"] == 0:
     changeCenterColor(1.0, 0.0, 0.0, 1.0)
-    taskVars["logFile"].writerow([taskVars["trialNum"], taskVars["lambda"], 0])
+    taskVars["logFile"].writerow([taskVars["trialNum"], taskVars["vision"], taskVars["haptic"],\
+                                  taskVars["lambda"], 0])
     print("Failure")
   else:
     taskVars["success"] = 1
     taskVars["running"] = False
     taskVars["correctTrials"] = taskVars["correctTrials"] + 1
-    taskVars["logFile"].writerow([taskVars["trialNum"], taskVars["lambda"], 1])
+    taskVars["logFile"].writerow([taskVars["trialNum"], taskVars["vision"], taskVars["haptic"],\
+                                  taskVars["lambda"], 1])
     print("Success")
     
   taskControlPtr = taskVars["taskControl"]

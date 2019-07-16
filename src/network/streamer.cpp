@@ -45,9 +45,13 @@ void updateStreamer(void)
     forceZ = force.z();
     
     M_HAPTIC_DATA_STREAM toolData;
-    memset(&toolData, 0, sizeof(toolData));  
-    auto packetNum = controlData.client->call("getMsgNum").as<int>();
-    auto currTime = controlData.client->call("getTimestamp").as<double>();
+    memset(&toolData, 0, sizeof(toolData)); 
+    auto packetIdx = controlData.client->async_call("getMsgNum");
+    auto timestamp = controlData.client->async_call("getTimestamp");
+    packetIdx.wait();
+    timestamp.wait();
+    auto packetNum = packetIdx.get().as<int>();
+    auto currTime = timestamp.get().as<double>();
     toolData.header.serial_no = packetNum;
     toolData.header.msg_type = HAPTIC_DATA_STREAM;
     toolData.header.timestamp = currTime;

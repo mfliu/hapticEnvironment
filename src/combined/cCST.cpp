@@ -40,8 +40,12 @@ cVector3d* cCST::computeNextPosition(cVector3d toolPos)
     
     M_CST_DATA cstData;
     memset(&cstData, 0, sizeof(cstData));
-    auto packetNum = controlData.client->call("getMsgNum").as<int>();
-    auto currTime = controlData.client->call("getTimestamp").as<double>();
+    auto packetIdx = controlData.client->async_call("getMsgNum");
+    auto timestamp = controlData.client->async_call("getTimestamp");
+    packetIdx.wait();
+    timestamp.wait();
+    int packetNum = packetIdx.get().as<int>();
+    double currTime = timestamp.get().as<double>();
     cstData.header.serial_no = packetNum;
     cstData.header.msg_type = CST_DATA;
     cstData.header.timestamp = currTime;
@@ -66,12 +70,12 @@ bool cCST::computeForce(const cVector3d& a_toolPos, const cVector3d& a_toolVel,
   usleep(1000);
   if (hapticEnabled == true && running == true) {
     cVector3d* nextPos = cCST::computeNextPosition(a_toolPos);
-    double forceMark = forceMagnitude * (nextPos->y()/120);
+    double forceMark = forceMagnitude * 8.0 * (nextPos->y()/100);
     if (forceMark > 8.0) {
       a_reactionForce.y(8.0);
     }
     else {
-      a_reactionForce.y(forceMagnitude * (nextPos->y()/120));
+      a_reactionForce.y(forceMark);
     }
     return true;
   }
