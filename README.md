@@ -1,8 +1,12 @@
 
 Just some notes for now.
+
 If you are cloning this repository and need the `rpclib` library, use 
-`git submodule init`
-`git submodule update` to populate the `external/rpclib` folder
+```
+git submodule init
+git submodule update`
+```
+to populate the `external/rpclib` folder
 Build rpclib from the `external/rpclib` folder with:
 ```
 mkdir build && cd build && cmake .. && make 
