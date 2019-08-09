@@ -128,7 +128,7 @@ def startEntry(options, taskVars):
   #MR.sendMessage(packet)
   enableGraphics("center", 1)
   
-  if taskVars["trialNum"] >= 30 and taskVars["vision"] == 1:
+  if taskVars["trialNum"] >= 10 and taskVars["vision"] == 1:
     visionOff = md.M_CST_SET_VISUAL()
     visionOff.header.msg_type = md.CST_SET_VISUAL
     name = create_string_buffer(b"cst", md.MAX_STRING_LENGTH)

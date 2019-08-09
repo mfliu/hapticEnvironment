@@ -2,6 +2,9 @@
 #define MAX_PACKET_LENGTH 8192 // arbitrary 
 #define MAX_STRING_LENGTH 128  // also arbitrary
 
+// Test Packet 
+#define TEST_PACKET 9000
+
 // Experiment Control Messages 1-500 
 // Sometimes 0 is poorly parsed as a truncation signal
 #define SESSION_START 1
@@ -51,6 +54,12 @@ typedef struct {
   double reserved;
   double timestamp;
 } MSG_HEADER;
+
+typedef struct {
+  MSG_HEADER header;
+  int a;
+  int b;
+} M_TEST_PACKET;
 
 typedef struct {
   MSG_HEADER header;

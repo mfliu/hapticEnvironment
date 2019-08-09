@@ -6,7 +6,22 @@ sys.path.append("/home/mfl24/Documents/chaiProjects/hapticEnvironment/python")
 import messageDefinitions as md
 import Messenger as MR
 from ctypes import * 
+import msgpackrpc
+import Globals
+#RPC_IP = "127.0.0.1"
+#RPC_PORT = 8080
 
+client = Globals.getClient()
+client.call("addModule", 1, "127.0.0.1", 7000)
+time.sleep(10)
+testPacket = md.M_TEST_PACKET()
+testPacket.a = c_int(10)
+testPacket.b = c_int(-1)
+testPacket = bytes(MR.makeMessage(testPacket))
+print(len(testPacket))
+client.call("sendMessage", testPacket, len(testPacket), 1)
+
+"""
 UDP_IP = "127.0.0.1"
 UDP_PORT = 7000
 
@@ -59,3 +74,4 @@ namePtr = (c_char_p) (addressof(name))
 cstStart.cstName = namePtr.value
 packet = MR.makeMessage(cstStart)
 sock.sendto(packet, (UDP_IP, UDP_PORT))
+"""

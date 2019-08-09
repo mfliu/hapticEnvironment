@@ -8,7 +8,7 @@ void initHaptics(void)
   hapticsData.handler = new cHapticDeviceHandler();
   hapticsData.handler->getDevice(hapticsData.hapticDevice, 0);
   hapticsData.hapticDeviceInfo = hapticsData.hapticDevice->getSpecifications();
-
+  
   double workspaceScaleFactor;
   double forceScaleFactor;
 
@@ -37,6 +37,8 @@ void initHaptics(void)
   hapticsData.tool->setWorkspaceScaleFactor(workspaceScaleFactor);
   hapticsData.tool->setWaitForSmallForce(false);
   hapticsData.tool->start();
+  
+  hapticsData.maxForce = hapticsData.hapticDeviceInfo.m_maxLinearForce;
   cout << "Haptics tool initialized" << endl;
 }
 

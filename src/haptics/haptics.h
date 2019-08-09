@@ -20,6 +20,7 @@ struct HapticData
   cThread* hapticsThread;
   cFrequencyCounter freqCounterHaptics;
   double toolRadius;
+  double maxForce;
 };
 
 #define HAPTIC_TOOL_RADIUS 2
