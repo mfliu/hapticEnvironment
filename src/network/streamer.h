@@ -5,6 +5,7 @@
 
 #include <stdlib.h>
 #include "chai3d.h"
+#include <vector>
 
 void startStreamer(void);
 //void closeStreamer(void);

@@ -2,14 +2,18 @@ import messageDefinitions as md
 import msgpackrpc
 import socket 
 
-LISTENER_IP = "127.0.0.1"
-LISTENER_PORT = 9000
+#LISTENER_IP = "127.0.0.1"
+#LISTENER_PORT = 9000
 
-MESSAGE_IP = "127.0.0.1"
-MESSAGE_PORT = 10000
+#MESSAGE_IP = "127.0.0.1"
+#MESSAGE_PORT = 10000
 
-SENDER_IP = "127.0.0.1"
-SENDER_PORT = 7000
+#SENDER_IP = "127.0.0.1"
+#SENDER_PORT = 7000
+MODULE_NUM = 2
+
+IPADDR = "127.0.0.1"
+PORT = 9000
 
 RPC_IP = "127.0.0.1"
 RPC_PORT = 8080
@@ -21,6 +25,14 @@ def getClient():
     client = msgpackrpc.Client(msgpackrpc.Address(RPC_IP, RPC_PORT))
   return client
 
+#moduleAdd = client.call_async("addModule", 2, IPADDR, PORT).get()
+#if moduleAdd == 0:
+#  print("Error adding module")
+#subscribeToRobot = client.call_async("subscribeTo", 2, 1).get() 
+#if subscribeToRobot == 0:
+#  print("Error subscribing to robot")
+
+"""
 senderSocket = None
 def getSenderSocket():
   global senderSocket
@@ -29,7 +41,7 @@ def getSenderSocket():
     senderSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     senderSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
   return senderSocket
-
+"""
 listenerSocket = None 
 def getListenerSocket():
   global listenerSocket
@@ -37,9 +49,9 @@ def getListenerSocket():
     listenerSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     listenerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     listenerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-    listenerSocket.bind((LISTENER_IP, LISTENER_PORT))
+    listenerSocket.bind((IPADDR, PORT))
   return listenerSocket 
-
+"""
 messageSocket = None
 def getMessageSocket():
   global messageSocket
@@ -49,6 +61,7 @@ def getMessageSocket():
     messageSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
     messageSocket.bind((MESSAGE_IP, MESSAGE_PORT))
   return messageSocket 
+"""
 
 HOME_PATH = "/home/mfl24/Documents/chaiProjects/hapticEnvironment/python/"
 UTILS_PATH = "/home/mfl24/Documents/chaiProjects/hapticEnvironment/python/utils/"

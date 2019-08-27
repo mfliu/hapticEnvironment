@@ -52,10 +52,14 @@ cVector3d* cCST::computeNextPosition(cVector3d toolPos)
     cstData.cursorX = currPos->x();
     cstData.cursorY = currPos->y();
     cstData.cursorZ = currPos->z();
-    char* packet[sizeof(cstData)];
+    char packet[sizeof(cstData)];
     memcpy(&packet, &cstData, sizeof(cstData));
-    sendPacket((char *) packet, sizeof(cstData), false);
-    usleep(500);
+    vector<char> packetData(packet, packet+sizeof(packet) / sizeof(char));
+    auto cstInt = controlData.client->async_call("sendMessage", packetData, sizeof(cstData), controlData.MODULE_NUM);    
+    //sendPacket((char *) packet, sizeof(cstData), false);
+    usleep(1000);
+    cstInt.wait();
+    auto cstNum = cstInt.get().as<int>();
     return nextPos;
   }
   else {

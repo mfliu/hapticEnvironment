@@ -19,10 +19,10 @@ while True:
   data, addr = sock.recvfrom(md.MAX_PACKET_LENGTH)
   header = md.MSG_HEADER()
   MR.readMessage(data, header)
-  if header.msg_type == md.TEST_PACKET:
-    testData = md.M_TEST_PACKET()
+  if header.msg_type == md.HAPTIC_DATA_STREAM:
+    testData = md.M_HAPTIC_DATA_STREAM()
     MR.readMessage(data, testData)
-    print(testData.a, testData.b)
+    print(testData.header.serial_no, testData.header.msg_type, testData.header.timestamp, testData.posX, testData.posY, testData.posZ)
   else:
     print(header.msg_type)
 

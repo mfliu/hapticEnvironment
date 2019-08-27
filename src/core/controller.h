@@ -34,14 +34,19 @@ struct ControlData
   
   // Messaging and Data Logging Variables
   //const char* SENDER_IP;
-  vector<string> SENDER_IPS;
+  int MODULE_NUM;
+  const char* IPADDR;
+  int PORT;
+  int msg_socket;
   rpc::client* client;
-  const char* LISTENER_IP;
+  
+  //const char* LISTENER_IP;
+  //int LISTENER_PORT;
+  vector<string> SENDER_IPS;
   //int SENDER_PORT;
-  vector<int> SENDER_PORTS;
-  int LISTENER_PORT;
-  vector<int> sender_sockets;
-  int listener_socket;
+  //vector<int> SENDER_PORTS;
+  //vector<int> sender_sockets;
+  //int listener_socket;
   cThread* streamerThread; // for streaming haptic data only
   cThread* listenerThread;
   ofstream dataFile;

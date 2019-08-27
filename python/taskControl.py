@@ -33,13 +33,16 @@ class TaskControl(BoxLayout):
     self.sessionInfo = {}
     self.state = "running"
     self.sm = None 
+    client = Globals.getClient()
+    client.call("addModule", 2, "127.0.0.1", 9000)
+    client.call("subscribeTo", 2, 1)
     self.listenerThread = Thread(target=self.listener)
     self.listenerThread.daemon = True
     self.listenerThread.start()
     
-    self.messageThread = Thread(target=self.messageListener)
-    self.messageThread.daemon = True
-    self.messageThread.start()
+    #self.messageThread = Thread(target=self.messageListener)
+    #self.messageThread.daemon = True
+    #self.messageThread.start()
 
   def setSubjectName(self, text):
     self.sessionInfo["subjectName"] = text 
@@ -72,16 +75,20 @@ class TaskControl(BoxLayout):
         msg_data = md.M_HAPTIC_DATA_STREAM()
         MR.readMessage(data, msg_data)
         Globals.CHAI_DATA = msg_data
+      elif self.sm != None:
+        self.sm.message(data)
       #elif self.sm != None:
       #  self.sm.message(data)
       time.sleep(0.001)
   
-  def messageListener(self):
-    while self.state == "running":
-      data, addr = Globals.getMessageSocket().recvfrom(md.MAX_PACKET_LENGTH)
-      if self.sm != None:
-        self.sm.message(data)
-      time.sleep(0.001)
+  #def messageListener(self):
+  #  while self.state == "running":
+  #    data, addr = Globals.getListenerSocket().recvfrom(md.MAX_PACKET_LENGTH)
+  #    header = md.MSG_HEADER()
+  #    MR.readMessage(data, header)
+  #    if self.sm != None and header.msg_type != md.HAPTIC_DATA_STREAM:
+  #      self.sm.message(data)
+  #    time.sleep(0.001)
 
   def startSM(self):
     self.initializeTreeView()
@@ -99,7 +106,7 @@ class TaskControl(BoxLayout):
     packet = MR.makeMessage(sessionStart)
     MR.sendMessage(packet)
     
-    startRecording= md.M_START_RECORDING()
+    startRecording = md.M_START_RECORDING()
     startRecording.header.msg_type = c_int(md.START_RECORDING)
     fileName = create_string_buffer(str.encode(saveFilePrefix+"_trial.data"), md.MAX_STRING_LENGTH)
     fileNamePtr = (c_char_p) (addressof(fileName))

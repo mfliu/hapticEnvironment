@@ -6,11 +6,74 @@ using namespace std;
 
 extern ControlData controlData;
 
-struct sockaddr_in listenerStruct;
-int listenerLen = sizeof(listenerStruct);
+//struct sockaddr_in listenerStruct;
+//int listenerLen = sizeof(listenerStruct);
 
-vector<struct sockaddr_in> senderStructs; 
+struct sockaddr_in msgStruct;
+int msgLen = sizeof(msgStruct);
 
+//vector<struct sockaddr_in> senderStructs; 
+
+int addMessageHandlerModule()
+{
+  auto addMod = controlData.client->call("addModule", controlData.MODULE_NUM, controlData.IPADDR, controlData.PORT);
+  //addMod.wait();
+  return addMod.as<int>();
+}
+
+int subscribeToTrialControl() 
+{
+  bool subscribed = false;
+  clock_t begin = clock();
+  while (subscribed == false) {
+    auto subscribe = controlData.client->async_call("subscribeTo", 1, 2);
+    subscribe.wait();
+    if (subscribe.get().as<int>() == 1) {
+      subscribed = true;
+      return 1;
+    }
+    clock_t now = clock();
+    double elapsed = double(now - begin)/CLOCKS_PER_SEC;
+    if (elapsed > 120) {
+      cout << "Error subscribing to Trial Control, exiting." << endl;
+      return 0;
+    }
+    sleep(5); // 1000 microseconds = 1 millisecond
+  }
+  return 1;
+}
+
+int openSocket()
+{
+  cout << "Opening messaging socket..." << endl;
+  controlData.msg_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  if (controlData.msg_socket < 0) {
+    cout << "Opening messaging socket failed" << endl;
+    exit(1);
+  }
+
+  memset((char*) &msgStruct, 0, msgLen);
+  msgStruct.sin_family = AF_INET;
+  msgStruct.sin_port = htons(controlData.PORT);
+  msgStruct.sin_addr.s_addr = inet_addr(controlData.IPADDR);
+  int opt = 1;
+  int broadcast = setsockopt(controlData.msg_socket, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt)); 
+  int reuseAddr = setsockopt(controlData.msg_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+  int reusePort = setsockopt(controlData.msg_socket, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
+  if (broadcast < 0 || reuseAddr < 0 || reusePort < 0)
+  {
+    cout << "Failed to set socket options" << endl;
+    exit(1);
+  }
+
+  int bind_sock_in = bind(controlData.msg_socket, (struct sockaddr*) &msgStruct, msgLen);
+  if (bind_sock_in < 0) {
+    cout << "Error binding messaging socket" << endl;
+    exit(1);
+  }
+  return 1; 
+}
+/*
 void openMessagingSockets()
 {
   cout << "Opening listener socket..." << endl;
@@ -73,13 +136,13 @@ void openMessagingSockets()
     }
     controlData.sender_sockets.push_back(sender_socket);
   }
-}
+}*/
 
 void closeMessagingSocket()
 {
-  shutdown(controlData.listener_socket, 2);
+  shutdown(controlData.msg_socket, 2);
 }
-
+/*
 int sendPacket(char* packet, uint16_t lengthPacket, bool isData)
 {
   if (isData == true)
@@ -103,14 +166,14 @@ int sendPacket(char* packet, uint16_t lengthPacket, bool isData)
     }
   }
   return 1;
-}
+}*/
 
 int readPacket(char* packetPointer)
 {
   int value = 0, bytesRead = 0;
-  ioctl(controlData.listener_socket, FIONREAD, &value);
+  ioctl(controlData.msg_socket, FIONREAD, &value);
   if (value > 0) {
-    bytesRead = recvfrom(controlData.listener_socket, packetPointer, MAX_PACKET_LENGTH, 0, (struct sockaddr*) &listenerStruct, (socklen_t *) &listenerLen);
+    bytesRead = recvfrom(controlData.msg_socket, packetPointer, MAX_PACKET_LENGTH, 0, (struct sockaddr*) &msgStruct, (socklen_t *) &msgLen);
     //cout << bytesRead << " bytes read from socket" << endl;
   }
   return bytesRead;
@@ -118,6 +181,6 @@ int readPacket(char* packetPointer)
 
 void closeAllConnections()
 {
-  close(controlData.listener_socket);
+  close(controlData.msg_socket);
 
 }

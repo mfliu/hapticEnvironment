@@ -12,11 +12,14 @@ import Globals
 #RPC_PORT = 8080
 
 client = Globals.getClient()
+#client.call("testMessage", 9000)
 client.call("addModule", 1, "127.0.0.1", 7000)
 time.sleep(10)
 testPacket = md.M_TEST_PACKET()
+testPacket.header.msg_type = md.TEST_PACKET
 testPacket.a = c_int(10)
 testPacket.b = c_int(-1)
+print(testPacket.header.msg_type)
 testPacket = bytes(MR.makeMessage(testPacket))
 print(len(testPacket))
 client.call("sendMessage", testPacket, len(testPacket), 1)

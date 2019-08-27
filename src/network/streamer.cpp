@@ -64,7 +64,7 @@ void updateStreamer(void)
     toolData.forceX = forceX;
     toolData.forceY = forceY;
     toolData.forceZ = forceZ;
-    
+      
     char collisions[4][MAX_STRING_LENGTH];
     memset(&collisions, 0, sizeof(collisions));
     int collisionIdx = 0;
@@ -80,15 +80,18 @@ void updateStreamer(void)
       }
     }
     memcpy(&(toolData.collisions), collisions, sizeof(toolData.collisions));
-    char* packet[sizeof(toolData)];
+    char packet[sizeof(toolData)];
     memcpy(&packet, &toolData, sizeof(toolData));
-   
-    sendPacket((char *) packet, sizeof(packet), true);
+    vector<char> packetData(packet, packet+sizeof(packet)/sizeof(char));
+    auto sendInt = controlData.client->async_call("sendMessage", packetData, sizeof(toolData), controlData.MODULE_NUM);
+    //auto sendInt = controlData.client->async_call("sendMessage", (char *) packet, sizeof(packet), controlData.MODULE_NUM);
     if (controlData.loggingData == true)
     {
       controlData.dataFile.write((const char*) packet, sizeof(toolData));
     }
-    usleep(500); // 1000 microseconds = 1 millisecond
+    //usleep(500); // 1000 microseconds = 1 millisecond
+    sendInt.wait();
+    auto sendNum = sendInt.get().as<int>();
   }
   closeMessagingSocket();
   controlData.streamerUp = false;

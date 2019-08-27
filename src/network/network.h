@@ -19,8 +19,11 @@
 #include <iostream>
 #include <fcntl.h>
 
-void openMessagingSockets();
+int addMessageHandlerModule();
+int subscribeToTrialControl();
+int openSocket();
+//void openMessagingSockets();
 void closeMessagingSocket();
-int sendPacket(char* packet, uint16_t lengthPacket, bool isData);
+//int sendPacket(char* packet, uint16_t lengthPacket, bool isData);
 int readPacket(char* packet);
 #endif

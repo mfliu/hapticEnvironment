@@ -23,13 +23,16 @@ int main(int argc, char* argv[])
   controlData.loggingData = false;
 
   // TODO: Set these IP addresses from a config file
-  controlData.LISTENER_IP = "127.0.0.1";
-  controlData.LISTENER_PORT = 7000;
-  controlData.client = new rpc::client(controlData.LISTENER_IP, 8080);
-  controlData.SENDER_IPS.push_back("127.0.0.1");
-  controlData.SENDER_IPS.push_back("127.0.0.1");
-  controlData.SENDER_PORTS.push_back(9000);
-  controlData.SENDER_PORTS.push_back(10000);
+  //controlData.LISTENER_IP = "127.0.0.1";
+  //controlData.LISTENER_PORT = 7000;
+  controlData.MODULE_NUM = 1;
+  controlData.IPADDR = "127.0.0.1";
+  controlData.PORT = 7000;
+  controlData.client = new rpc::client("127.0.0.1", 8080);
+  //controlData.SENDER_IPS.push_back("127.0.0.1");
+  //controlData.SENDER_IPS.push_back("127.0.0.1");
+  //controlData.SENDER_PORTS.push_back(9000);
+  //controlData.SENDER_PORTS.push_back(10000);
   controlData.hapticsOnly = false;
   
   if (controlData.hapticsOnly == false) {
@@ -38,11 +41,28 @@ int main(int argc, char* argv[])
   }
   initHaptics();
   startHapticsThread(); 
-  openMessagingSockets();
-  startStreamer(); 
-  startListener();
   atexit(close);
   resizeWindowCallback(graphicsData.window, graphicsData.width, graphicsData.height);
+  sleep(2); 
+  openSocket();
+  int addSuccess = addMessageHandlerModule();
+  if (addSuccess == 0) {
+    cout << "Module addition failed" << endl;
+    close();
+    exit(1);
+  }
+  sleep(1);
+  int subscribeSuccess = subscribeToTrialControl();
+  if (subscribeSuccess == 0) {
+    cout << "Subcribe to Trial Control failed" << endl;
+    close();
+    exit(1);
+  }
+  sleep(2);
+  startStreamer(); 
+  startListener();
+  cout << "streamer and listener started" << endl;
+  
   while (!glfwWindowShouldClose(graphicsData.window)) {
     glfwGetWindowSize(graphicsData.window, &graphicsData.width, &graphicsData.height);
     graphicsData.graphicsClock = clock();

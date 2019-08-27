@@ -26,15 +26,9 @@ double MessageHandler::getTimestamp()
   return timeNow.count();
 }
 
-//int MessageHandler::sendMessage(char* const packet, int module)
-//{
-//  memset(msg, 0, MAX_PACKET_LENGTH);
-//  memcpy(msg, packet, sizeof(&packet));
-//  return 1;
-//}
-
-int MessageHandler::addModule(int moduleID, int port, string ipAddr) //, const int subscriberList[10])
+int MessageHandler::addModule(int moduleID, string ipAddr, int port) //, const int subscriberList[10])
 {
+  //cout << "Adding module " << moduleID << " with IP " << ipAddr << ":" << port << endl;
   struct sockaddr_in sockStruct;
   int sockLen = sizeof(sockStruct);
   int sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -56,36 +50,17 @@ int MessageHandler::addModule(int moduleID, int port, string ipAddr) //, const i
     return 0;
   }
 
-  int bind_sock = bind(sock, (struct sockaddr*) &sockStruct, sockLen);
+  /*int bind_sock = bind(sock, (struct sockaddr*) &sockStruct, sockLen);
   if (bind_sock < 0) {
     cout << "Error binding socket for module " << moduleID << "." << endl;
     return 0;
-  }
-  cout << "Module " << moduleID << ":\t" << inet_ntoa(sockStruct.sin_addr) << ":" << sockStruct.sin_port << endl;
+  }*/
+
   moduleSubscribers[moduleID] = {};
   moduleSockets[moduleID] = sock;
   socketStructs[sock] = sockStruct;
-  cout << "Socket opened for module " << moduleID << "." << endl;
+  cout << "Added module " << moduleID << ":\t" << inet_ntoa(sockStruct.sin_addr) << ":" << ntohs(sockStruct.sin_port) << endl;
   return 1;
-  /*try {
-    map<int, set<int>>::iterator it = moduleSubscribers.find(moduleID);
-    if (it != moduleSubscribers.end()) {
-      moduleSubscribers = set<int>();
-      //for(int i = 0; i < 10; i++){
-      //  moduleSubscribers[moduleID].insert(subscriberList[i]);
-      //} 
-    }
-    else {
-      for (int i = 0; i < 10; i++) {
-        moduleSubscribers[moduleID].insert(subscriberList[i]);
-      }
-    }
-    return 1;
-  }
-  catch (...) {
-    cout << "Failed to subscribe module " << moduleID << endl;
-    return 0;
-  }*/
 }
 
 int MessageHandler::subscribeTo(int myID, int subscribeID) 
@@ -109,8 +84,8 @@ int MessageHandler::sendMessage(vector<char> packet, uint16_t lengthPacket, int 
       int socketNum = moduleSockets[*setIt];
       struct sockaddr_in sockStruct = socketStructs[socketNum];
       int socketLen = sizeof(sockStruct);
-      if (sendto(socketNum, reinterpret_cast<char*>(packet.data()), lengthPacket, 0, (struct sockaddr*) &(socketStructs[socketNum]), socketLen) < 0) {
-        cout << "Data sending error for module " << sendingModule << " sending to module " << socketNum << "." << endl;
+      if (sendto(socketNum, &packet[0], lengthPacket, 0, (struct sockaddr*) &(socketStructs[socketNum]), socketLen) < 0) {
+        cout << "Data sending error for module " << sendingModule << " sending to module " << *setIt << "." << endl;
         return 0;
       }
     }
@@ -122,14 +97,21 @@ int MessageHandler::sendMessage(vector<char> packet, uint16_t lengthPacket, int 
   
 }
 
+int MessageHandler::testMessage(int val)
+{
+  cout << "Test message received with value " << val << endl;
+  return 1;
+}
+
 int main()
 {
   //TODO: Read Ports and IP address from config file
   MessageHandler* mh = new MessageHandler("127.0.0.1", 8080);
   mh->getServer()->bind("getMsgNum", [&mh](){return mh->getMsgNum();});
   mh->getServer()->bind("getTimestamp", [&mh](){return mh->getTimestamp();});
-  mh->getServer()->bind("addModule", [&mh](int moduleID, int port, string ipAddr){return mh->addModule(moduleID, port, ipAddr);});
+  mh->getServer()->bind("addModule", [&mh](int moduleID, string ipAddr, int port){return mh->addModule(moduleID, ipAddr, port);});
   mh->getServer()->bind("subscribeTo", [&mh](int myID, int subscribeID){return mh->subscribeTo(myID, subscribeID);});
   mh->getServer()->bind("sendMessage", [&mh](vector<char> packet, uint16_t lengthPacket, int sendingModule){return mh->sendMessage(packet, lengthPacket, sendingModule);});
-  mh->getServer()->run();
+  mh->getServer()->bind("testMessage", [&mh](int val){return mh->testMessage(val);});
+  mh->getServer()->run(); 
 }

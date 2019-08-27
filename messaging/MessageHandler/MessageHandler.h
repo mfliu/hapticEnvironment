@@ -37,10 +37,10 @@ class MessageHandler
     rpc::server* getServer();
     int getMsgNum();
     double getTimestamp();
-    int addModule(int moduleID, int port, string ipAddr); //, const int subscriberList[10]);
+    int addModule(int moduleID, string ipAddr, int port); //, const int subscriberList[10]);
     int subscribeTo(int myID, int subscribeID);
     int sendMessage(vector<char> packet, uint16_t lengthPacket, int module);
-    //int getMessage(char* result);
+    int testMessage(int val);
 };
 
 #endif
