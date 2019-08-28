@@ -1,0 +1,63 @@
+\hypertarget{controller_8cpp}{}\doxysection{/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/core/controller.cpp File Reference}
+\label{controller_8cpp}\index{/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/core/controller.cpp@{/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/core/controller.cpp}}
+
+
+This file contains the main function that runs the haptic, graphics, and message listening loops.  
+
+
+{\ttfamily \#include \char`\"{}controller.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{controller_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{controller_8cpp_a0ddf1224851353fc92bfbff6f499fa97}} 
+int {\bfseries main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\item 
+bool \mbox{\hyperlink{controller_8cpp_abf7f0927b3bbb1978f73c56f1e1f9f68}{all\+Threads\+Down}} ()
+\item 
+void \mbox{\hyperlink{controller_8cpp_a5ae591df94fc66ccb85cbb6565368bca}{close}} ()
+\item 
+void \mbox{\hyperlink{controller_8cpp_a2f751138b5d47b3bcaf45aa63abfaeb4}{parse\+Packet}} (char $\ast$packet)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{controller_8cpp_a61a3ab6594c74ee0f051c3259633f46f}\label{controller_8cpp_a61a3ab6594c74ee0f051c3259633f46f}} 
+\mbox{\hyperlink{struct_haptic_data}{Haptic\+Data}} {\bfseries haptics\+Data}
+\item 
+\mbox{\Hypertarget{controller_8cpp_a0327ccbf141035cc55235dfc5a25179a}\label{controller_8cpp_a0327ccbf141035cc55235dfc5a25179a}} 
+\mbox{\hyperlink{struct_graphics_data}{Graphics\+Data}} {\bfseries graphics\+Data}
+\item 
+\mbox{\Hypertarget{controller_8cpp_a0e74175a64ca6de70034d06fb12f6712}\label{controller_8cpp_a0e74175a64ca6de70034d06fb12f6712}} 
+\mbox{\hyperlink{struct_control_data}{Control\+Data}} {\bfseries control\+Data}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file contains the main function that runs the haptic, graphics, and message listening loops. 
+
+This file is in the global namespace. It accesses haptic data and graphics data through external structs, and keeps track of all the messaging sockets and Chai3D threads through the \mbox{\hyperlink{struct_control_data}{Control\+Data}} extern, which is accessible in other files. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{controller_8cpp_abf7f0927b3bbb1978f73c56f1e1f9f68}\label{controller_8cpp_abf7f0927b3bbb1978f73c56f1e1f9f68}} 
+\index{controller.cpp@{controller.cpp}!allThreadsDown@{allThreadsDown}}
+\index{allThreadsDown@{allThreadsDown}!controller.cpp@{controller.cpp}}
+\doxysubsubsection{\texorpdfstring{allThreadsDown()}{allThreadsDown()}}
+{\footnotesize\ttfamily bool all\+Threads\+Down (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Checks if the haptics and messaging threads have exited yet. The graphics loop is in main, and exits when all other threads are down, so it is not checked here. \mbox{\Hypertarget{controller_8cpp_a5ae591df94fc66ccb85cbb6565368bca}\label{controller_8cpp_a5ae591df94fc66ccb85cbb6565368bca}} 
+\index{controller.cpp@{controller.cpp}!close@{close}}
+\index{close@{close}!controller.cpp@{controller.cpp}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily void close (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Ends the program. This method does so by setting the \char`\"{}simulation\+Running\char`\"{} boolean to false. When false, other threads will exit. To exit gracefully, this method waits until all threads have returned before stopping the haptic tool and exiting the graphic interface. \mbox{\Hypertarget{controller_8cpp_a2f751138b5d47b3bcaf45aa63abfaeb4}\label{controller_8cpp_a2f751138b5d47b3bcaf45aa63abfaeb4}} 
+\index{controller.cpp@{controller.cpp}!parsePacket@{parsePacket}}
+\index{parsePacket@{parsePacket}!controller.cpp@{controller.cpp}}
+\doxysubsubsection{\texorpdfstring{parsePacket()}{parsePacket()}}
+{\footnotesize\ttfamily void parse\+Packet (\begin{DoxyParamCaption}\item[{char $\ast$}]{packet }\end{DoxyParamCaption})}
+
+This function receives packets from the listener threads and updates the haptic environment variables accordingly. 
+\begin{DoxyParams}{Parameters}
+{\em packet} & is a pointer to a char array of bytes \\
+\hline
+\end{DoxyParams}

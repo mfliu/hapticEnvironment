@@ -21,9 +21,7 @@
 
 int addMessageHandlerModule();
 int subscribeToTrialControl();
-int openSocket();
-//void openMessagingSockets();
+int openMessagingSocket();
 void closeMessagingSocket();
-//int sendPacket(char* packet, uint16_t lengthPacket, bool isData);
 int readPacket(char* packet);
 #endif

@@ -1,5 +1,16 @@
 #include "controller.h"
 
+/**
+ * @file controller.cpp 
+ * @brief This file contains the main function that runs the haptic, graphics, and message listening
+ * loops.
+ *
+ * This file is in the global namespace. It accesses haptic data and graphics data through external
+ * structs, and keeps track of all the messaging sockets and Chai3D threads through the ControlData
+ * extern, which is accessible in other files. 
+ */
+
+
 extern HapticData hapticsData;
 extern GraphicsData graphicsData;
 ControlData controlData;
@@ -44,7 +55,7 @@ int main(int argc, char* argv[])
   atexit(close);
   resizeWindowCallback(graphicsData.window, graphicsData.width, graphicsData.height);
   sleep(2); 
-  openSocket();
+  openMessagingSocket();
   int addSuccess = addMessageHandlerModule();
   if (addSuccess == 0) {
     cout << "Module addition failed" << endl;
@@ -76,11 +87,20 @@ int main(int argc, char* argv[])
   return(0);
 }
 
+/**
+ * Checks if the haptics and messaging threads have exited yet. The graphics loop is in main, and
+ * exits when all other threads are down, so it is not checked here.
+ */
 bool allThreadsDown()
 {
   return (controlData.hapticsUp && controlData.listenerUp && controlData.streamerUp);  
 }
 
+/**
+ * Ends the program. This method does so by setting the "simulationRunning" boolean to false. When
+ * false, other threads will exit. To exit gracefully, this method waits until all threads have
+ * returned before stopping the haptic tool and exiting the graphic interface.
+ */
 void close()
 {
   controlData.simulationRunning = false;
@@ -99,6 +119,11 @@ void close()
   closeMessagingSocket();
 }
 
+/**
+ * This function receives packets from the listener threads and updates the haptic environment
+ * variables accordingly.
+ * @param packet is a pointer to a char array of bytes
+ */
 void parsePacket(char* packet)
 {
   MSG_HEADER header;

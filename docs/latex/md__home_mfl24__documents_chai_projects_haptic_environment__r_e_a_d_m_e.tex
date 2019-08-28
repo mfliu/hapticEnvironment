@@ -1,0 +1,12 @@
+Just some notes for now.
+
+If you are cloning this repository and need the {\ttfamily rpclib} library, use \`{}\`{}\`{} git submodule init git submodule update\`{} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{to populate the `external/rpclib` folder}
+\DoxyCodeLine{Build rpclib from the `external/rpclib` folder with:}
+\end{DoxyCode}
+ mkdir build \&\& cd build \&\& cmake .. \&\& make \`{}\`{}\`{}
+
+R\+PC Server is built into \mbox{\hyperlink{class_message_handler}{Message\+Handler}}, both the C++ module and the Python module runs a R\+PC client. Same {\ttfamily rpclib} for the server and client in C++, \href{https://github.com/msgpack-rpc/msgpack-rpc-python}{\texttt{ {\ttfamily msgpack-\/rpc}}} for Python client
+
+Heavily based on and inspired by\+: \href{https://github.com/djoshea/haptic-control}{\texttt{ this project}} 
