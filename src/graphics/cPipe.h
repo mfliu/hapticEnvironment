@@ -4,6 +4,9 @@
 using namespace chai3d;
 using namespace std;
 
+/**
+ * @brief Pipe class for generating cylindrical pipes.
+ */
 class cPipe : public cGenericObject 
 {
   private:

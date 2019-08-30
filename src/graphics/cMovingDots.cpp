@@ -1,5 +1,18 @@
 #include "cMovingDots.h"
 
+/**
+ * @param n Number of points 
+ * @param c Coherence of points, must be between 0 and 1
+ * @param d Direction in degrees that dots are moving in 
+ * @param m Magnitude or speed at which the dots move
+ *
+ * @brief Constructor for moving dot object 
+ *
+ * This function generates a dot at a random position in the field of view and adds a pointer to the
+ * dots using Chai3D's cMultiPoint object. For each set of moving dots, \a c*n points are chosen to
+ * be the "movingDots", or dots that move in the direction specified. The remainder of the points
+ * <em> (n-(c*n)) </em> are dots that move in random directions.
+ */
 cMovingDots::cMovingDots(int n, double c, double d, double m) : cGenericMovingObject()
 {
   generator.seed(time(0));
@@ -45,6 +58,19 @@ cMovingDots::cMovingDots(int n, double c, double d, double m) : cGenericMovingOb
   }
 }
 
+/**
+ * @param dt The amount of time that has passed since this function was last called
+ * @param toolPos Position of the haptic robot 
+ * @param toolVel Velocity of the haptic robot 
+ *
+ * @brief Update function for this moving object 
+ *
+ * This function is called for the moving object in each iteration of the graphics loop. For moving
+ * dots, this function computes the next position of each true moving dot based on the specified direction and
+ * velocity, and re-renders the dot accordingly. Each random dot is assigned a 
+ * random velocity and direction to move. If the dot moves out of the field of view, it's
+ * position is randomly selected to be within the field of view. 
+ */
 void cMovingDots::graphicsLoopFunction(double dt, cVector3d toolPos, cVector3d toolVel)
 {
   uniform_real_distribution<double> distribution(-1.0, 1.0);
@@ -90,11 +116,17 @@ void cMovingDots::graphicsLoopFunction(double dt, cVector3d toolPos, cVector3d t
   randomPoints->markForUpdate();
 }
 
+/**
+ * Returns the dots moving in the specified direction
+ */
 cMultiPoint* cMovingDots::getMovingPoints()
 {
   return movingPoints; 
 }
 
+/**
+ * Returns the dots moving in random directions. If coherence is 1, the number of random dots is 0.
+ */
 cMultiPoint* cMovingDots::getRandomPoints()
 {
   return randomPoints;

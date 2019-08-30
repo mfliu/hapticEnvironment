@@ -1,0 +1,47 @@
+\hypertarget{streamer_8cpp}{}\doxysection{/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/network/streamer.cpp File Reference}
+\label{streamer_8cpp}\index{/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/network/streamer.cpp@{/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/network/streamer.cpp}}
+
+
+Data streaming functionality.  
+
+
+{\ttfamily \#include \char`\"{}streamer.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}haptics/haptics.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}network.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{streamer_8cpp_a1a3bec23f06d053c8de512fc1b94bad7}{start\+Streamer}} (void)
+\item 
+void \mbox{\hyperlink{streamer_8cpp_a192913d11742ee519e26bcfd77cca72d}{update\+Streamer}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{streamer_8cpp_a0e74175a64ca6de70034d06fb12f6712}\label{streamer_8cpp_a0e74175a64ca6de70034d06fb12f6712}} 
+\mbox{\hyperlink{struct_control_data}{Control\+Data}} {\bfseries control\+Data}
+\item 
+\mbox{\Hypertarget{streamer_8cpp_a61a3ab6594c74ee0f051c3259633f46f}\label{streamer_8cpp_a61a3ab6594c74ee0f051c3259633f46f}} 
+\mbox{\hyperlink{struct_haptic_data}{Haptic\+Data}} {\bfseries haptics\+Data}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Data streaming functionality. 
+
+Starts thread to start streaming position, velocity, and force data of the robot 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{streamer_8cpp_a1a3bec23f06d053c8de512fc1b94bad7}\label{streamer_8cpp_a1a3bec23f06d053c8de512fc1b94bad7}} 
+\index{streamer.cpp@{streamer.cpp}!startStreamer@{startStreamer}}
+\index{startStreamer@{startStreamer}!streamer.cpp@{streamer.cpp}}
+\doxysubsubsection{\texorpdfstring{startStreamer()}{startStreamer()}}
+{\footnotesize\ttfamily void start\+Streamer (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Start the data streaming thread. The pointer to the thread is stored in the \mbox{\hyperlink{struct_control_data}{Control\+Data}} struct \mbox{\Hypertarget{streamer_8cpp_a192913d11742ee519e26bcfd77cca72d}\label{streamer_8cpp_a192913d11742ee519e26bcfd77cca72d}} 
+\index{streamer.cpp@{streamer.cpp}!updateStreamer@{updateStreamer}}
+\index{updateStreamer@{updateStreamer}!streamer.cpp@{streamer.cpp}}
+\doxysubsubsection{\texorpdfstring{updateStreamer()}{updateStreamer()}}
+{\footnotesize\ttfamily void update\+Streamer (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Gets and sends the position, velocity, and force data of the robot 

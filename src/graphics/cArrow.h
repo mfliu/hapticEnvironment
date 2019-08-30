@@ -5,6 +5,9 @@
 using namespace chai3d;
 using namespace std;
 
+/**
+ * @brief A graphical arrow class 
+ */
 class cArrow : public cGenericObject
 {
   private:

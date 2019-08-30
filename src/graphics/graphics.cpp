@@ -1,8 +1,22 @@
 #include "graphics.h"
 
+/**
+ * @file graphics.cpp
+ * @brief Functions for setting up and starting the graphics loop.
+ *
+ * The graphics loop is the main loop of the program. Haptics runs in its own loop and messaging is
+ * handled by a separate thread. The functions here are responsible for using GLFW libraries to
+ * initialize and update the display.
+ */
+
 extern HapticData hapticsData;
 extern ControlData controlData;
 GraphicsData graphicsData;
+
+/**
+ * Creates and initializes a GLFW window, and stores a pointer to this window in the graphicsData
+ * struct. This does not initialize the Chai3D graphics information. For that, @see initScene
+ */
 
 void initDisplay(void)
 {
@@ -63,6 +77,9 @@ void initDisplay(void)
 #endif
 }
 
+/**
+ * Initializes the world for Chai3D. Also creates and sets the camera viewing angle and lighting.
+ */
 void initScene(void)
 {
   graphicsData.world = new cWorld();
@@ -86,17 +103,40 @@ void initScene(void)
   graphicsData.light->setDir(0.0, -1.0, 0.0);
 }
 
+/**
+ * @param a_window Pointer to GLFW window.
+ * @param a_width Initial window width 
+ * @param a_height Initial window height
+ *
+ * This function is called when the user resizes the window.
+ */
 void resizeWindowCallback(GLFWwindow* a_window, int a_width, int a_height)
 {
   graphicsData.width = a_width;
   graphicsData.height = a_height;
 }
 
+/**
+ * @param error Error code
+ * @param errorDescription Error message
+ *
+ * This function is automatically called when a GLFW error is thrown
+ */
 void errorCallback(int error, const char* errorDescription)
 {
   cout << "Error: " << errorDescription << endl;
 }
 
+/**
+ * @param window Pointer to GLFW Window object 
+ * @param key Name of the key that was pressed. Space key causes errors over message passing
+ * @param scancode The scancode assigned to the key that was pressed 
+ * @param action Type of action--should be GLFW_PRESS 
+ * @param mods Modifier bits
+ *
+ * Callback function if a keyboard key is pressed. When a key is pressed, a message is sent to the
+ * Trial Control module with a string representing the name of the key. 
+ */
 void keySelectCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
   if ((action != GLFW_PRESS) && (action != GLFW_REPEAT)) {
@@ -155,6 +195,11 @@ void keySelectCallback(GLFWwindow* window, int key, int scancode, int action, in
   }
 }
 
+/**
+ * updateGraphics is called from the main loop and updates the graphics at each time step. Each
+ * update involves updating the shadows and camera view, as well as rendering the updated position
+ * of any moving objects. All moving objects must override the graphicsLoopFunction method.
+ */
 void updateGraphics(void)
 {
   graphicsData.world->updateShadowMaps(false, graphicsData.mirroredDisplay);

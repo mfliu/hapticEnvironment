@@ -1,5 +1,14 @@
 \hypertarget{classc_arrow}{}\doxysection{c\+Arrow Class Reference}
 \label{classc_arrow}\index{cArrow@{cArrow}}
+
+
+A graphical arrow class.  
+
+
+
+
+{\ttfamily \#include $<$c\+Arrow.\+h$>$}
+
 Inheritance diagram for c\+Arrow\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -9,13 +18,53 @@ Inheritance diagram for c\+Arrow\+:\begin{figure}[H]
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classc_arrow_ac8bb7d663ec42a0666c111d3b14633f5}\label{classc_arrow_ac8bb7d663ec42a0666c111d3b14633f5}} 
-{\bfseries c\+Arrow} (double a\+\_\+length, double a\+\_\+shaft\+Radius, double a\+\_\+length\+Tip, double a\+\_\+radius\+Tip, bool a\+\_\+bidir, unsigned int a\+\_\+num\+Sides, c\+Vector3d $\ast$a\+\_\+dir, c\+Vector3d $\ast$a\+\_\+pos, c\+Colorf $\ast$a\+\_\+color)
+\mbox{\hyperlink{classc_arrow_ac8bb7d663ec42a0666c111d3b14633f5}{c\+Arrow}} (double a\+\_\+length, double a\+\_\+shaft\+Radius, double a\+\_\+length\+Tip, double a\+\_\+radius\+Tip, bool a\+\_\+bidir, unsigned int a\+\_\+num\+Sides, c\+Vector3d $\ast$a\+\_\+dir, c\+Vector3d $\ast$a\+\_\+pos, c\+Colorf $\ast$a\+\_\+color)
 \item 
-\mbox{\Hypertarget{classc_arrow_a7186331105b442e9838b2ffa3df105ed}\label{classc_arrow_a7186331105b442e9838b2ffa3df105ed}} 
-c\+Mesh $\ast$ {\bfseries get\+Arrow\+Obj} ()
+c\+Mesh $\ast$ \mbox{\hyperlink{classc_arrow_a7186331105b442e9838b2ffa3df105ed}{get\+Arrow\+Obj}} ()
 \end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+A graphical arrow class. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classc_arrow_ac8bb7d663ec42a0666c111d3b14633f5}\label{classc_arrow_ac8bb7d663ec42a0666c111d3b14633f5}} 
+\index{cArrow@{cArrow}!cArrow@{cArrow}}
+\index{cArrow@{cArrow}!cArrow@{cArrow}}
+\doxysubsubsection{\texorpdfstring{cArrow()}{cArrow()}}
+{\footnotesize\ttfamily c\+Arrow\+::c\+Arrow (\begin{DoxyParamCaption}\item[{double}]{a\+\_\+length,  }\item[{double}]{a\+\_\+shaft\+Radius,  }\item[{double}]{a\+\_\+length\+Tip,  }\item[{double}]{a\+\_\+radius\+Tip,  }\item[{bool}]{a\+\_\+bidir,  }\item[{unsigned int}]{a\+\_\+num\+Sides,  }\item[{c\+Vector3d $\ast$}]{a\+\_\+dir,  }\item[{c\+Vector3d $\ast$}]{a\+\_\+pos,  }\item[{c\+Colorf $\ast$}]{a\+\_\+color }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+\_\+length} & Length of the arrow \\
+\hline
+{\em a\+\_\+shaft\+Radius} & Radius of the arrow shaft \\
+\hline
+{\em a\+\_\+length\+Tip} & Length of the tip of the arrow (the pointy part) \\
+\hline
+{\em a\+\_\+radius\+Tip} & Radius of the tip of the arrow. The tip of the arrow is conical. \\
+\hline
+{\em a\+\_\+bidir} & True to have arrow tips on both ends, False to have an arrow tip on one end \\
+\hline
+{\em a\+\_\+num\+Sides} & Number of sides on radial sections. \\
+\hline
+{\em a\+\_\+dir} & Direction of arrow \\
+\hline
+{\em a\+\_\+pos} & Position to start arrow. Arrow starts at a\+\_\+pos and points in a\+\_\+dir, with the length being the length of the a\+\_\+dir vector. \\
+\hline
+{\em a\+\_\+color} & Color of vertices \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classc_arrow_a7186331105b442e9838b2ffa3df105ed}\label{classc_arrow_a7186331105b442e9838b2ffa3df105ed}} 
+\index{cArrow@{cArrow}!getArrowObj@{getArrowObj}}
+\index{getArrowObj@{getArrowObj}!cArrow@{cArrow}}
+\doxysubsubsection{\texorpdfstring{getArrowObj()}{getArrowObj()}}
+{\footnotesize\ttfamily c\+Mesh $\ast$ c\+Arrow\+::get\+Arrow\+Obj (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Returns the mesh object created by the arrow. 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

@@ -4,6 +4,14 @@
 #include <random>
 #include <ctime>
 
+/**
+ * @brief A class for moving point clouds. 
+ *
+ * Creates a cloud of points that move in a given direction with a specified coherence. 
+ * Essentially, the implementation of Movshon & Newsome's moving dot graphics.
+ * Creates a cloud of moving points, where <em> c% </em> of points are moving according to the
+ * direction and velocity given, while the remainder of the points move in random directions.
+ */
 class cMovingDots : public cGenericMovingObject
 {
   private:

@@ -1,5 +1,14 @@
 \hypertarget{classc_generic_moving_object}{}\doxysection{c\+Generic\+Moving\+Object Class Reference}
 \label{classc_generic_moving_object}\index{cGenericMovingObject@{cGenericMovingObject}}
+
+
+A generic abstract class for any object that moves across the screen at regular time intervals.  
+
+
+
+
+{\ttfamily \#include $<$c\+Generic\+Moving\+Object.\+h$>$}
+
 Inheritance diagram for c\+Generic\+Moving\+Object\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -13,6 +22,11 @@ Inheritance diagram for c\+Generic\+Moving\+Object\+:\begin{figure}[H]
 virtual void {\bfseries graphics\+Loop\+Function} (double dt, c\+Vector3d tool\+Pos, c\+Vector3d tool\+Vel)
 \end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+A generic abstract class for any object that moves across the screen at regular time intervals. 
+
+All objects that move must inherit this class and override the graphics\+Loop\+Function. This function is called in the graphics update loop for each moving object in the environment. 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

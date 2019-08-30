@@ -6,9 +6,19 @@
 using namespace chai3d;
 using namespace std;
 
+/**
+ * @file streamer.cpp
+ * @brief Data streaming functionality
+ *
+ * Starts thread to start streaming position, velocity, and force data of the robot
+ */
+
 extern ControlData controlData;
 extern HapticData hapticsData;
 
+/**
+ * Start the data streaming thread. The pointer to the thread is stored in the ControlData struct
+ */
 void startStreamer(void)
 {
   controlData.streamerThread = new cThread();
@@ -16,6 +26,9 @@ void startStreamer(void)
   controlData.streamerUp = true;
 }
 
+/**
+ * Gets and sends the position, velocity, and force data of the robot
+ */
 void updateStreamer(void)
 {
   cVector3d pos;

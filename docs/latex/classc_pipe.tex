@@ -1,5 +1,14 @@
 \hypertarget{classc_pipe}{}\doxysection{c\+Pipe Class Reference}
 \label{classc_pipe}\index{cPipe@{cPipe}}
+
+
+Pipe class for generating cylindrical pipes.  
+
+
+
+
+{\ttfamily \#include $<$c\+Pipe.\+h$>$}
+
 Inheritance diagram for c\+Pipe\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -9,13 +18,51 @@ Inheritance diagram for c\+Pipe\+:\begin{figure}[H]
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classc_pipe_a8de5acac2eb25cafecc821336e5561d7}\label{classc_pipe_a8de5acac2eb25cafecc821336e5561d7}} 
-{\bfseries c\+Pipe} (double height, double inner\+Radius, double outer\+Radius, unsigned int num\+Sides, unsigned int num\+Height\+Segments, c\+Vector3d $\ast$pos, c\+Matrix3d $\ast$rot, c\+Colorf $\ast$color)
+\mbox{\hyperlink{classc_pipe_a8de5acac2eb25cafecc821336e5561d7}{c\+Pipe}} (double height, double inner\+Radius, double outer\+Radius, unsigned int num\+Sides, unsigned int num\+Height\+Segments, c\+Vector3d $\ast$pos, c\+Matrix3d $\ast$rot, c\+Colorf $\ast$color)
 \item 
-\mbox{\Hypertarget{classc_pipe_a9fae3a62e5034853afae2f0adb6b7ef6}\label{classc_pipe_a9fae3a62e5034853afae2f0adb6b7ef6}} 
-c\+Mesh $\ast$ {\bfseries get\+Pipe\+Obj} ()
+c\+Mesh $\ast$ \mbox{\hyperlink{classc_pipe_a9fae3a62e5034853afae2f0adb6b7ef6}{get\+Pipe\+Obj}} ()
 \end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+Pipe class for generating cylindrical pipes. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classc_pipe_a8de5acac2eb25cafecc821336e5561d7}\label{classc_pipe_a8de5acac2eb25cafecc821336e5561d7}} 
+\index{cPipe@{cPipe}!cPipe@{cPipe}}
+\index{cPipe@{cPipe}!cPipe@{cPipe}}
+\doxysubsubsection{\texorpdfstring{cPipe()}{cPipe()}}
+{\footnotesize\ttfamily c\+Pipe\+::c\+Pipe (\begin{DoxyParamCaption}\item[{double}]{a\+\_\+height,  }\item[{double}]{a\+\_\+inner\+Radius,  }\item[{double}]{a\+\_\+outer\+Radius,  }\item[{unsigned int}]{a\+\_\+num\+Sides,  }\item[{unsigned int}]{a\+\_\+num\+Height\+Segments,  }\item[{c\+Vector3d $\ast$}]{a\+\_\+pos,  }\item[{c\+Matrix3d $\ast$}]{a\+\_\+rot,  }\item[{c\+Colorf $\ast$}]{a\+\_\+color }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+\_\+height} & Height of the pipe \\
+\hline
+{\em a\+\_\+inner\+Radius} & Radius of the inner portion of the pipe (can be hollow) \\
+\hline
+{\em a\+\_\+outer\+Radius} & Radius of the outer portion of the pipe \\
+\hline
+{\em num\+Sides} & Number of sides that make up the pipe. If 6, then the pipe is hexagonal. \\
+\hline
+{\em a\+\_\+num\+Height\+Segments} & Number of segments in the pipe \\
+\hline
+{\em a\+\_\+pos} & Position of the center of the pipe \\
+\hline
+{\em a\+\_\+rot} & Rotation of the pipe, 0 is perfectly horizontal \\
+\hline
+{\em a\+\_\+color} & Color of the pipe \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classc_pipe_a9fae3a62e5034853afae2f0adb6b7ef6}\label{classc_pipe_a9fae3a62e5034853afae2f0adb6b7ef6}} 
+\index{cPipe@{cPipe}!getPipeObj@{getPipeObj}}
+\index{getPipeObj@{getPipeObj}!cPipe@{cPipe}}
+\doxysubsubsection{\texorpdfstring{getPipeObj()}{getPipeObj()}}
+{\footnotesize\ttfamily c\+Mesh $\ast$ c\+Pipe\+::get\+Pipe\+Obj (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Returns the mesh object associated with this pipe object 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

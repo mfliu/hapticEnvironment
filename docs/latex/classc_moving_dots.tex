@@ -1,5 +1,14 @@
 \hypertarget{classc_moving_dots}{}\doxysection{c\+Moving\+Dots Class Reference}
 \label{classc_moving_dots}\index{cMovingDots@{cMovingDots}}
+
+
+A class for moving point clouds.  
+
+
+
+
+{\ttfamily \#include $<$c\+Moving\+Dots.\+h$>$}
+
 Inheritance diagram for c\+Moving\+Dots\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -9,18 +18,81 @@ Inheritance diagram for c\+Moving\+Dots\+:\begin{figure}[H]
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classc_moving_dots_a701535c08f46f02aa76e4f5249db1503}\label{classc_moving_dots_a701535c08f46f02aa76e4f5249db1503}} 
-{\bfseries c\+Moving\+Dots} (int n, double c, double d, double m)
+\mbox{\hyperlink{classc_moving_dots_a701535c08f46f02aa76e4f5249db1503}{c\+Moving\+Dots}} (int n, double c, double d, double m)
+\begin{DoxyCompactList}\small\item\em Constructor for moving dot object. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classc_moving_dots_ae2827036e4e319d7a97a1a3c2710836d}{graphics\+Loop\+Function}} (double dt, c\+Vector3d tool\+Pos, c\+Vector3d tool\+Vel)
+\begin{DoxyCompactList}\small\item\em Update function for this moving object. \end{DoxyCompactList}\item 
+c\+Multi\+Point $\ast$ \mbox{\hyperlink{classc_moving_dots_afb00e8f257767260db66062f45bedfc6}{get\+Moving\+Points}} ()
 \item 
-\mbox{\Hypertarget{classc_moving_dots_ae2827036e4e319d7a97a1a3c2710836d}\label{classc_moving_dots_ae2827036e4e319d7a97a1a3c2710836d}} 
-virtual void {\bfseries graphics\+Loop\+Function} (double dt, c\+Vector3d tool\+Pos, c\+Vector3d tool\+Vel)
-\item 
-\mbox{\Hypertarget{classc_moving_dots_afb00e8f257767260db66062f45bedfc6}\label{classc_moving_dots_afb00e8f257767260db66062f45bedfc6}} 
-c\+Multi\+Point $\ast$ {\bfseries get\+Moving\+Points} ()
-\item 
-\mbox{\Hypertarget{classc_moving_dots_ac80391a697cd064d086112328e46461c}\label{classc_moving_dots_ac80391a697cd064d086112328e46461c}} 
-c\+Multi\+Point $\ast$ {\bfseries get\+Random\+Points} ()
+c\+Multi\+Point $\ast$ \mbox{\hyperlink{classc_moving_dots_ac80391a697cd064d086112328e46461c}{get\+Random\+Points}} ()
 \end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class for moving point clouds. 
+
+Creates a cloud of points that move in a given direction with a specified coherence. Essentially, the implementation of Movshon \& Newsome\textquotesingle{}s moving dot graphics. Creates a cloud of moving points, where {\itshape  c\% } of points are moving according to the direction and velocity given, while the remainder of the points move in random directions. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classc_moving_dots_a701535c08f46f02aa76e4f5249db1503}\label{classc_moving_dots_a701535c08f46f02aa76e4f5249db1503}} 
+\index{cMovingDots@{cMovingDots}!cMovingDots@{cMovingDots}}
+\index{cMovingDots@{cMovingDots}!cMovingDots@{cMovingDots}}
+\doxysubsubsection{\texorpdfstring{cMovingDots()}{cMovingDots()}}
+{\footnotesize\ttfamily c\+Moving\+Dots\+::c\+Moving\+Dots (\begin{DoxyParamCaption}\item[{int}]{n,  }\item[{double}]{c,  }\item[{double}]{d,  }\item[{double}]{m }\end{DoxyParamCaption})}
+
+
+
+Constructor for moving dot object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of points \\
+\hline
+{\em c} & Coherence of points, must be between 0 and 1 \\
+\hline
+{\em d} & Direction in degrees that dots are moving in \\
+\hline
+{\em m} & Magnitude or speed at which the dots move\\
+\hline
+\end{DoxyParams}
+This function generates a dot at a random position in the field of view and adds a pointer to the dots using Chai3D\textquotesingle{}s c\+Multi\+Point object. For each set of moving dots, {\itshape c$\ast$n} points are chosen to be the \char`\"{}moving\+Dots\char`\"{}, or dots that move in the direction specified. The remainder of the points {\itshape  (n-\/(c$\ast$n)) } are dots that move in random directions. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classc_moving_dots_afb00e8f257767260db66062f45bedfc6}\label{classc_moving_dots_afb00e8f257767260db66062f45bedfc6}} 
+\index{cMovingDots@{cMovingDots}!getMovingPoints@{getMovingPoints}}
+\index{getMovingPoints@{getMovingPoints}!cMovingDots@{cMovingDots}}
+\doxysubsubsection{\texorpdfstring{getMovingPoints()}{getMovingPoints()}}
+{\footnotesize\ttfamily c\+Multi\+Point $\ast$ c\+Moving\+Dots\+::get\+Moving\+Points (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Returns the dots moving in the specified direction \mbox{\Hypertarget{classc_moving_dots_ac80391a697cd064d086112328e46461c}\label{classc_moving_dots_ac80391a697cd064d086112328e46461c}} 
+\index{cMovingDots@{cMovingDots}!getRandomPoints@{getRandomPoints}}
+\index{getRandomPoints@{getRandomPoints}!cMovingDots@{cMovingDots}}
+\doxysubsubsection{\texorpdfstring{getRandomPoints()}{getRandomPoints()}}
+{\footnotesize\ttfamily c\+Multi\+Point $\ast$ c\+Moving\+Dots\+::get\+Random\+Points (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Returns the dots moving in random directions. If coherence is 1, the number of random dots is 0. \mbox{\Hypertarget{classc_moving_dots_ae2827036e4e319d7a97a1a3c2710836d}\label{classc_moving_dots_ae2827036e4e319d7a97a1a3c2710836d}} 
+\index{cMovingDots@{cMovingDots}!graphicsLoopFunction@{graphicsLoopFunction}}
+\index{graphicsLoopFunction@{graphicsLoopFunction}!cMovingDots@{cMovingDots}}
+\doxysubsubsection{\texorpdfstring{graphicsLoopFunction()}{graphicsLoopFunction()}}
+{\footnotesize\ttfamily void c\+Moving\+Dots\+::graphics\+Loop\+Function (\begin{DoxyParamCaption}\item[{double}]{dt,  }\item[{c\+Vector3d}]{tool\+Pos,  }\item[{c\+Vector3d}]{tool\+Vel }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Update function for this moving object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dt} & The amount of time that has passed since this function was last called \\
+\hline
+{\em tool\+Pos} & Position of the haptic robot \\
+\hline
+{\em tool\+Vel} & Velocity of the haptic robot\\
+\hline
+\end{DoxyParams}
+This function is called for the moving object in each iteration of the graphics loop. For moving dots, this function computes the next position of each true moving dot based on the specified direction and velocity, and re-\/renders the dot accordingly. Each random dot is assigned a random velocity and direction to move. If the dot moves out of the field of view, it\textquotesingle{}s position is randomly selected to be within the field of view. 
+
+Reimplemented from \mbox{\hyperlink{classc_generic_moving_object}{c\+Generic\+Moving\+Object}}.
+
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

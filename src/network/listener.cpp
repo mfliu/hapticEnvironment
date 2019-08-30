@@ -6,9 +6,20 @@
 using namespace chai3d;
 using namespace std;
 
+/**
+ * @file listener.cpp
+ * @brief Starts thread for listening to messages
+ *
+ * The Trial Control module should be the only module that sends messages to the robot
+ * directly--every other module should interact with the Trial Control module. 
+ */
+
 extern ControlData controlData;
 extern HapticData hapticsData;
 
+/** 
+ * Start the listening thread
+ */
 void startListener()
 {
   controlData.listenerThread = new cThread();
@@ -16,6 +27,10 @@ void startListener()
   controlData.listenerUp = true;
 }
 
+/**
+ * Upon receiving a packet, call the parsePacket function
+ * @see parsePacket
+ */
 void updateListener()
 {
   char rawPacket[MAX_PACKET_LENGTH];

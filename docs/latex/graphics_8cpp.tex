@@ -1,0 +1,112 @@
+\hypertarget{graphics_8cpp}{}\doxysection{/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/graphics/graphics.cpp File Reference}
+\label{graphics_8cpp}\index{/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/graphics/graphics.cpp@{/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/graphics/graphics.cpp}}
+
+
+Functions for setting up and starting the graphics loop.  
+
+
+{\ttfamily \#include \char`\"{}graphics.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{graphics_8cpp_a2b00342dede324282512c2d2b17f58b8}{init\+Display}} (void)
+\item 
+void \mbox{\hyperlink{graphics_8cpp_a2608babebb1b2b1775a8afdc42533307}{init\+Scene}} (void)
+\item 
+void \mbox{\hyperlink{graphics_8cpp_a7d9672e1a4e16d04203ede1323b81b65}{resize\+Window\+Callback}} (G\+L\+F\+Wwindow $\ast$a\+\_\+window, int a\+\_\+width, int a\+\_\+height)
+\item 
+void \mbox{\hyperlink{graphics_8cpp_a0c1c8426796ff939dcad378bd1c9f4db}{error\+Callback}} (int error, const char $\ast$error\+Description)
+\item 
+void \mbox{\hyperlink{graphics_8cpp_a5faca11eb733b75aa7ba985270de31c8}{key\+Select\+Callback}} (G\+L\+F\+Wwindow $\ast$window, int key, int scancode, int action, int mods)
+\item 
+void \mbox{\hyperlink{graphics_8cpp_ab4f2f13d59e61705f68614dc4565cc7b}{update\+Graphics}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{graphics_8cpp_a61a3ab6594c74ee0f051c3259633f46f}\label{graphics_8cpp_a61a3ab6594c74ee0f051c3259633f46f}} 
+\mbox{\hyperlink{struct_haptic_data}{Haptic\+Data}} {\bfseries haptics\+Data}
+\item 
+\mbox{\Hypertarget{graphics_8cpp_a0e74175a64ca6de70034d06fb12f6712}\label{graphics_8cpp_a0e74175a64ca6de70034d06fb12f6712}} 
+\mbox{\hyperlink{struct_control_data}{Control\+Data}} {\bfseries control\+Data}
+\item 
+\mbox{\Hypertarget{graphics_8cpp_a0327ccbf141035cc55235dfc5a25179a}\label{graphics_8cpp_a0327ccbf141035cc55235dfc5a25179a}} 
+\mbox{\hyperlink{struct_graphics_data}{Graphics\+Data}} {\bfseries graphics\+Data}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions for setting up and starting the graphics loop. 
+
+The graphics loop is the main loop of the program. Haptics runs in its own loop and messaging is handled by a separate thread. The functions here are responsible for using G\+L\+FW libraries to initialize and update the display. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{graphics_8cpp_a0c1c8426796ff939dcad378bd1c9f4db}\label{graphics_8cpp_a0c1c8426796ff939dcad378bd1c9f4db}} 
+\index{graphics.cpp@{graphics.cpp}!errorCallback@{errorCallback}}
+\index{errorCallback@{errorCallback}!graphics.cpp@{graphics.cpp}}
+\doxysubsubsection{\texorpdfstring{errorCallback()}{errorCallback()}}
+{\footnotesize\ttfamily void error\+Callback (\begin{DoxyParamCaption}\item[{int}]{error,  }\item[{const char $\ast$}]{error\+Description }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & Error code \\
+\hline
+{\em error\+Description} & Error message\\
+\hline
+\end{DoxyParams}
+This function is automatically called when a G\+L\+FW error is thrown \mbox{\Hypertarget{graphics_8cpp_a2b00342dede324282512c2d2b17f58b8}\label{graphics_8cpp_a2b00342dede324282512c2d2b17f58b8}} 
+\index{graphics.cpp@{graphics.cpp}!initDisplay@{initDisplay}}
+\index{initDisplay@{initDisplay}!graphics.cpp@{graphics.cpp}}
+\doxysubsubsection{\texorpdfstring{initDisplay()}{initDisplay()}}
+{\footnotesize\ttfamily void init\+Display (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Creates and initializes a G\+L\+FW window, and stores a pointer to this window in the graphics\+Data struct. This does not initialize the Chai3D graphics information. For that, \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{graphics_8cpp_a2608babebb1b2b1775a8afdc42533307}{init\+Scene}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{graphics_8cpp_a2608babebb1b2b1775a8afdc42533307}\label{graphics_8cpp_a2608babebb1b2b1775a8afdc42533307}} 
+\index{graphics.cpp@{graphics.cpp}!initScene@{initScene}}
+\index{initScene@{initScene}!graphics.cpp@{graphics.cpp}}
+\doxysubsubsection{\texorpdfstring{initScene()}{initScene()}}
+{\footnotesize\ttfamily void init\+Scene (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Initializes the world for Chai3D. Also creates and sets the camera viewing angle and lighting. \mbox{\Hypertarget{graphics_8cpp_a5faca11eb733b75aa7ba985270de31c8}\label{graphics_8cpp_a5faca11eb733b75aa7ba985270de31c8}} 
+\index{graphics.cpp@{graphics.cpp}!keySelectCallback@{keySelectCallback}}
+\index{keySelectCallback@{keySelectCallback}!graphics.cpp@{graphics.cpp}}
+\doxysubsubsection{\texorpdfstring{keySelectCallback()}{keySelectCallback()}}
+{\footnotesize\ttfamily void key\+Select\+Callback (\begin{DoxyParamCaption}\item[{G\+L\+F\+Wwindow $\ast$}]{window,  }\item[{int}]{key,  }\item[{int}]{scancode,  }\item[{int}]{action,  }\item[{int}]{mods }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & Pointer to G\+L\+FW Window object \\
+\hline
+{\em key} & Name of the key that was pressed. Space key causes errors over message passing \\
+\hline
+{\em scancode} & The scancode assigned to the key that was pressed \\
+\hline
+{\em action} & Type of action--should be G\+L\+F\+W\+\_\+\+P\+R\+E\+SS \\
+\hline
+{\em mods} & Modifier bits\\
+\hline
+\end{DoxyParams}
+Callback function if a keyboard key is pressed. When a key is pressed, a message is sent to the Trial Control module with a string representing the name of the key. \mbox{\Hypertarget{graphics_8cpp_a7d9672e1a4e16d04203ede1323b81b65}\label{graphics_8cpp_a7d9672e1a4e16d04203ede1323b81b65}} 
+\index{graphics.cpp@{graphics.cpp}!resizeWindowCallback@{resizeWindowCallback}}
+\index{resizeWindowCallback@{resizeWindowCallback}!graphics.cpp@{graphics.cpp}}
+\doxysubsubsection{\texorpdfstring{resizeWindowCallback()}{resizeWindowCallback()}}
+{\footnotesize\ttfamily void resize\+Window\+Callback (\begin{DoxyParamCaption}\item[{G\+L\+F\+Wwindow $\ast$}]{a\+\_\+window,  }\item[{int}]{a\+\_\+width,  }\item[{int}]{a\+\_\+height }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+\_\+window} & Pointer to G\+L\+FW window. \\
+\hline
+{\em a\+\_\+width} & Initial window width \\
+\hline
+{\em a\+\_\+height} & Initial window height\\
+\hline
+\end{DoxyParams}
+This function is called when the user resizes the window. \mbox{\Hypertarget{graphics_8cpp_ab4f2f13d59e61705f68614dc4565cc7b}\label{graphics_8cpp_ab4f2f13d59e61705f68614dc4565cc7b}} 
+\index{graphics.cpp@{graphics.cpp}!updateGraphics@{updateGraphics}}
+\index{updateGraphics@{updateGraphics}!graphics.cpp@{graphics.cpp}}
+\doxysubsubsection{\texorpdfstring{updateGraphics()}{updateGraphics()}}
+{\footnotesize\ttfamily void update\+Graphics (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+update\+Graphics is called from the main loop and updates the graphics at each time step. Each update involves updating the shadows and camera view, as well as rendering the updated position of any moving objects. All moving objects must override the graphics\+Loop\+Function method. 
