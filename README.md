@@ -1,5 +1,6 @@
 
 Just some notes for now.
+Documentation here: https://mfliu.github.io/hapticEnvironment/index.html
 
 If you are cloning this repository and need the `rpclib` library, use 
 ```
