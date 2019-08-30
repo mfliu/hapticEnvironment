@@ -1,5 +1,15 @@
 #include "cBoundingPlane.h"
 
+/**
+ * @param stiffness Stiffness of the bounding planes 
+ * @param toolRadius Size of the haptic cursor in the workspace
+ * @param bWidth Width of area in the bounding plane 
+ * @param bHeight Height of area in the bounding plane
+ *
+ * Initializes meshes for each side of the bounding plane and ensures that the haptic tool can enter
+ * the bounding box but can't leave it, by setting the directionality of the vertex normals.
+ */
+
 cBoundingPlane::cBoundingPlane(int stiffness, double toolRadius, double bWidth, double bHeight)
 {
   double w = bWidth/2;

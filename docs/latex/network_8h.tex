@@ -1,0 +1,72 @@
+\hypertarget{network_8h}{}\doxysection{/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/network/network.h File Reference}
+\label{network_8h}\index{/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/network/network.h@{/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/network/network.h}}
+{\ttfamily \#include \char`\"{}message\+Definitions.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$sys/ioctl.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$ctime$>$}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{network_8h_a2ed65f7844ae0c750272dbd3eca34fa6}{add\+Message\+Handler\+Module}} ()
+\item 
+int \mbox{\hyperlink{network_8h_a2ea5a85aec82381e125efc102f79ec83}{subscribe\+To\+Trial\+Control}} ()
+\item 
+int \mbox{\hyperlink{network_8h_a499c60465b6a1609a460e77684f89ca9}{open\+Messaging\+Socket}} ()
+\item 
+void \mbox{\hyperlink{network_8h_a6d5326c15ff2fc6d7e380d1646c45e4a}{close\+Messaging\+Socket}} ()
+\item 
+int \mbox{\hyperlink{network_8h_ae35558fae22afd5eb664ec1f37f91ab1}{read\+Packet}} (char $\ast$packet)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{network_8h_a2ed65f7844ae0c750272dbd3eca34fa6}\label{network_8h_a2ed65f7844ae0c750272dbd3eca34fa6}} 
+\index{network.h@{network.h}!addMessageHandlerModule@{addMessageHandlerModule}}
+\index{addMessageHandlerModule@{addMessageHandlerModule}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{addMessageHandlerModule()}{addMessageHandlerModule()}}
+{\footnotesize\ttfamily int add\+Message\+Handler\+Module (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This function adds the robot environment to the \mbox{\hyperlink{class_message_handler}{Message\+Handler}}. Information such as the module number, IP address, and port are set through command-\/line inputs and stored in the control\+Data external struct. \mbox{\Hypertarget{network_8h_a6d5326c15ff2fc6d7e380d1646c45e4a}\label{network_8h_a6d5326c15ff2fc6d7e380d1646c45e4a}} 
+\index{network.h@{network.h}!closeMessagingSocket@{closeMessagingSocket}}
+\index{closeMessagingSocket@{closeMessagingSocket}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{closeMessagingSocket()}{closeMessagingSocket()}}
+{\footnotesize\ttfamily void close\+Messaging\+Socket (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Closes the socket for this module. \mbox{\Hypertarget{network_8h_a499c60465b6a1609a460e77684f89ca9}\label{network_8h_a499c60465b6a1609a460e77684f89ca9}} 
+\index{network.h@{network.h}!openMessagingSocket@{openMessagingSocket}}
+\index{openMessagingSocket@{openMessagingSocket}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{openMessagingSocket()}{openMessagingSocket()}}
+{\footnotesize\ttfamily int open\+Messaging\+Socket (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This specifically opens the {\bfseries{listening}} port for this module. Sending ports are opened via \mbox{\hyperlink{class_message_handler}{Message\+Handler}}. In other words, this opens the socket that is assigned to this module. \mbox{\Hypertarget{network_8h_ae35558fae22afd5eb664ec1f37f91ab1}\label{network_8h_ae35558fae22afd5eb664ec1f37f91ab1}} 
+\index{network.h@{network.h}!readPacket@{readPacket}}
+\index{readPacket@{readPacket}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{readPacket()}{readPacket()}}
+{\footnotesize\ttfamily int read\+Packet (\begin{DoxyParamCaption}\item[{char $\ast$}]{packet\+Pointer }\end{DoxyParamCaption})}
+
+Receives messages on the messaging socket and sends them to be parsed by the controller 
+\begin{DoxyParams}{Parameters}
+{\em packet\+Pointer} & is a char pointer to store the read-\/in bytes \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{controller_8h_a2f751138b5d47b3bcaf45aa63abfaeb4}{parse\+Packet}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{network_8h_a2ea5a85aec82381e125efc102f79ec83}\label{network_8h_a2ea5a85aec82381e125efc102f79ec83}} 
+\index{network.h@{network.h}!subscribeToTrialControl@{subscribeToTrialControl}}
+\index{subscribeToTrialControl@{subscribeToTrialControl}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{subscribeToTrialControl()}{subscribeToTrialControl()}}
+{\footnotesize\ttfamily int subscribe\+To\+Trial\+Control (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Subscribe to the trial control module. This tells \mbox{\hyperlink{class_message_handler}{Message\+Handler}} to take all messages sent by Trial Control and send them to this module. 

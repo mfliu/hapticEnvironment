@@ -5,13 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Haptic Environment Documentation: cConstrainToLine Class Reference</title>
+<title>Haptic Environment: cConstrainToLine Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,7 +27,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Haptic Environment Documentation
+   <div id="projectname">Haptic Environment
    </div>
    <div id="projectbrief">Documentation for haptic environment code</div>
   </td>
@@ -69,6 +75,11 @@ $(function() {
 <div class="title">cConstrainToLine Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Constrains movement of the haptic device to a line between two points.  
+ <a href="classc_constrain_to_line.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="c_constrain_to_line_8h_source.html">cConstrainToLine.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for cConstrainToLine:</div>
 <div class="dyncontent">
@@ -78,19 +89,162 @@ Inheritance diagram for cConstrainToLine:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0bf284901020b09804b00f159c175d02"><td class="memItemLeft" align="right" valign="top"><a id="a0bf284901020b09804b00f159c175d02"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>cConstrainToLine</b> (cWorld *worldPtr, cVector3d *p1, cVector3d *p2, double s)</td></tr>
+<tr class="memitem:a0bf284901020b09804b00f159c175d02"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_constrain_to_line.html#a0bf284901020b09804b00f159c175d02">cConstrainToLine</a> (cWorld *worldPtr, cVector3d *p1, cVector3d *p2, double s)</td></tr>
 <tr class="separator:a0bf284901020b09804b00f159c175d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f9bf489d88ea38477d60b82f640b487"><td class="memItemLeft" align="right" valign="top"><a id="a0f9bf489d88ea38477d60b82f640b487"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setEnabled</b> (bool e)</td></tr>
+<tr class="memitem:a0f9bf489d88ea38477d60b82f640b487"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_constrain_to_line.html#a0f9bf489d88ea38477d60b82f640b487">setEnabled</a> (bool e)</td></tr>
 <tr class="separator:a0f9bf489d88ea38477d60b82f640b487"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a048f1b2dfdfef5eed63afcce053bb8f3"><td class="memItemLeft" align="right" valign="top"><a id="a048f1b2dfdfef5eed63afcce053bb8f3"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>getEnabled</b> ()</td></tr>
+<tr class="memitem:a048f1b2dfdfef5eed63afcce053bb8f3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_constrain_to_line.html#a048f1b2dfdfef5eed63afcce053bb8f3">getEnabled</a> ()</td></tr>
 <tr class="separator:a048f1b2dfdfef5eed63afcce053bb8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:addc811982511a4fc8c73eecba3c86c49"><td class="memItemLeft" align="right" valign="top"><a id="addc811982511a4fc8c73eecba3c86c49"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>computeForce</b> (const cVector3d &amp;a_toolPos, const cVector3d &amp;a_toolVel, const unsigned int &amp;a_toolID, cVector3d &amp;a_reactionForce)</td></tr>
+<tr class="memitem:addc811982511a4fc8c73eecba3c86c49"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_constrain_to_line.html#addc811982511a4fc8c73eecba3c86c49">computeForce</a> (const cVector3d &amp;a_toolPos, const cVector3d &amp;a_toolVel, const unsigned int &amp;a_toolID, cVector3d &amp;a_reactionForce)</td></tr>
 <tr class="separator:addc811982511a4fc8c73eecba3c86c49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Constrains movement of the haptic device to a line between two points. </p>
+<p>Creates a line between two points that has a strong magnetic effect. Can be enabled or disabled. As with other haptic effects, this class inherits from Chai3D's cGenericEFfect. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a0bf284901020b09804b00f159c175d02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bf284901020b09804b00f159c175d02">&#9670;&nbsp;</a></span>cConstrainToLine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cConstrainToLine::cConstrainToLine </td>
+          <td>(</td>
+          <td class="paramtype">cWorld *&#160;</td>
+          <td class="paramname"><em>worldPtr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cVector3d *&#160;</td>
+          <td class="paramname"><em>p1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cVector3d *&#160;</td>
+          <td class="paramname"><em>p2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">worldPtr</td><td>Pointer to the world, since haptic effects are global. </td></tr>
+    <tr><td class="paramname">p1</td><td>First endpoint of line </td></tr>
+    <tr><td class="paramname">p2</td><td>Second endpoint of line</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Constructor for a magnetic line to which the haptic tool is pulled </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="addc811982511a4fc8c73eecba3c86c49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addc811982511a4fc8c73eecba3c86c49">&#9670;&nbsp;</a></span>computeForce()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cConstrainToLine::computeForce </td>
+          <td>(</td>
+          <td class="paramtype">const cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_toolPos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_toolVel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned int &amp;&#160;</td>
+          <td class="paramname"><em>a_toolID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_reactionForce</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a_toolPos</td><td>Position of the haptic tool </td></tr>
+    <tr><td class="paramname">a_toolVel</td><td>Velocity of the haptic tool </td></tr>
+    <tr><td class="paramname">a_toolID</td><td>ID number of the haptic tool </td></tr>
+    <tr><td class="paramname">a_reactionForce</td><td>Vector that stores force to be applied to haptic tool.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function is inherited from cGenericEffect and is called on each iteration of the haptic update thread. The haptic tool is constrained to a line by computing the projection between the tool and the line and applying a force that is normal from the point to the line. Essentially, the haptic tool is connected to the line by a spring along the projection from the tool to the line. </p>
+
+</div>
+</div>
+<a id="a048f1b2dfdfef5eed63afcce053bb8f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a048f1b2dfdfef5eed63afcce053bb8f3">&#9670;&nbsp;</a></span>getEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cConstrainToLine::getEnabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Determine whether the line constraint is enabled. True if it is, false otherwise </p>
+
+</div>
+</div>
+<a id="a0f9bf489d88ea38477d60b82f640b487"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f9bf489d88ea38477d60b82f640b487">&#9670;&nbsp;</a></span>setEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cConstrainToLine::setEnabled </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>True enables this effect, false deactivates it</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Set whether the haptic tool is being constrained to a line </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/<a class="el" href="c_constrain_to_line_8h_source.html">cConstrainToLine.h</a></li>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/cConstrainToLine.cpp</li>

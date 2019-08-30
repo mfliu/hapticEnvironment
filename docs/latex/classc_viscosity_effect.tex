@@ -1,5 +1,14 @@
 \hypertarget{classc_viscosity_effect}{}\doxysection{c\+Viscosity\+Effect Class Reference}
 \label{classc_viscosity_effect}\index{cViscosityEffect@{cViscosityEffect}}
+
+
+Creates a velocity-\/dependent (viscous) field.  
+
+
+
+
+{\ttfamily \#include $<$c\+Viscosity\+Effect.\+h$>$}
+
 Inheritance diagram for c\+Viscosity\+Effect\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -9,11 +18,9 @@ Inheritance diagram for c\+Viscosity\+Effect\+:\begin{figure}[H]
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classc_viscosity_effect_a7ed90777668b3aa8d656b87ae2eafa37}\label{classc_viscosity_effect_a7ed90777668b3aa8d656b87ae2eafa37}} 
-{\bfseries c\+Viscosity\+Effect} (c\+World $\ast$world\+Ptr, c\+Matrix3d $\ast$B)
+\mbox{\hyperlink{classc_viscosity_effect_a7ed90777668b3aa8d656b87ae2eafa37}{c\+Viscosity\+Effect}} (c\+World $\ast$world\+Ptr, c\+Matrix3d $\ast$B)
 \item 
-\mbox{\Hypertarget{classc_viscosity_effect_afb5fbed02b34496df2fe066d8d4dc868}\label{classc_viscosity_effect_afb5fbed02b34496df2fe066d8d4dc868}} 
-bool {\bfseries compute\+Force} (const c\+Vector3d \&a\+\_\+tool\+Pos, const c\+Vector3d \&a\+\_\+tool\+Vel, const unsigned int \&a\+\_\+tool\+ID, c\+Vector3d \&a\+\_\+reaction\+Force)
+bool \mbox{\hyperlink{classc_viscosity_effect_afb5fbed02b34496df2fe066d8d4dc868}{compute\+Force}} (const c\+Vector3d \&a\+\_\+tool\+Pos, const c\+Vector3d \&a\+\_\+tool\+Vel, const unsigned int \&a\+\_\+tool\+ID, c\+Vector3d \&a\+\_\+reaction\+Force)
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
@@ -23,7 +30,50 @@ c\+Matrix3d $\ast$ {\bfseries viscosity\+Matrix}
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+Creates a velocity-\/dependent (viscous) field. 
+
+Apply a velocity-\/dependent resistive or assistive force to the haptic device. This is done through a 3x3 matrix $B$
+
+\[ B=\begin{bmatrix} v_x & v_{xy} & v_{xz} \\ v_{xy} & v_y & v_{yz} \\ v_{xz} & v_{yz} & v_z \end{bmatrix} \] where each element of $B$ is a multiplier for the velocity of the haptic tool in that dimension. Thus, resistive forces in the {\itshape x-\/direction} only would have negative values in $v_x$, while nonzero values in the off-\/diagonals will produce a curl field. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classc_viscosity_effect_a7ed90777668b3aa8d656b87ae2eafa37}\label{classc_viscosity_effect_a7ed90777668b3aa8d656b87ae2eafa37}} 
+\index{cViscosityEffect@{cViscosityEffect}!cViscosityEffect@{cViscosityEffect}}
+\index{cViscosityEffect@{cViscosityEffect}!cViscosityEffect@{cViscosityEffect}}
+\doxysubsubsection{\texorpdfstring{cViscosityEffect()}{cViscosityEffect()}}
+{\footnotesize\ttfamily c\+Viscosity\+Effect\+::c\+Viscosity\+Effect (\begin{DoxyParamCaption}\item[{c\+World $\ast$}]{world\+Ptr,  }\item[{c\+Matrix3d $\ast$}]{B }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em world\+Ptr} & Pointer to the world \\
+\hline
+{\em B} & 3x3 matrix of multipliers\\
+\hline
+\end{DoxyParams}
+Constructor for the viscous field. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classc_viscosity_effect_afb5fbed02b34496df2fe066d8d4dc868}\label{classc_viscosity_effect_afb5fbed02b34496df2fe066d8d4dc868}} 
+\index{cViscosityEffect@{cViscosityEffect}!computeForce@{computeForce}}
+\index{computeForce@{computeForce}!cViscosityEffect@{cViscosityEffect}}
+\doxysubsubsection{\texorpdfstring{computeForce()}{computeForce()}}
+{\footnotesize\ttfamily bool c\+Viscosity\+Effect\+::compute\+Force (\begin{DoxyParamCaption}\item[{const c\+Vector3d \&}]{a\+\_\+tool\+Pos,  }\item[{const c\+Vector3d \&}]{a\+\_\+tool\+Vel,  }\item[{const unsigned int \&}]{a\+\_\+tool\+ID,  }\item[{c\+Vector3d \&}]{a\+\_\+reaction\+Force }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+\_\+tool\+Pos} & Position of the haptic tool in the workspace \\
+\hline
+{\em a\+\_\+tool\+Vel} & Velocity of the haptic tool \\
+\hline
+{\em a\+\_\+tool\+ID} & ID assigned to this particular haptic device \\
+\hline
+{\em a\+\_\+reaction\+Force} & A vector for storing the force to be applied to the haptic tool\\
+\hline
+\end{DoxyParams}
+Computes B$\ast$tool\+Vel at each timepoint at which this function is called (in the haptic loop) 
+
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/haptics/c\+Viscosity\+Effect.\+h\item 
+/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/haptics/\mbox{\hyperlink{c_viscosity_effect_8h}{c\+Viscosity\+Effect.\+h}}\item 
 /home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/haptics/c\+Viscosity\+Effect.\+cpp\end{DoxyCompactItemize}

@@ -5,13 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Haptic Environment Documentation: /home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/cBoundingPlane.h Source File</title>
+<title>Haptic Environment: /home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/cBoundingPlane.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,7 +27,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Haptic Environment Documentation
+   <div id="projectname">Haptic Environment
    </div>
    <div id="projectbrief">Documentation for haptic environment code</div>
   </td>
@@ -70,32 +76,32 @@ $(function() {
 <div class="title">cBoundingPlane.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;chai3d.h&quot;</span></div>
+<a href="c_bounding_plane_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;chai3d.h&quot;</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keyword">using namespace </span>chai3d;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">using namespace </span>std;</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="classc_bounding_plane.html">    6</a></span>&#160;<span class="keyword">class </span><a class="code" href="classc_bounding_plane.html">cBoundingPlane</a> : <span class="keyword">public</span> cGenericObject </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    cMesh* lowerMesh;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    cMesh* upperMesh;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    cMesh* topMesh;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    cMesh* bottomMesh;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    cMesh* rightMesh;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    cMesh* leftMesh;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <a class="code" href="classc_bounding_plane.html">cBoundingPlane</a>(<span class="keywordtype">int</span> stiffness, <span class="keywordtype">double</span> toolRadius, <span class="keywordtype">double</span> bWidth, <span class="keywordtype">double</span> bHeight);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    cMesh* getLowerBoundingPlane() { <span class="keywordflow">return</span> lowerMesh; }</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    cMesh* getUpperBoundingPlane() { <span class="keywordflow">return</span> upperMesh; }</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    cMesh* getTopBoundingPlane() { <span class="keywordflow">return</span> topMesh; }</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    cMesh* getBottomBoundingPlane() { <span class="keywordflow">return</span> bottomMesh; }</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    cMesh* getLeftBoundingPlane() { <span class="keywordflow">return</span> leftMesh; }</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    cMesh* getRightBoundingPlane() { <span class="keywordflow">return</span> rightMesh; }</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;};</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classc_bounding_plane.html">   18</a></span>&#160;<span class="keyword">class </span><a class="code" href="classc_bounding_plane.html">cBoundingPlane</a> : <span class="keyword">public</span> cGenericObject </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    cMesh* lowerMesh;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    cMesh* upperMesh;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    cMesh* topMesh;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    cMesh* bottomMesh;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    cMesh* rightMesh;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    cMesh* leftMesh;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="classc_bounding_plane.html">cBoundingPlane</a>(<span class="keywordtype">int</span> stiffness, <span class="keywordtype">double</span> toolRadius, <span class="keywordtype">double</span> bWidth, <span class="keywordtype">double</span> bHeight);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    cMesh* getLowerBoundingPlane() { <span class="keywordflow">return</span> lowerMesh; }</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    cMesh* getUpperBoundingPlane() { <span class="keywordflow">return</span> upperMesh; }</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    cMesh* getTopBoundingPlane() { <span class="keywordflow">return</span> topMesh; }</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    cMesh* getBottomBoundingPlane() { <span class="keywordflow">return</span> bottomMesh; }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    cMesh* getLeftBoundingPlane() { <span class="keywordflow">return</span> leftMesh; }</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    cMesh* getRightBoundingPlane() { <span class="keywordflow">return</span> rightMesh; }</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassc_bounding_plane_html"><div class="ttname"><a href="classc_bounding_plane.html">cBoundingPlane</a></div><div class="ttdef"><b>Definition:</b> cBoundingPlane.h:6</div></div>
+<div class="ttc" id="aclassc_bounding_plane_html"><div class="ttname"><a href="classc_bounding_plane.html">cBoundingPlane</a></div><div class="ttdoc">Creates bounding planes that constrict movement to a 2D plane near the center of the workspace.</div><div class="ttdef"><b>Definition:</b> cBoundingPlane.h:18</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

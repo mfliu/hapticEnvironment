@@ -5,13 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Haptic Environment Documentation: cViscosityEffect Class Reference</title>
+<title>Haptic Environment: cViscosityEffect Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,7 +27,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Haptic Environment Documentation
+   <div id="projectname">Haptic Environment
    </div>
    <div id="projectbrief">Documentation for haptic environment code</div>
   </td>
@@ -70,6 +76,11 @@ $(function() {
 <div class="title">cViscosityEffect Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Creates a velocity-dependent (viscous) field.  
+ <a href="classc_viscosity_effect.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="c_viscosity_effect_8h_source.html">cViscosityEffect.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for cViscosityEffect:</div>
 <div class="dyncontent">
@@ -79,11 +90,9 @@ Inheritance diagram for cViscosityEffect:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7ed90777668b3aa8d656b87ae2eafa37"><td class="memItemLeft" align="right" valign="top"><a id="a7ed90777668b3aa8d656b87ae2eafa37"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>cViscosityEffect</b> (cWorld *worldPtr, cMatrix3d *B)</td></tr>
+<tr class="memitem:a7ed90777668b3aa8d656b87ae2eafa37"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_viscosity_effect.html#a7ed90777668b3aa8d656b87ae2eafa37">cViscosityEffect</a> (cWorld *worldPtr, cMatrix3d *B)</td></tr>
 <tr class="separator:a7ed90777668b3aa8d656b87ae2eafa37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb5fbed02b34496df2fe066d8d4dc868"><td class="memItemLeft" align="right" valign="top"><a id="afb5fbed02b34496df2fe066d8d4dc868"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>computeForce</b> (const cVector3d &amp;a_toolPos, const cVector3d &amp;a_toolVel, const unsigned int &amp;a_toolID, cVector3d &amp;a_reactionForce)</td></tr>
+<tr class="memitem:afb5fbed02b34496df2fe066d8d4dc868"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_viscosity_effect.html#afb5fbed02b34496df2fe066d8d4dc868">computeForce</a> (const cVector3d &amp;a_toolPos, const cVector3d &amp;a_toolVel, const unsigned int &amp;a_toolID, cVector3d &amp;a_reactionForce)</td></tr>
 <tr class="separator:afb5fbed02b34496df2fe066d8d4dc868"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -92,6 +101,101 @@ Public Attributes</h2></td></tr>
 cMatrix3d *&#160;</td><td class="memItemRight" valign="bottom"><b>viscosityMatrix</b></td></tr>
 <tr class="separator:a2515b5d3febe442c5d0cae3bc77809ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Creates a velocity-dependent (viscous) field. </p>
+<p>Apply a velocity-dependent resistive or assistive force to the haptic device. This is done through a 3x3 matrix \(B\)</p>
+<p class="formulaDsp">
+\[ B=\begin{bmatrix} v_x &amp; v_{xy} &amp; v_{xz} \\ v_{xy} &amp; v_y &amp; v_{yz} \\ v_{xz} &amp; v_{yz} &amp; v_z \end{bmatrix} \]
+</p>
+<p> where each element of \(B\) is a multiplier for the velocity of the haptic tool in that dimension. Thus, resistive forces in the <em>x-direction</em> only would have negative values in \(v_x\), while nonzero values in the off-diagonals will produce a curl field. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a7ed90777668b3aa8d656b87ae2eafa37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ed90777668b3aa8d656b87ae2eafa37">&#9670;&nbsp;</a></span>cViscosityEffect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cViscosityEffect::cViscosityEffect </td>
+          <td>(</td>
+          <td class="paramtype">cWorld *&#160;</td>
+          <td class="paramname"><em>worldPtr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cMatrix3d *&#160;</td>
+          <td class="paramname"><em>B</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">worldPtr</td><td>Pointer to the world </td></tr>
+    <tr><td class="paramname">B</td><td>3x3 matrix of multipliers</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Constructor for the viscous field. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="afb5fbed02b34496df2fe066d8d4dc868"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb5fbed02b34496df2fe066d8d4dc868">&#9670;&nbsp;</a></span>computeForce()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cViscosityEffect::computeForce </td>
+          <td>(</td>
+          <td class="paramtype">const cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_toolPos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_toolVel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned int &amp;&#160;</td>
+          <td class="paramname"><em>a_toolID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_reactionForce</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a_toolPos</td><td>Position of the haptic tool in the workspace </td></tr>
+    <tr><td class="paramname">a_toolVel</td><td>Velocity of the haptic tool </td></tr>
+    <tr><td class="paramname">a_toolID</td><td>ID assigned to this particular haptic device </td></tr>
+    <tr><td class="paramname">a_reactionForce</td><td>A vector for storing the force to be applied to the haptic tool</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Computes B*toolVel at each timepoint at which this function is called (in the haptic loop) </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/<a class="el" href="c_viscosity_effect_8h_source.html">cViscosityEffect.h</a></li>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/cViscosityEffect.cpp</li>

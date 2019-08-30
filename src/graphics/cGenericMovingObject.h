@@ -6,6 +6,10 @@ using namespace std;
 
 
 /**
+ * @file cGenericMovingObject.h
+ *
+ * @class cGenericMovingObject
+ *
  * @brief A generic abstract class for any object that moves across the screen at regular time intervals.
  * 
  * All objects that move must inherit this class and override the graphicsLoopFunction. This

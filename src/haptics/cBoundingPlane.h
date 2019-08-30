@@ -3,6 +3,18 @@
 using namespace chai3d;
 using namespace std;
 
+/**
+ * @file cBoundingPlane.h
+ * @class cBoundingPlane
+ * @brief Creates bounding planes that constrict movement to a 2D plane near the center of the
+ * workspace.
+ *
+ * Restricts movement of the haptic device to a vertical 2D plane. The stiffness of the bounds can
+ * be specified. 
+ *
+ * @deprecated Do not use this class until issues with colllision detection are resolved
+ */
+
 class cBoundingPlane : public cGenericObject 
 {
   private:

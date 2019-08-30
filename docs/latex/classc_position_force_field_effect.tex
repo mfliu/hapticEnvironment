@@ -1,5 +1,14 @@
 \hypertarget{classc_position_force_field_effect}{}\doxysection{c\+Position\+Force\+Field\+Effect Class Reference}
 \label{classc_position_force_field_effect}\index{cPositionForceFieldEffect@{cPositionForceFieldEffect}}
+
+
+Creates a force field that varies over the space of the haptic environment.  
+
+
+
+
+{\ttfamily \#include $<$c\+Position\+Force\+Field\+Effect.\+h$>$}
+
 Inheritance diagram for c\+Position\+Force\+Field\+Effect\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -9,15 +18,59 @@ Inheritance diagram for c\+Position\+Force\+Field\+Effect\+:\begin{figure}[H]
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classc_position_force_field_effect_a6bb58929a024719dd1ede786c934e5f5}\label{classc_position_force_field_effect_a6bb58929a024719dd1ede786c934e5f5}} 
-{\bfseries c\+Position\+Force\+Field\+Effect} (c\+World $\ast$world\+Ptr, double m, double d)
+\mbox{\hyperlink{classc_position_force_field_effect_a6bb58929a024719dd1ede786c934e5f5}{c\+Position\+Force\+Field\+Effect}} (c\+World $\ast$world\+Ptr, double m, double d)
 \item 
-\mbox{\Hypertarget{classc_position_force_field_effect_a705d8b97acf79579cf5b8de00f9c5a54}\label{classc_position_force_field_effect_a705d8b97acf79579cf5b8de00f9c5a54}} 
-bool {\bfseries compute\+Force} (const c\+Vector3d \&a\+\_\+tool\+Pos, const c\+Vector3d \&a\+\_\+tool\+Vel, const unsigned int \&a\+\_\+tool\+ID, c\+Vector3d \&a\+\_\+reaction\+Force)
+bool \mbox{\hyperlink{classc_position_force_field_effect_a705d8b97acf79579cf5b8de00f9c5a54}{compute\+Force}} (const c\+Vector3d \&a\+\_\+tool\+Pos, const c\+Vector3d \&a\+\_\+tool\+Vel, const unsigned int \&a\+\_\+tool\+ID, c\+Vector3d \&a\+\_\+reaction\+Force)
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+Creates a force field that varies over the space of the haptic environment. 
+
+This effect depends on the position of the haptic cursor. Forces applied are in the specified direction and magnitude, multiplied by the position of the cursor. \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classc_c_s_t}{c\+C\+ST}} 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classc_position_force_field_effect_a6bb58929a024719dd1ede786c934e5f5}\label{classc_position_force_field_effect_a6bb58929a024719dd1ede786c934e5f5}} 
+\index{cPositionForceFieldEffect@{cPositionForceFieldEffect}!cPositionForceFieldEffect@{cPositionForceFieldEffect}}
+\index{cPositionForceFieldEffect@{cPositionForceFieldEffect}!cPositionForceFieldEffect@{cPositionForceFieldEffect}}
+\doxysubsubsection{\texorpdfstring{cPositionForceFieldEffect()}{cPositionForceFieldEffect()}}
+{\footnotesize\ttfamily c\+Position\+Force\+Field\+Effect\+::c\+Position\+Force\+Field\+Effect (\begin{DoxyParamCaption}\item[{c\+World $\ast$}]{world\+Ptr,  }\item[{double}]{m,  }\item[{double}]{d }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em world\+Ptr} & Pointer to the world \\
+\hline
+{\em m} & Magnitude of the force field \\
+\hline
+{\em d} & Direciton of the force field\\
+\hline
+\end{DoxyParams}
+Constructor for a position-\/dependent force field 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classc_position_force_field_effect_a705d8b97acf79579cf5b8de00f9c5a54}\label{classc_position_force_field_effect_a705d8b97acf79579cf5b8de00f9c5a54}} 
+\index{cPositionForceFieldEffect@{cPositionForceFieldEffect}!computeForce@{computeForce}}
+\index{computeForce@{computeForce}!cPositionForceFieldEffect@{cPositionForceFieldEffect}}
+\doxysubsubsection{\texorpdfstring{computeForce()}{computeForce()}}
+{\footnotesize\ttfamily bool c\+Position\+Force\+Field\+Effect\+::compute\+Force (\begin{DoxyParamCaption}\item[{const c\+Vector3d \&}]{a\+\_\+tool\+Pos,  }\item[{const c\+Vector3d \&}]{a\+\_\+tool\+Vel,  }\item[{const unsigned int \&}]{a\+\_\+tool\+ID,  }\item[{c\+Vector3d \&}]{a\+\_\+reaction\+Force }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+\_\+tool\+Pos} & Position of the haptic tool \\
+\hline
+{\em a\+\_\+tool\+Vel} & Velocity of the haptic tool \\
+\hline
+{\em a\+\_\+tool\+ID} & ID number of the haptic tool \\
+\hline
+{\em a\+\_\+reaction\+Force} & Vector that stores the force to be applied to the robot\\
+\hline
+\end{DoxyParams}
+The position of the haptic tool is multiplied by the magnitude and direction of the specified force field 
+
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/haptics/c\+Position\+Force\+Field\+Effect.\+h\item 
+/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/haptics/\mbox{\hyperlink{c_position_force_field_effect_8h}{c\+Position\+Force\+Field\+Effect.\+h}}\item 
 /home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/haptics/c\+Position\+Force\+Field\+Effect.\+cpp\end{DoxyCompactItemize}

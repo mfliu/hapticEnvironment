@@ -7,6 +7,7 @@ using namespace chai3d;
 using namespace std;
 
 /**
+ * @file streamer.h
  * @file streamer.cpp
  * @brief Data streaming functionality
  *

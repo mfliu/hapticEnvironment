@@ -1,6 +1,7 @@
 #include "controller.h"
 
 /**
+ * @file controller.h
  * @file controller.cpp 
  * @brief This file contains the main function that runs the haptic, graphics, and message listening
  * loops.

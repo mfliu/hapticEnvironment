@@ -5,13 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Haptic Environment Documentation: /home/mfl24/Documents/chaiProjects/hapticEnvironment/src/core/controller.h Source File</title>
+<title>Haptic Environment: /home/mfl24/Documents/chaiProjects/hapticEnvironment/src/core/controller.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,7 +27,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Haptic Environment Documentation
+   <div id="projectname">Haptic Environment
    </div>
    <div id="projectbrief">Documentation for haptic environment code</div>
   </td>
@@ -70,7 +76,7 @@ $(function() {
 <div class="title">controller.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once </span></div>
+<a href="controller_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once </span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#ifndef _CONTROLLER_H_</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#define _CONTROLLER_H_  </span></div>
@@ -81,12 +87,12 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;network/network.h&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;network/streamer.h&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;network/listener.h&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;haptics/haptics.h&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;graphics/graphics.h&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;combined/combined.h&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="network_8h.html">network/network.h</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="streamer_8h.html">network/streamer.h</a>&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="listener_8h.html">network/listener.h</a>&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="haptics_8h.html">haptics/haptics.h</a>&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="graphics_8h.html">graphics/graphics.h</a>&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="combined_8h.html">combined/combined.h</a>&quot;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;thread&gt;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;rpc/client.h&quot;</span></div>
@@ -132,15 +138,21 @@ $(function() {
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  unordered_map&lt;string, cGenericEffect*&gt; worldEffects;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;};</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="controller_8cpp.html#abf7f0927b3bbb1978f73c56f1e1f9f68">allThreadsDown</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controller_8cpp.html#a5ae591df94fc66ccb85cbb6565368bca">close</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controller_8cpp.html#a2f751138b5d47b3bcaf45aa63abfaeb4">parsePacket</a>(<span class="keywordtype">char</span>* packet);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="controller_8h.html#ae1d35590a2bbad855286a6e72e0a9181">allThreadsDown</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controller_8h.html#a67b72387b99fb35706b11eeba7070bc4">close</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controller_8h.html#a2f751138b5d47b3bcaf45aa63abfaeb4">parsePacket</a>(<span class="keywordtype">char</span>* packet);</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="acontroller_8cpp_html_a5ae591df94fc66ccb85cbb6565368bca"><div class="ttname"><a href="controller_8cpp.html#a5ae591df94fc66ccb85cbb6565368bca">close</a></div><div class="ttdeci">void close()</div><div class="ttdef"><b>Definition:</b> controller.cpp:104</div></div>
+<div class="ttc" id="agraphics_8h_html"><div class="ttname"><a href="graphics_8h.html">graphics.h</a></div></div>
+<div class="ttc" id="acontroller_8h_html_a67b72387b99fb35706b11eeba7070bc4"><div class="ttname"><a href="controller_8h.html#a67b72387b99fb35706b11eeba7070bc4">close</a></div><div class="ttdeci">void close(void)</div><div class="ttdef"><b>Definition:</b> controller.cpp:105</div></div>
 <div class="ttc" id="astruct_control_data_html"><div class="ttname"><a href="struct_control_data.html">ControlData</a></div><div class="ttdef"><b>Definition:</b> controller.h:25</div></div>
-<div class="ttc" id="acontroller_8cpp_html_abf7f0927b3bbb1978f73c56f1e1f9f68"><div class="ttname"><a href="controller_8cpp.html#abf7f0927b3bbb1978f73c56f1e1f9f68">allThreadsDown</a></div><div class="ttdeci">bool allThreadsDown()</div><div class="ttdef"><b>Definition:</b> controller.cpp:94</div></div>
-<div class="ttc" id="acontroller_8cpp_html_a2f751138b5d47b3bcaf45aa63abfaeb4"><div class="ttname"><a href="controller_8cpp.html#a2f751138b5d47b3bcaf45aa63abfaeb4">parsePacket</a></div><div class="ttdeci">void parsePacket(char *packet)</div><div class="ttdef"><b>Definition:</b> controller.cpp:127</div></div>
+<div class="ttc" id="acontroller_8h_html_a2f751138b5d47b3bcaf45aa63abfaeb4"><div class="ttname"><a href="controller_8h.html#a2f751138b5d47b3bcaf45aa63abfaeb4">parsePacket</a></div><div class="ttdeci">void parsePacket(char *packet)</div><div class="ttdef"><b>Definition:</b> controller.cpp:128</div></div>
+<div class="ttc" id="acontroller_8h_html_ae1d35590a2bbad855286a6e72e0a9181"><div class="ttname"><a href="controller_8h.html#ae1d35590a2bbad855286a6e72e0a9181">allThreadsDown</a></div><div class="ttdeci">bool allThreadsDown(void)</div><div class="ttdef"><b>Definition:</b> controller.cpp:95</div></div>
+<div class="ttc" id="alistener_8h_html"><div class="ttname"><a href="listener_8h.html">listener.h</a></div></div>
+<div class="ttc" id="acombined_8h_html"><div class="ttname"><a href="combined_8h.html">combined.h</a></div><div class="ttdoc">A header file with the includes of any combined classes–classes with both haptic and graphic effects.</div></div>
+<div class="ttc" id="anetwork_8h_html"><div class="ttname"><a href="network_8h.html">network.h</a></div></div>
+<div class="ttc" id="astreamer_8h_html"><div class="ttname"><a href="streamer_8h.html">streamer.h</a></div></div>
+<div class="ttc" id="ahaptics_8h_html"><div class="ttname"><a href="haptics_8h.html">haptics.h</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -5,13 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Haptic Environment Documentation: /home/mfl24/Documents/chaiProjects/hapticEnvironment/src/graphics/graphics.h Source File</title>
+<title>Haptic Environment: /home/mfl24/Documents/chaiProjects/hapticEnvironment/src/graphics/graphics.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,7 +27,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Haptic Environment Documentation
+   <div id="projectname">Haptic Environment
    </div>
    <div id="projectbrief">Documentation for haptic environment code</div>
   </td>
@@ -70,23 +76,23 @@ $(function() {
 <div class="title">graphics.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once </span></div>
+<a href="graphics_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once </span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifndef _GRAPHICS_H_INCLUDED_</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#define _GRAPHICS_H_INCLUDED_ </span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;chai3d.h&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;GLFW/glfw3.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;haptics/haptics.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="haptics_8h.html">haptics/haptics.h</a>&quot;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">// ------------------------------------------------------</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">// -------------Custom Graphics Functionality------------</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// ------------------------------------------------------</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;cGenericMovingObject.h&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;cMovingDots.h&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;cPipe.h&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;cArrow.h&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="c_generic_moving_object_8h.html">cGenericMovingObject.h</a>&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="c_moving_dots_8h.html">cMovingDots.h</a>&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="c_pipe_8h.html">cPipe.h</a>&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="c_arrow_8h.html">cArrow.h</a>&quot;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">using namespace </span>chai3d; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">using namespace </span>std; </div>
@@ -110,22 +116,27 @@ $(function() {
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  vector&lt;cGenericMovingObject*&gt; movingObjects;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;};</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">void</span> <a class="code" href="graphics_8cpp.html#a2b00342dede324282512c2d2b17f58b8">initDisplay</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">void</span> <a class="code" href="graphics_8cpp.html#a2608babebb1b2b1775a8afdc42533307">initScene</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">void</span> <a class="code" href="graphics_8cpp.html#a0c1c8426796ff939dcad378bd1c9f4db">errorCallback</a>(<span class="keywordtype">int</span> error, <span class="keyword">const</span> <span class="keywordtype">char</span>* errorDescription);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">void</span> <a class="code" href="graphics_8cpp.html#a7d9672e1a4e16d04203ede1323b81b65">resizeWindowCallback</a>(GLFWwindow* window, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">void</span> <a class="code" href="graphics_8cpp.html#a5faca11eb733b75aa7ba985270de31c8">keySelectCallback</a>(GLFWwindow* window, <span class="keywordtype">int</span> key, <span class="keywordtype">int</span> scancode, <span class="keywordtype">int</span> action, <span class="keywordtype">int</span> mods);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">void</span> <a class="code" href="graphics_8cpp.html#ab4f2f13d59e61705f68614dc4565cc7b">updateGraphics</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">void</span> <a class="code" href="graphics_8h.html#a2b00342dede324282512c2d2b17f58b8">initDisplay</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">void</span> <a class="code" href="graphics_8h.html#a2608babebb1b2b1775a8afdc42533307">initScene</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">void</span> <a class="code" href="graphics_8h.html#a0c1c8426796ff939dcad378bd1c9f4db">errorCallback</a>(<span class="keywordtype">int</span> error, <span class="keyword">const</span> <span class="keywordtype">char</span>* errorDescription);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">void</span> <a class="code" href="graphics_8h.html#a6b0513b9cf343dd077382c85ed088f00">resizeWindowCallback</a>(GLFWwindow* window, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">void</span> <a class="code" href="graphics_8h.html#a5faca11eb733b75aa7ba985270de31c8">keySelectCallback</a>(GLFWwindow* window, <span class="keywordtype">int</span> key, <span class="keywordtype">int</span> scancode, <span class="keywordtype">int</span> action, <span class="keywordtype">int</span> mods);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">void</span> <a class="code" href="graphics_8h.html#ab4f2f13d59e61705f68614dc4565cc7b">updateGraphics</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="agraphics_8cpp_html_ab4f2f13d59e61705f68614dc4565cc7b"><div class="ttname"><a href="graphics_8cpp.html#ab4f2f13d59e61705f68614dc4565cc7b">updateGraphics</a></div><div class="ttdeci">void updateGraphics(void)</div><div class="ttdef"><b>Definition:</b> graphics.cpp:203</div></div>
-<div class="ttc" id="agraphics_8cpp_html_a2b00342dede324282512c2d2b17f58b8"><div class="ttname"><a href="graphics_8cpp.html#a2b00342dede324282512c2d2b17f58b8">initDisplay</a></div><div class="ttdeci">void initDisplay(void)</div><div class="ttdef"><b>Definition:</b> graphics.cpp:21</div></div>
-<div class="ttc" id="agraphics_8cpp_html_a5faca11eb733b75aa7ba985270de31c8"><div class="ttname"><a href="graphics_8cpp.html#a5faca11eb733b75aa7ba985270de31c8">keySelectCallback</a></div><div class="ttdeci">void keySelectCallback(GLFWwindow *window, int key, int scancode, int action, int mods)</div><div class="ttdef"><b>Definition:</b> graphics.cpp:140</div></div>
+<div class="ttc" id="ac_pipe_8h_html"><div class="ttname"><a href="c_pipe_8h.html">cPipe.h</a></div></div>
+<div class="ttc" id="agraphics_8h_html_a6b0513b9cf343dd077382c85ed088f00"><div class="ttname"><a href="graphics_8h.html#a6b0513b9cf343dd077382c85ed088f00">resizeWindowCallback</a></div><div class="ttdeci">void resizeWindowCallback(GLFWwindow *window, int w, int h)</div><div class="ttdef"><b>Definition:</b> graphics.cpp:114</div></div>
+<div class="ttc" id="agraphics_8h_html_a0c1c8426796ff939dcad378bd1c9f4db"><div class="ttname"><a href="graphics_8h.html#a0c1c8426796ff939dcad378bd1c9f4db">errorCallback</a></div><div class="ttdeci">void errorCallback(int error, const char *errorDescription)</div><div class="ttdef"><b>Definition:</b> graphics.cpp:126</div></div>
+<div class="ttc" id="ac_generic_moving_object_8h_html"><div class="ttname"><a href="c_generic_moving_object_8h.html">cGenericMovingObject.h</a></div></div>
+<div class="ttc" id="agraphics_8h_html_a5faca11eb733b75aa7ba985270de31c8"><div class="ttname"><a href="graphics_8h.html#a5faca11eb733b75aa7ba985270de31c8">keySelectCallback</a></div><div class="ttdeci">void keySelectCallback(GLFWwindow *window, int key, int scancode, int action, int mods)</div><div class="ttdef"><b>Definition:</b> graphics.cpp:141</div></div>
+<div class="ttc" id="agraphics_8h_html_a2608babebb1b2b1775a8afdc42533307"><div class="ttname"><a href="graphics_8h.html#a2608babebb1b2b1775a8afdc42533307">initScene</a></div><div class="ttdeci">void initScene(void)</div><div class="ttdef"><b>Definition:</b> graphics.cpp:84</div></div>
 <div class="ttc" id="astruct_graphics_data_html"><div class="ttname"><a href="struct_graphics_data.html">GraphicsData</a></div><div class="ttdef"><b>Definition:</b> graphics.h:22</div></div>
-<div class="ttc" id="agraphics_8cpp_html_a0c1c8426796ff939dcad378bd1c9f4db"><div class="ttname"><a href="graphics_8cpp.html#a0c1c8426796ff939dcad378bd1c9f4db">errorCallback</a></div><div class="ttdeci">void errorCallback(int error, const char *errorDescription)</div><div class="ttdef"><b>Definition:</b> graphics.cpp:125</div></div>
-<div class="ttc" id="agraphics_8cpp_html_a7d9672e1a4e16d04203ede1323b81b65"><div class="ttname"><a href="graphics_8cpp.html#a7d9672e1a4e16d04203ede1323b81b65">resizeWindowCallback</a></div><div class="ttdeci">void resizeWindowCallback(GLFWwindow *a_window, int a_width, int a_height)</div><div class="ttdef"><b>Definition:</b> graphics.cpp:113</div></div>
-<div class="ttc" id="agraphics_8cpp_html_a2608babebb1b2b1775a8afdc42533307"><div class="ttname"><a href="graphics_8cpp.html#a2608babebb1b2b1775a8afdc42533307">initScene</a></div><div class="ttdeci">void initScene(void)</div><div class="ttdef"><b>Definition:</b> graphics.cpp:83</div></div>
+<div class="ttc" id="ac_moving_dots_8h_html"><div class="ttname"><a href="c_moving_dots_8h.html">cMovingDots.h</a></div></div>
+<div class="ttc" id="ac_arrow_8h_html"><div class="ttname"><a href="c_arrow_8h.html">cArrow.h</a></div></div>
+<div class="ttc" id="agraphics_8h_html_a2b00342dede324282512c2d2b17f58b8"><div class="ttname"><a href="graphics_8h.html#a2b00342dede324282512c2d2b17f58b8">initDisplay</a></div><div class="ttdeci">void initDisplay(void)</div><div class="ttdef"><b>Definition:</b> graphics.cpp:22</div></div>
+<div class="ttc" id="agraphics_8h_html_ab4f2f13d59e61705f68614dc4565cc7b"><div class="ttname"><a href="graphics_8h.html#ab4f2f13d59e61705f68614dc4565cc7b">updateGraphics</a></div><div class="ttdeci">void updateGraphics(void)</div><div class="ttdef"><b>Definition:</b> graphics.cpp:204</div></div>
+<div class="ttc" id="ahaptics_8h_html"><div class="ttname"><a href="haptics_8h.html">haptics.h</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

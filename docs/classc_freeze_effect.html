@@ -5,13 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Haptic Environment Documentation: cFreezeEffect Class Reference</title>
+<title>Haptic Environment: cFreezeEffect Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,7 +27,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Haptic Environment Documentation
+   <div id="projectname">Haptic Environment
    </div>
    <div id="projectbrief">Documentation for haptic environment code</div>
   </td>
@@ -69,6 +75,11 @@ $(function() {
 <div class="title">cFreezeEffect Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Freezes the haptic tool and prevents it from moving.  
+ <a href="classc_freeze_effect.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="c_freeze_effect_8h_source.html">cFreezeEffect.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for cFreezeEffect:</div>
 <div class="dyncontent">
@@ -78,13 +89,108 @@ Inheritance diagram for cFreezeEffect:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a532ece083e9a2da1ad992cd52353e429"><td class="memItemLeft" align="right" valign="top"><a id="a532ece083e9a2da1ad992cd52353e429"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>cFreezeEffect</b> (cWorld *worldPtr, double maxStiffness, cVector3d startPoint)</td></tr>
+<tr class="memitem:a532ece083e9a2da1ad992cd52353e429"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_freeze_effect.html#a532ece083e9a2da1ad992cd52353e429">cFreezeEffect</a> (cWorld *worldPtr, double maxStiffness, cVector3d startPoint)</td></tr>
 <tr class="separator:a532ece083e9a2da1ad992cd52353e429"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96f9c5f1cd5795513897090a3792504d"><td class="memItemLeft" align="right" valign="top"><a id="a96f9c5f1cd5795513897090a3792504d"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>computeForce</b> (const cVector3d &amp;a_toolPos, const cVector3d &amp;a_toolVel, const unsigned int &amp;a_toolID, cVector3d &amp;a_reactionForce)</td></tr>
+<tr class="memitem:a96f9c5f1cd5795513897090a3792504d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_freeze_effect.html#a96f9c5f1cd5795513897090a3792504d">computeForce</a> (const cVector3d &amp;a_toolPos, const cVector3d &amp;a_toolVel, const unsigned int &amp;a_toolID, cVector3d &amp;a_reactionForce)</td></tr>
 <tr class="separator:a96f9c5f1cd5795513897090a3792504d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Freezes the haptic tool and prevents it from moving. </p>
+<p>Freezes the haptic tool in place essentially by creating a spring between the haptic point and its freeze-time location with a high stiffness. Usage would be to create a freeze effect the moment the haptic cursor needs to be frozen. However, this effect can be used to create "sink" essentially to trap the haptic cursor to a different location. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a532ece083e9a2da1ad992cd52353e429"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a532ece083e9a2da1ad992cd52353e429">&#9670;&nbsp;</a></span>cFreezeEffect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cFreezeEffect::cFreezeEffect </td>
+          <td>(</td>
+          <td class="paramtype">cWorld *&#160;</td>
+          <td class="paramname"><em>worldPtr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>maxStiffness</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cVector3d&#160;</td>
+          <td class="paramname"><em>startPoint</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">worldPtr</td><td>Pointer to the world </td></tr>
+    <tr><td class="paramname">maxStiffness</td><td>Maximum stiffness of the world to ensure that the haptic tool is maximally freezed </td></tr>
+    <tr><td class="paramname">startPoint</td><td>The position at which the haptic cursor is frozen&ndash;typically the instantaneous position of the cursor. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a96f9c5f1cd5795513897090a3792504d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96f9c5f1cd5795513897090a3792504d">&#9670;&nbsp;</a></span>computeForce()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cFreezeEffect::computeForce </td>
+          <td>(</td>
+          <td class="paramtype">const cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_toolPos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_toolVel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned int &amp;&#160;</td>
+          <td class="paramname"><em>a_toolID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_reactionForce</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a_toolPos</td><td>Position of the haptic tool </td></tr>
+    <tr><td class="paramname">a_toolVel</td><td>Velocity of the haptic tool </td></tr>
+    <tr><td class="paramname">a_toolID</td><td>ID number of the haptic tool </td></tr>
+    <tr><td class="paramname">a_reactionForce</td><td>Vector to store the computed reaction force</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Produces a force in the direction between the haptic tool and the position at which the tool should be frozen. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/<a class="el" href="c_freeze_effect_8h_source.html">cFreezeEffect.h</a></li>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/cFreezeEffect.cpp</li>

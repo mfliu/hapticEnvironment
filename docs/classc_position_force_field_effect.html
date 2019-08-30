@@ -5,13 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Haptic Environment Documentation: cPositionForceFieldEffect Class Reference</title>
+<title>Haptic Environment: cPositionForceFieldEffect Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,7 +27,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Haptic Environment Documentation
+   <div id="projectname">Haptic Environment
    </div>
    <div id="projectbrief">Documentation for haptic environment code</div>
   </td>
@@ -69,6 +75,11 @@ $(function() {
 <div class="title">cPositionForceFieldEffect Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Creates a force field that varies over the space of the haptic environment.  
+ <a href="classc_position_force_field_effect.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="c_position_force_field_effect_8h_source.html">cPositionForceFieldEffect.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for cPositionForceFieldEffect:</div>
 <div class="dyncontent">
@@ -78,13 +89,109 @@ Inheritance diagram for cPositionForceFieldEffect:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6bb58929a024719dd1ede786c934e5f5"><td class="memItemLeft" align="right" valign="top"><a id="a6bb58929a024719dd1ede786c934e5f5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>cPositionForceFieldEffect</b> (cWorld *worldPtr, double m, double d)</td></tr>
+<tr class="memitem:a6bb58929a024719dd1ede786c934e5f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_position_force_field_effect.html#a6bb58929a024719dd1ede786c934e5f5">cPositionForceFieldEffect</a> (cWorld *worldPtr, double m, double d)</td></tr>
 <tr class="separator:a6bb58929a024719dd1ede786c934e5f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a705d8b97acf79579cf5b8de00f9c5a54"><td class="memItemLeft" align="right" valign="top"><a id="a705d8b97acf79579cf5b8de00f9c5a54"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>computeForce</b> (const cVector3d &amp;a_toolPos, const cVector3d &amp;a_toolVel, const unsigned int &amp;a_toolID, cVector3d &amp;a_reactionForce)</td></tr>
+<tr class="memitem:a705d8b97acf79579cf5b8de00f9c5a54"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_position_force_field_effect.html#a705d8b97acf79579cf5b8de00f9c5a54">computeForce</a> (const cVector3d &amp;a_toolPos, const cVector3d &amp;a_toolVel, const unsigned int &amp;a_toolID, cVector3d &amp;a_reactionForce)</td></tr>
 <tr class="separator:a705d8b97acf79579cf5b8de00f9c5a54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Creates a force field that varies over the space of the haptic environment. </p>
+<p>This effect depends on the position of the haptic cursor. Forces applied are in the specified direction and magnitude, multiplied by the position of the cursor. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classc_c_s_t.html" title="Instance of a critical stability task paradigm.">cCST</a> </dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a6bb58929a024719dd1ede786c934e5f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bb58929a024719dd1ede786c934e5f5">&#9670;&nbsp;</a></span>cPositionForceFieldEffect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cPositionForceFieldEffect::cPositionForceFieldEffect </td>
+          <td>(</td>
+          <td class="paramtype">cWorld *&#160;</td>
+          <td class="paramname"><em>worldPtr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>d</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">worldPtr</td><td>Pointer to the world </td></tr>
+    <tr><td class="paramname">m</td><td>Magnitude of the force field </td></tr>
+    <tr><td class="paramname">d</td><td>Direciton of the force field</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Constructor for a position-dependent force field </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a705d8b97acf79579cf5b8de00f9c5a54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a705d8b97acf79579cf5b8de00f9c5a54">&#9670;&nbsp;</a></span>computeForce()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cPositionForceFieldEffect::computeForce </td>
+          <td>(</td>
+          <td class="paramtype">const cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_toolPos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_toolVel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned int &amp;&#160;</td>
+          <td class="paramname"><em>a_toolID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_reactionForce</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a_toolPos</td><td>Position of the haptic tool </td></tr>
+    <tr><td class="paramname">a_toolVel</td><td>Velocity of the haptic tool </td></tr>
+    <tr><td class="paramname">a_toolID</td><td>ID number of the haptic tool </td></tr>
+    <tr><td class="paramname">a_reactionForce</td><td>Vector that stores the force to be applied to the robot</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The position of the haptic tool is multiplied by the magnitude and direction of the specified force field </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/<a class="el" href="c_position_force_field_effect_8h_source.html">cPositionForceFieldEffect.h</a></li>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/cPositionForceFieldEffect.cpp</li>

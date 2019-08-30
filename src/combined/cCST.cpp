@@ -3,6 +3,18 @@ extern ControlData controlData;
 extern HapticData hapticsData;
 extern GraphicsData graphicsData;
 
+/**
+ * @param worldPtr Pointer to the world 
+ * @param l Lambda, or the instability parameter for CST 
+ * @param f Magnitude of the force 
+ * @param v Set whether visual feedback is enabled
+ * @param h Set whether haptic feedback is enabled
+ * 
+ * Constructor for a CST object. A CST object inherits both from cGenericMovingObject and
+ * cGenericEffect because the CST cursor is a graphical object whose position must be updated at
+ * each iteration of the graphical loop. Similarly, cGenericEffect enables haptic feedback
+ * rendering.  
+ */
 cCST::cCST(cWorld* worldPtr, double l, double f, bool v, bool h):cGenericMovingObject(), cGenericEffect(worldPtr)
 {
   world = worldPtr;
@@ -25,6 +37,12 @@ cCST::cCST(cWorld* worldPtr, double l, double f, bool v, bool h):cGenericMovingO
   lastUpdateTime = 0.0;
 }
 
+/**
+ * @param toolPos Position of the haptic tool 
+ * 
+ * Given the position of the haptic tool, (the hand position \f$u(t)\f$, this function computes the
+ * next position of the CST cursor \f$x(t)\f$. 
+ */
 cVector3d* cCST::computeNextPosition(cVector3d toolPos)
 {
   double cstTime = cstClock->getCurrentTimeSeconds();
@@ -68,6 +86,15 @@ cVector3d* cCST::computeNextPosition(cVector3d toolPos)
   }
 }
 
+/**
+ * @param a_toolPos Position of the haptic tool 
+ * @param a_toolVel Velocity of the haptic tool 
+ * @param a_toolID ID number of the haptic tool 
+ * @param a_reactionForce Vector for storing forces to be applied the haptic tool 
+ *
+ * This function takes the position of the CST cursor computed by computeNextPosition and determines
+ * the force needed to be rendered to the user. 
+ */
 bool cCST::computeForce(const cVector3d& a_toolPos, const cVector3d& a_toolVel,
                   const unsigned int& a_toolID, cVector3d& a_reactionForce)
 {
@@ -90,6 +117,15 @@ bool cCST::computeForce(const cVector3d& a_toolPos, const cVector3d& a_toolVel,
   }
 }
 
+/**
+ * @param dt Time increment since this function was last run 
+ * @param toolPos Position of the haptic tool 
+ * @param toolVel Velocity of the haptic tool 
+ *
+ * Since the CST cursor is a moving object and inherits from cGenericMovingObject, it must override
+ * this function. This function updates the graphical rendering of the CST cursor based on the
+ * position computed by the computeNextPosition function.
+ */
 void cCST::graphicsLoopFunction(double dt, cVector3d toolPos, cVector3d toolVel)
 {
   if (visionEnabled == true && running == true) {
@@ -103,6 +139,12 @@ void cCST::graphicsLoopFunction(double dt, cVector3d toolPos, cVector3d toolVel)
     visualCursor->setEnabled(false);
   }
 }
+
+/**
+ * @param v Set whether visual feedback should be given. 
+ *
+ * True to enable visual feedback, false to disable visual feedback.
+ */
 void cCST::setVisionEnabled(bool v)
 {
   visionEnabled = v;
@@ -114,11 +156,21 @@ void cCST::setVisionEnabled(bool v)
   }
 }
 
+/**
+ * @param h Set whether haptic feedback should be given.
+ *
+ * True to enable haptic feedback, false to disable haptic feedback.
+ */
 void cCST::setHapticEnabled(bool h)
 {
   hapticEnabled = h;
 }
 
+/**
+ * @param l Lambda 
+ *
+ * Set the value of the instability parameter \f$\lambda\f$
+ */
 bool cCST::setLambda(double l)
 {
   if (running == true) {
@@ -130,6 +182,10 @@ bool cCST::setLambda(double l)
   }
 }
 
+/**
+ * The CST object is instantiated for all trials of CST. This function enables the start of a new
+ * trial of CST
+ */
 void cCST::startCST()
 {
   running = true;
@@ -137,6 +193,9 @@ void cCST::startCST()
   lastUpdateTime = cstClock->getCurrentTimeSeconds();
 }
 
+/**
+ * Stops a CST trial.
+ */
 void cCST::stopCST()
 {
   running = false;
@@ -147,6 +206,10 @@ void cCST::stopCST()
   currPos->z(0.0);
 }
 
+/**
+ * When a session of CST is complete, this is called to clear up memory allocated to the CST object
+ * and remove it from the Chai3d world.
+ */
 void cCST::destructCST()
 {
   world->deleteChild(visualCursor);

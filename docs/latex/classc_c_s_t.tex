@@ -1,5 +1,14 @@
 \hypertarget{classc_c_s_t}{}\doxysection{c\+C\+ST Class Reference}
 \label{classc_c_s_t}\index{cCST@{cCST}}
+
+
+Instance of a critical stability task paradigm.  
+
+
+
+
+{\ttfamily \#include $<$c\+C\+S\+T.\+h$>$}
+
 Inheritance diagram for c\+C\+ST\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -9,36 +18,147 @@ Inheritance diagram for c\+C\+ST\+:\begin{figure}[H]
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classc_c_s_t_af07dae93133ddb613683d5adc7096189}\label{classc_c_s_t_af07dae93133ddb613683d5adc7096189}} 
-{\bfseries c\+C\+ST} (c\+World $\ast$world\+Ptr, double l, double f, bool v, bool h)
+\mbox{\hyperlink{classc_c_s_t_af07dae93133ddb613683d5adc7096189}{c\+C\+ST}} (c\+World $\ast$world\+Ptr, double l, double f, bool v, bool h)
 \item 
-\mbox{\Hypertarget{classc_c_s_t_a45ef6ab882283e34d88b4f123a2eceb3}\label{classc_c_s_t_a45ef6ab882283e34d88b4f123a2eceb3}} 
-bool {\bfseries compute\+Force} (const c\+Vector3d \&a\+\_\+tool\+Pos, const c\+Vector3d \&a\+\_\+tool\+Vel, const unsigned int \&a\+\_\+tool\+ID, c\+Vector3d \&a\+\_\+reaction\+Force)
+bool \mbox{\hyperlink{classc_c_s_t_a45ef6ab882283e34d88b4f123a2eceb3}{compute\+Force}} (const c\+Vector3d \&a\+\_\+tool\+Pos, const c\+Vector3d \&a\+\_\+tool\+Vel, const unsigned int \&a\+\_\+tool\+ID, c\+Vector3d \&a\+\_\+reaction\+Force)
 \item 
-\mbox{\Hypertarget{classc_c_s_t_a4a04e4f8d10ac350957e803223b0ab6d}\label{classc_c_s_t_a4a04e4f8d10ac350957e803223b0ab6d}} 
-void {\bfseries graphics\+Loop\+Function} (double dt, c\+Vector3d tool\+Pos, c\+Vector3d tool\+Vel)
+void \mbox{\hyperlink{classc_c_s_t_a4a04e4f8d10ac350957e803223b0ab6d}{graphics\+Loop\+Function}} (double dt, c\+Vector3d tool\+Pos, c\+Vector3d tool\+Vel)
 \item 
-\mbox{\Hypertarget{classc_c_s_t_a2c69f8bf61a3031f15106f1f6f6a3f05}\label{classc_c_s_t_a2c69f8bf61a3031f15106f1f6f6a3f05}} 
-void {\bfseries set\+Vision\+Enabled} (bool v)
+void \mbox{\hyperlink{classc_c_s_t_a2c69f8bf61a3031f15106f1f6f6a3f05}{set\+Vision\+Enabled}} (bool v)
 \item 
-\mbox{\Hypertarget{classc_c_s_t_a0c3dfb0ef8ed2d3dfc2e0fd8846c1c03}\label{classc_c_s_t_a0c3dfb0ef8ed2d3dfc2e0fd8846c1c03}} 
-void {\bfseries set\+Haptic\+Enabled} (bool h)
+void \mbox{\hyperlink{classc_c_s_t_a0c3dfb0ef8ed2d3dfc2e0fd8846c1c03}{set\+Haptic\+Enabled}} (bool h)
 \item 
-\mbox{\Hypertarget{classc_c_s_t_a85ec7fbeab2e8e3b9706890492f9fe51}\label{classc_c_s_t_a85ec7fbeab2e8e3b9706890492f9fe51}} 
-bool {\bfseries set\+Lambda} (double l)
+bool \mbox{\hyperlink{classc_c_s_t_a85ec7fbeab2e8e3b9706890492f9fe51}{set\+Lambda}} (double l)
 \item 
-\mbox{\Hypertarget{classc_c_s_t_a42be640dc8619f2abf2e3e917fb53942}\label{classc_c_s_t_a42be640dc8619f2abf2e3e917fb53942}} 
-void {\bfseries start\+C\+ST} ()
+void \mbox{\hyperlink{classc_c_s_t_a42be640dc8619f2abf2e3e917fb53942}{start\+C\+ST}} ()
 \item 
-\mbox{\Hypertarget{classc_c_s_t_ace4fcb63c13e0ca1fafe0ba12ae87ed0}\label{classc_c_s_t_ace4fcb63c13e0ca1fafe0ba12ae87ed0}} 
-void {\bfseries stop\+C\+ST} ()
+void \mbox{\hyperlink{classc_c_s_t_ace4fcb63c13e0ca1fafe0ba12ae87ed0}{stop\+C\+ST}} ()
 \item 
-\mbox{\Hypertarget{classc_c_s_t_a8b0df7768ca3fcfdf9bbb117c575e05b}\label{classc_c_s_t_a8b0df7768ca3fcfdf9bbb117c575e05b}} 
-void {\bfseries destruct\+C\+ST} ()
+void \mbox{\hyperlink{classc_c_s_t_a8b0df7768ca3fcfdf9bbb117c575e05b}{destruct\+C\+ST}} ()
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+Instance of a critical stability task paradigm. 
+
+This class instantiates a Critical Stability Task (C\+ST) object. The C\+ST involves stabilizing a cursor with the haptic robot. Each instantiation of the C\+ST creates a C\+ST cursor. The C\+ST can be instantiated with haptic feedback only, visual feedback only, or both. The haptic feedback uses a position-\/dependent force field to render state information to the user. For more information on the C\+ST, see Quick et al. (\href{https://www.physiology.org/doi/full/10.1152/jn.00300.2017}{\texttt{ https\+://www.\+physiology.\+org/doi/full/10.\+1152/jn.\+00300.\+2017}})
+
+The C\+ST system is governed by the equation\+: \[ \frac{dx}{dt} = \lambda (x(t)-u(t)) \] where $x(t)$ is the C\+ST cursor position and $u(t)$ is the hand position, and $\lambda$ is the degree of instability of the system. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classc_c_s_t_af07dae93133ddb613683d5adc7096189}\label{classc_c_s_t_af07dae93133ddb613683d5adc7096189}} 
+\index{cCST@{cCST}!cCST@{cCST}}
+\index{cCST@{cCST}!cCST@{cCST}}
+\doxysubsubsection{\texorpdfstring{cCST()}{cCST()}}
+{\footnotesize\ttfamily c\+C\+S\+T\+::c\+C\+ST (\begin{DoxyParamCaption}\item[{c\+World $\ast$}]{world\+Ptr,  }\item[{double}]{l,  }\item[{double}]{f,  }\item[{bool}]{v,  }\item[{bool}]{h }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em world\+Ptr} & Pointer to the world \\
+\hline
+{\em l} & Lambda, or the instability parameter for C\+ST \\
+\hline
+{\em f} & Magnitude of the force \\
+\hline
+{\em v} & Set whether visual feedback is enabled \\
+\hline
+{\em h} & Set whether haptic feedback is enabled\\
+\hline
+\end{DoxyParams}
+Constructor for a C\+ST object. A C\+ST object inherits both from \mbox{\hyperlink{classc_generic_moving_object}{c\+Generic\+Moving\+Object}} and c\+Generic\+Effect because the C\+ST cursor is a graphical object whose position must be updated at each iteration of the graphical loop. Similarly, c\+Generic\+Effect enables haptic feedback rendering. ~\newline
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classc_c_s_t_a45ef6ab882283e34d88b4f123a2eceb3}\label{classc_c_s_t_a45ef6ab882283e34d88b4f123a2eceb3}} 
+\index{cCST@{cCST}!computeForce@{computeForce}}
+\index{computeForce@{computeForce}!cCST@{cCST}}
+\doxysubsubsection{\texorpdfstring{computeForce()}{computeForce()}}
+{\footnotesize\ttfamily bool c\+C\+S\+T\+::compute\+Force (\begin{DoxyParamCaption}\item[{const c\+Vector3d \&}]{a\+\_\+tool\+Pos,  }\item[{const c\+Vector3d \&}]{a\+\_\+tool\+Vel,  }\item[{const unsigned int \&}]{a\+\_\+tool\+ID,  }\item[{c\+Vector3d \&}]{a\+\_\+reaction\+Force }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+\_\+tool\+Pos} & Position of the haptic tool \\
+\hline
+{\em a\+\_\+tool\+Vel} & Velocity of the haptic tool \\
+\hline
+{\em a\+\_\+tool\+ID} & ID number of the haptic tool \\
+\hline
+{\em a\+\_\+reaction\+Force} & Vector for storing forces to be applied the haptic tool\\
+\hline
+\end{DoxyParams}
+This function takes the position of the C\+ST cursor computed by compute\+Next\+Position and determines the force needed to be rendered to the user. \mbox{\Hypertarget{classc_c_s_t_a8b0df7768ca3fcfdf9bbb117c575e05b}\label{classc_c_s_t_a8b0df7768ca3fcfdf9bbb117c575e05b}} 
+\index{cCST@{cCST}!destructCST@{destructCST}}
+\index{destructCST@{destructCST}!cCST@{cCST}}
+\doxysubsubsection{\texorpdfstring{destructCST()}{destructCST()}}
+{\footnotesize\ttfamily void c\+C\+S\+T\+::destruct\+C\+ST (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+When a session of C\+ST is complete, this is called to clear up memory allocated to the C\+ST object and remove it from the Chai3d world. \mbox{\Hypertarget{classc_c_s_t_a4a04e4f8d10ac350957e803223b0ab6d}\label{classc_c_s_t_a4a04e4f8d10ac350957e803223b0ab6d}} 
+\index{cCST@{cCST}!graphicsLoopFunction@{graphicsLoopFunction}}
+\index{graphicsLoopFunction@{graphicsLoopFunction}!cCST@{cCST}}
+\doxysubsubsection{\texorpdfstring{graphicsLoopFunction()}{graphicsLoopFunction()}}
+{\footnotesize\ttfamily void c\+C\+S\+T\+::graphics\+Loop\+Function (\begin{DoxyParamCaption}\item[{double}]{dt,  }\item[{c\+Vector3d}]{tool\+Pos,  }\item[{c\+Vector3d}]{tool\+Vel }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em dt} & Time increment since this function was last run \\
+\hline
+{\em tool\+Pos} & Position of the haptic tool \\
+\hline
+{\em tool\+Vel} & Velocity of the haptic tool\\
+\hline
+\end{DoxyParams}
+Since the C\+ST cursor is a moving object and inherits from \mbox{\hyperlink{classc_generic_moving_object}{c\+Generic\+Moving\+Object}}, it must override this function. This function updates the graphical rendering of the C\+ST cursor based on the position computed by the compute\+Next\+Position function. 
+
+Reimplemented from \mbox{\hyperlink{classc_generic_moving_object}{c\+Generic\+Moving\+Object}}.
+
+\mbox{\Hypertarget{classc_c_s_t_a0c3dfb0ef8ed2d3dfc2e0fd8846c1c03}\label{classc_c_s_t_a0c3dfb0ef8ed2d3dfc2e0fd8846c1c03}} 
+\index{cCST@{cCST}!setHapticEnabled@{setHapticEnabled}}
+\index{setHapticEnabled@{setHapticEnabled}!cCST@{cCST}}
+\doxysubsubsection{\texorpdfstring{setHapticEnabled()}{setHapticEnabled()}}
+{\footnotesize\ttfamily void c\+C\+S\+T\+::set\+Haptic\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{h }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Set whether haptic feedback should be given.\\
+\hline
+\end{DoxyParams}
+True to enable haptic feedback, false to disable haptic feedback. \mbox{\Hypertarget{classc_c_s_t_a85ec7fbeab2e8e3b9706890492f9fe51}\label{classc_c_s_t_a85ec7fbeab2e8e3b9706890492f9fe51}} 
+\index{cCST@{cCST}!setLambda@{setLambda}}
+\index{setLambda@{setLambda}!cCST@{cCST}}
+\doxysubsubsection{\texorpdfstring{setLambda()}{setLambda()}}
+{\footnotesize\ttfamily bool c\+C\+S\+T\+::set\+Lambda (\begin{DoxyParamCaption}\item[{double}]{l }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em l} & Lambda\\
+\hline
+\end{DoxyParams}
+Set the value of the instability parameter $\lambda$ \mbox{\Hypertarget{classc_c_s_t_a2c69f8bf61a3031f15106f1f6f6a3f05}\label{classc_c_s_t_a2c69f8bf61a3031f15106f1f6f6a3f05}} 
+\index{cCST@{cCST}!setVisionEnabled@{setVisionEnabled}}
+\index{setVisionEnabled@{setVisionEnabled}!cCST@{cCST}}
+\doxysubsubsection{\texorpdfstring{setVisionEnabled()}{setVisionEnabled()}}
+{\footnotesize\ttfamily void c\+C\+S\+T\+::set\+Vision\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{v }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Set whether visual feedback should be given.\\
+\hline
+\end{DoxyParams}
+True to enable visual feedback, false to disable visual feedback. \mbox{\Hypertarget{classc_c_s_t_a42be640dc8619f2abf2e3e917fb53942}\label{classc_c_s_t_a42be640dc8619f2abf2e3e917fb53942}} 
+\index{cCST@{cCST}!startCST@{startCST}}
+\index{startCST@{startCST}!cCST@{cCST}}
+\doxysubsubsection{\texorpdfstring{startCST()}{startCST()}}
+{\footnotesize\ttfamily void c\+C\+S\+T\+::start\+C\+ST (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+The C\+ST object is instantiated for all trials of C\+ST. This function enables the start of a new trial of C\+ST \mbox{\Hypertarget{classc_c_s_t_ace4fcb63c13e0ca1fafe0ba12ae87ed0}\label{classc_c_s_t_ace4fcb63c13e0ca1fafe0ba12ae87ed0}} 
+\index{cCST@{cCST}!stopCST@{stopCST}}
+\index{stopCST@{stopCST}!cCST@{cCST}}
+\doxysubsubsection{\texorpdfstring{stopCST()}{stopCST()}}
+{\footnotesize\ttfamily void c\+C\+S\+T\+::stop\+C\+ST (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Stops a C\+ST trial. 
+
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/combined/c\+C\+S\+T.\+h\item 
+/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/combined/\mbox{\hyperlink{c_c_s_t_8h}{c\+C\+S\+T.\+h}}\item 
 /home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/combined/c\+C\+S\+T.\+cpp\end{DoxyCompactItemize}

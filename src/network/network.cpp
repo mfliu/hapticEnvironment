@@ -5,6 +5,7 @@ using namespace chai3d;
 using namespace std;
 
 /**
+ * @file network.h
  * @file network.cpp
  * @brief General networking functions.
  *

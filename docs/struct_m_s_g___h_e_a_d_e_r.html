@@ -5,13 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Haptic Environment Documentation: MSG_HEADER Struct Reference</title>
+<title>Haptic Environment: MSG_HEADER Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,7 +27,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Haptic Environment Documentation
+   <div id="projectname">Haptic Environment
    </div>
    <div id="projectbrief">Documentation for haptic environment code</div>
   </td>
@@ -69,22 +75,83 @@ $(function() {
 <div class="title">MSG_HEADER Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="message_definitions_8h_source.html">messageDefinitions.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a91feb2a1e2940db849b8d9f379c24c46"><td class="memItemLeft" align="right" valign="top"><a id="a91feb2a1e2940db849b8d9f379c24c46"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>serial_no</b></td></tr>
+<tr class="memitem:a91feb2a1e2940db849b8d9f379c24c46"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_m_s_g___h_e_a_d_e_r.html#a91feb2a1e2940db849b8d9f379c24c46">serial_no</a></td></tr>
 <tr class="separator:a91feb2a1e2940db849b8d9f379c24c46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a042293f98458920e037def4ce2c5a1db"><td class="memItemLeft" align="right" valign="top"><a id="a042293f98458920e037def4ce2c5a1db"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>msg_type</b></td></tr>
+<tr class="memitem:a042293f98458920e037def4ce2c5a1db"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_m_s_g___h_e_a_d_e_r.html#a042293f98458920e037def4ce2c5a1db">msg_type</a></td></tr>
 <tr class="separator:a042293f98458920e037def4ce2c5a1db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06315a858cc9b99b405c82f3f2d8b2ec"><td class="memItemLeft" align="right" valign="top"><a id="a06315a858cc9b99b405c82f3f2d8b2ec"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>reserved</b></td></tr>
+<tr class="memitem:a06315a858cc9b99b405c82f3f2d8b2ec"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_m_s_g___h_e_a_d_e_r.html#a06315a858cc9b99b405c82f3f2d8b2ec">reserved</a></td></tr>
 <tr class="separator:a06315a858cc9b99b405c82f3f2d8b2ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fd1b9960ad37ae42b05910b83f22918"><td class="memItemLeft" align="right" valign="top"><a id="a1fd1b9960ad37ae42b05910b83f22918"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>timestamp</b></td></tr>
+<tr class="memitem:a1fd1b9960ad37ae42b05910b83f22918"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_m_s_g___h_e_a_d_e_r.html#a1fd1b9960ad37ae42b05910b83f22918">timestamp</a></td></tr>
 <tr class="separator:a1fd1b9960ad37ae42b05910b83f22918"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="struct_m_s_g___h_e_a_d_e_r.html">MSG_HEADER</a> is included in all messages that are sent. It contains metadata about the time and type of message </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a042293f98458920e037def4ce2c5a1db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a042293f98458920e037def4ce2c5a1db">&#9670;&nbsp;</a></span>msg_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int MSG_HEADER::msg_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Type of message should correspond to one of the integers listed in <a class="el" href="message_definitions_8h_source.html">messageDefinitions.h</a>. </p>
+
+</div>
+</div>
+<a id="a06315a858cc9b99b405c82f3f2d8b2ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06315a858cc9b99b405c82f3f2d8b2ec">&#9670;&nbsp;</a></span>reserved</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double MSG_HEADER::reserved</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reserved for now </p>
+
+</div>
+</div>
+<a id="a91feb2a1e2940db849b8d9f379c24c46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91feb2a1e2940db849b8d9f379c24c46">&#9670;&nbsp;</a></span>serial_no</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int MSG_HEADER::serial_no</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Serial Number of message, received from <a class="el" href="class_message_handler.html">MessageHandler</a>. </p>
+
+</div>
+</div>
+<a id="a1fd1b9960ad37ae42b05910b83f22918"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fd1b9960ad37ae42b05910b83f22918">&#9670;&nbsp;</a></span>timestamp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double MSG_HEADER::timestamp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Time <a class="el" href="class_message_handler.html">MessageHandler</a> made the message. </p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/common/<a class="el" href="message_definitions_8h_source.html">messageDefinitions.h</a></li>
 </ul>

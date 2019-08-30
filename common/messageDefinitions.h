@@ -47,18 +47,24 @@
 #define GRAPHICS_SHAPE_SPHERE 2050
 #define GRAPHICS_SHAPE_TORUS 2051
 
-// MSG_HEADER
+/**
+ * MSG_HEADER is included in all messages that are sent. It contains metadata about the time and
+ * type of message
+ */
 typedef struct {
-  int serial_no;
-  int msg_type;
-  double reserved;
-  double timestamp;
+  int serial_no; /**< Serial Number of message, received from MessageHandler.*/
+  int msg_type; /**< Type of message should correspond to one of the integers listed in messageDefinitions.h.*/
+  double reserved; /**< Reserved for now */
+  double timestamp; /**< Time MessageHandler made the message.*/ 
 } MSG_HEADER;
 
+/**
+ * M_TEST_PACKET is used for testing to ensure that message sending is working.
+ */
 typedef struct {
-  MSG_HEADER header;
-  int a;
-  int b;
+  MSG_HEADER header; /**< Standard message header */
+  int a; /**< First test value */
+  int b; /**< Second test value */
 } M_TEST_PACKET;
 
 typedef struct {

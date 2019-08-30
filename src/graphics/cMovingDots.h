@@ -5,6 +5,10 @@
 #include <ctime>
 
 /**
+ * @file cMovingDots.h
+ *
+ * @class cMovingDots
+ * 
  * @brief A class for moving point clouds. 
  *
  * Creates a cloud of points that move in a given direction with a specified coherence. 

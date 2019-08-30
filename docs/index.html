@@ -5,13 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Haptic Environment Documentation: Main Page</title>
+<title>Haptic Environment: Main Page</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,7 +27,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Haptic Environment Documentation
+   <div id="projectname">Haptic Environment
    </div>
    <div id="projectbrief">Documentation for haptic environment code</div>
   </td>
@@ -61,11 +67,15 @@ $(function() {
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Haptic Environment Documentation Documentation</div>  </div>
+<div class="title">Haptic Environment Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><h1><a class="anchor" id="autotoc_md0"></a>
+Overview</h1>
+<p>This hapticEnvironment code is built on top of the <a href="https://www.chai3d.org/">CHAI3D</a> framework for controlling the haptic and graphic interfaces. It is meant to be used with the Novint Falcon robot or the <a href="http://www.forcedimension.com/products/delta-3/overview">delta.3</a> robot from Force Dimensions. The hapticEnvironment code is used to create behavioral paradigms that integrate haptic feedback with visual displays in a virtual reality environment. Higher level control of the trial structure is done via a module that passes messages to this robot module. The goal is to separate the trial control logic from the haptic control logic, because the haptic control logic must run quickly for real-time events to be smooth. The trial control module can be any module capable of sending messages via UDP packets. Documentation here includes a Python trial control module that takes configuration files and begins the state machine that runs each session. </p>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -5,13 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Haptic Environment Documentation: cBoundingPlane Class Reference</title>
+<title>Haptic Environment: cBoundingPlane Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,7 +27,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Haptic Environment Documentation
+   <div id="projectname">Haptic Environment
    </div>
    <div id="projectbrief">Documentation for haptic environment code</div>
   </td>
@@ -69,6 +75,11 @@ $(function() {
 <div class="title">cBoundingPlane Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Creates bounding planes that constrict movement to a 2D plane near the center of the workspace.  
+ <a href="classc_bounding_plane.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="c_bounding_plane_8h_source.html">cBoundingPlane.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for cBoundingPlane:</div>
 <div class="dyncontent">
@@ -78,8 +89,7 @@ Inheritance diagram for cBoundingPlane:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adafdc37c191eb2b67601f61af50f1fcb"><td class="memItemLeft" align="right" valign="top"><a id="adafdc37c191eb2b67601f61af50f1fcb"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>cBoundingPlane</b> (int stiffness, double toolRadius, double bWidth, double bHeight)</td></tr>
+<tr class="memitem:adafdc37c191eb2b67601f61af50f1fcb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_bounding_plane.html#adafdc37c191eb2b67601f61af50f1fcb">cBoundingPlane</a> (int stiffness, double toolRadius, double bWidth, double bHeight)</td></tr>
 <tr class="separator:adafdc37c191eb2b67601f61af50f1fcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2d302cfe485c0cfc1143ea1fdc3ed50"><td class="memItemLeft" align="right" valign="top"><a id="ab2d302cfe485c0cfc1143ea1fdc3ed50"></a>
 cMesh *&#160;</td><td class="memItemRight" valign="bottom"><b>getLowerBoundingPlane</b> ()</td></tr>
@@ -100,6 +110,61 @@ cMesh *&#160;</td><td class="memItemRight" valign="bottom"><b>getLeftBoundingPla
 cMesh *&#160;</td><td class="memItemRight" valign="bottom"><b>getRightBoundingPlane</b> ()</td></tr>
 <tr class="separator:ad18c2549101c703ceb8e028d6793759d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Creates bounding planes that constrict movement to a 2D plane near the center of the workspace. </p>
+<p>Restricts movement of the haptic device to a vertical 2D plane. The stiffness of the bounds can be specified.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>Do not use this class until issues with colllision detection are resolved </dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="adafdc37c191eb2b67601f61af50f1fcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adafdc37c191eb2b67601f61af50f1fcb">&#9670;&nbsp;</a></span>cBoundingPlane()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cBoundingPlane::cBoundingPlane </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>stiffness</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>toolRadius</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>bWidth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>bHeight</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stiffness</td><td>Stiffness of the bounding planes </td></tr>
+    <tr><td class="paramname">toolRadius</td><td>Size of the haptic cursor in the workspace </td></tr>
+    <tr><td class="paramname">bWidth</td><td>Width of area in the bounding plane </td></tr>
+    <tr><td class="paramname">bHeight</td><td>Height of area in the bounding plane</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Initializes meshes for each side of the bounding plane and ensures that the haptic tool can enter the bounding box but can't leave it, by setting the directionality of the vertex normals. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/<a class="el" href="c_bounding_plane_8h_source.html">cBoundingPlane.h</a></li>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/cBoundingPlane.cpp</li>

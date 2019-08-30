@@ -4,6 +4,16 @@
 using namespace chai3d;
 using namespace std;
 
+/**
+ * @file cPositionForceFieldEffect.h
+ * @class cPositionForceFieldEffect
+ *
+ * @brief Creates a force field that varies over the space of the haptic environment.
+ *
+ * This effect depends on the position of the haptic cursor. Forces applied are in the specified
+ * direction and magnitude, multiplied by the position of the cursor. 
+ * @see cCST
+ */
 class cPositionForceFieldEffect : public cGenericEffect
 {
   private:

@@ -1,0 +1,18 @@
+\documentclass{article}
+\usepackage{ifthen}
+\usepackage{epsfig}
+\usepackage[utf8]{inputenc}
+\usepackage{newunicodechar}
+  \newunicodechar{⁻}{${}^{-}$}% Superscript minus
+  \newunicodechar{²}{${}^{2}$}% Superscript two
+  \newunicodechar{³}{${}^{3}$}% Superscript three
+
+\pagestyle{empty}
+\begin{document}
+$B$
+\pagebreak
+
+\[ B=\begin{matrix} v_x & v_{xy} & v_{xz} | v_{xy} & v_y & v_{yz} | v_{xz} & v_{yz} & v_z \end{matrix} \]
+\pagebreak
+
+\end{document}

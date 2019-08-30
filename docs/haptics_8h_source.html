@@ -5,13 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Haptic Environment Documentation: /home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/haptics.h Source File</title>
+<title>Haptic Environment: /home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/haptics.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,7 +27,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Haptic Environment Documentation
+   <div id="projectname">Haptic Environment
    </div>
    <div id="projectbrief">Documentation for haptic environment code</div>
   </td>
@@ -70,15 +76,15 @@ $(function() {
 <div class="title">haptics.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once </span></div>
+<a href="haptics_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once </span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#ifndef _HAPTICS_H_INCLUDED_</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#define _HAPTICS_H_INCLUDED_</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;chai3d.h&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;graphics/graphics.h&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;core/controller.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="graphics_8h.html">graphics/graphics.h</a>&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="controller_8h.html">core/controller.h</a>&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">using namespace </span>chai3d;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">using namespace </span>std;</div>
@@ -97,23 +103,33 @@ $(function() {
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define HAPTIC_TOOL_RADIUS 2</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">void</span> initHaptics(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">void</span> startHapticsThread(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> updateHaptics(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">void</span> <a class="code" href="haptics_8h.html#aea30bcf257bf572dfbc1ba657868a058">initHaptics</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">void</span> <a class="code" href="haptics_8h.html#a6a79f42f3500eaa34bbe57d42f1ad9d5">startHapticsThread</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> <a class="code" href="haptics_8h.html#a462f255791f9149b42eb171276add3a0">updateHaptics</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">// ---------------------------------------------------- //</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">// -----------Custom Haptics Functionality------------- // </span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">// ---------------------------------------------------- // </span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;cBoundingPlane.h&quot;</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &quot;cConstantForceFieldEffect.h&quot;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &quot;cViscosityEffect.h&quot;</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &quot;cFreezeEffect.h&quot;</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &quot;cPositionForceFieldEffect.h&quot;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="c_bounding_plane_8h.html">cBoundingPlane.h</a>&quot;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="c_constant_force_field_effect_8h.html">cConstantForceFieldEffect.h</a>&quot;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="c_viscosity_effect_8h.html">cViscosityEffect.h</a>&quot;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="c_freeze_effect_8h.html">cFreezeEffect.h</a>&quot;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="c_position_force_field_effect_8h.html">cPositionForceFieldEffect.h</a>&quot;</span></div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="agraphics_8h_html"><div class="ttname"><a href="graphics_8h.html">graphics.h</a></div></div>
+<div class="ttc" id="acontroller_8h_html"><div class="ttname"><a href="controller_8h.html">controller.h</a></div></div>
+<div class="ttc" id="ac_constant_force_field_effect_8h_html"><div class="ttname"><a href="c_constant_force_field_effect_8h.html">cConstantForceFieldEffect.h</a></div></div>
 <div class="ttc" id="astruct_haptic_data_html"><div class="ttname"><a href="struct_haptic_data.html">HapticData</a></div><div class="ttdef"><b>Definition:</b> haptics.h:14</div></div>
+<div class="ttc" id="ahaptics_8h_html_aea30bcf257bf572dfbc1ba657868a058"><div class="ttname"><a href="haptics_8h.html#aea30bcf257bf572dfbc1ba657868a058">initHaptics</a></div><div class="ttdeci">void initHaptics(void)</div><div class="ttdoc">Initializes the haptic thread.</div><div class="ttdef"><b>Definition:</b> haptics.cpp:23</div></div>
+<div class="ttc" id="ahaptics_8h_html_a462f255791f9149b42eb171276add3a0"><div class="ttname"><a href="haptics_8h.html#a462f255791f9149b42eb171276add3a0">updateHaptics</a></div><div class="ttdeci">void updateHaptics(void)</div><div class="ttdoc">Haptic update function.</div><div class="ttdef"><b>Definition:</b> haptics.cpp:83</div></div>
+<div class="ttc" id="ahaptics_8h_html_a6a79f42f3500eaa34bbe57d42f1ad9d5"><div class="ttname"><a href="haptics_8h.html#a6a79f42f3500eaa34bbe57d42f1ad9d5">startHapticsThread</a></div><div class="ttdeci">void startHapticsThread(void)</div><div class="ttdoc">Starts the haptic thread.</div><div class="ttdef"><b>Definition:</b> haptics.cpp:67</div></div>
+<div class="ttc" id="ac_bounding_plane_8h_html"><div class="ttname"><a href="c_bounding_plane_8h.html">cBoundingPlane.h</a></div></div>
+<div class="ttc" id="ac_freeze_effect_8h_html"><div class="ttname"><a href="c_freeze_effect_8h.html">cFreezeEffect.h</a></div></div>
+<div class="ttc" id="ac_viscosity_effect_8h_html"><div class="ttname"><a href="c_viscosity_effect_8h.html">cViscosityEffect.h</a></div></div>
+<div class="ttc" id="ac_position_force_field_effect_8h_html"><div class="ttname"><a href="c_position_force_field_effect_8h.html">cPositionForceFieldEffect.h</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

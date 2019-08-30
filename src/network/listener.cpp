@@ -7,6 +7,7 @@ using namespace chai3d;
 using namespace std;
 
 /**
+ * @file listener.h
  * @file listener.cpp
  * @brief Starts thread for listening to messages
  *

@@ -4,6 +4,15 @@
 using namespace chai3d;
 using namespace std;
 
+/**
+ * @file cConstrainToLine.h
+ * @class cConstrainToLine
+ *
+ * @brief Constrains movement of the haptic device to a line between two points 
+ *
+ * Creates a line between two points that has a strong magnetic effect. Can be enabled or disabled.
+ * As with other haptic effects, this class inherits from Chai3D's cGenericEFfect. 
+ */
 class cConstrainToLine : public cGenericEffect
 {
   private:

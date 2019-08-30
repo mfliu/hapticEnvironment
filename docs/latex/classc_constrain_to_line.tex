@@ -1,5 +1,14 @@
 \hypertarget{classc_constrain_to_line}{}\doxysection{c\+Constrain\+To\+Line Class Reference}
 \label{classc_constrain_to_line}\index{cConstrainToLine@{cConstrainToLine}}
+
+
+Constrains movement of the haptic device to a line between two points.  
+
+
+
+
+{\ttfamily \#include $<$c\+Constrain\+To\+Line.\+h$>$}
+
 Inheritance diagram for c\+Constrain\+To\+Line\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -9,21 +18,77 @@ Inheritance diagram for c\+Constrain\+To\+Line\+:\begin{figure}[H]
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classc_constrain_to_line_a0bf284901020b09804b00f159c175d02}\label{classc_constrain_to_line_a0bf284901020b09804b00f159c175d02}} 
-{\bfseries c\+Constrain\+To\+Line} (c\+World $\ast$world\+Ptr, c\+Vector3d $\ast$p1, c\+Vector3d $\ast$p2, double s)
+\mbox{\hyperlink{classc_constrain_to_line_a0bf284901020b09804b00f159c175d02}{c\+Constrain\+To\+Line}} (c\+World $\ast$world\+Ptr, c\+Vector3d $\ast$p1, c\+Vector3d $\ast$p2, double s)
 \item 
-\mbox{\Hypertarget{classc_constrain_to_line_a0f9bf489d88ea38477d60b82f640b487}\label{classc_constrain_to_line_a0f9bf489d88ea38477d60b82f640b487}} 
-void {\bfseries set\+Enabled} (bool e)
+void \mbox{\hyperlink{classc_constrain_to_line_a0f9bf489d88ea38477d60b82f640b487}{set\+Enabled}} (bool e)
 \item 
-\mbox{\Hypertarget{classc_constrain_to_line_a048f1b2dfdfef5eed63afcce053bb8f3}\label{classc_constrain_to_line_a048f1b2dfdfef5eed63afcce053bb8f3}} 
-bool {\bfseries get\+Enabled} ()
+bool \mbox{\hyperlink{classc_constrain_to_line_a048f1b2dfdfef5eed63afcce053bb8f3}{get\+Enabled}} ()
 \item 
-\mbox{\Hypertarget{classc_constrain_to_line_addc811982511a4fc8c73eecba3c86c49}\label{classc_constrain_to_line_addc811982511a4fc8c73eecba3c86c49}} 
-bool {\bfseries compute\+Force} (const c\+Vector3d \&a\+\_\+tool\+Pos, const c\+Vector3d \&a\+\_\+tool\+Vel, const unsigned int \&a\+\_\+tool\+ID, c\+Vector3d \&a\+\_\+reaction\+Force)
+bool \mbox{\hyperlink{classc_constrain_to_line_addc811982511a4fc8c73eecba3c86c49}{compute\+Force}} (const c\+Vector3d \&a\+\_\+tool\+Pos, const c\+Vector3d \&a\+\_\+tool\+Vel, const unsigned int \&a\+\_\+tool\+ID, c\+Vector3d \&a\+\_\+reaction\+Force)
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+Constrains movement of the haptic device to a line between two points. 
+
+Creates a line between two points that has a strong magnetic effect. Can be enabled or disabled. As with other haptic effects, this class inherits from Chai3D\textquotesingle{}s c\+Generic\+E\+Ffect. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classc_constrain_to_line_a0bf284901020b09804b00f159c175d02}\label{classc_constrain_to_line_a0bf284901020b09804b00f159c175d02}} 
+\index{cConstrainToLine@{cConstrainToLine}!cConstrainToLine@{cConstrainToLine}}
+\index{cConstrainToLine@{cConstrainToLine}!cConstrainToLine@{cConstrainToLine}}
+\doxysubsubsection{\texorpdfstring{cConstrainToLine()}{cConstrainToLine()}}
+{\footnotesize\ttfamily c\+Constrain\+To\+Line\+::c\+Constrain\+To\+Line (\begin{DoxyParamCaption}\item[{c\+World $\ast$}]{world\+Ptr,  }\item[{c\+Vector3d $\ast$}]{p1,  }\item[{c\+Vector3d $\ast$}]{p2,  }\item[{double}]{s }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em world\+Ptr} & Pointer to the world, since haptic effects are global. \\
+\hline
+{\em p1} & First endpoint of line \\
+\hline
+{\em p2} & Second endpoint of line\\
+\hline
+\end{DoxyParams}
+Constructor for a magnetic line to which the haptic tool is pulled 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classc_constrain_to_line_addc811982511a4fc8c73eecba3c86c49}\label{classc_constrain_to_line_addc811982511a4fc8c73eecba3c86c49}} 
+\index{cConstrainToLine@{cConstrainToLine}!computeForce@{computeForce}}
+\index{computeForce@{computeForce}!cConstrainToLine@{cConstrainToLine}}
+\doxysubsubsection{\texorpdfstring{computeForce()}{computeForce()}}
+{\footnotesize\ttfamily bool c\+Constrain\+To\+Line\+::compute\+Force (\begin{DoxyParamCaption}\item[{const c\+Vector3d \&}]{a\+\_\+tool\+Pos,  }\item[{const c\+Vector3d \&}]{a\+\_\+tool\+Vel,  }\item[{const unsigned int \&}]{a\+\_\+tool\+ID,  }\item[{c\+Vector3d \&}]{a\+\_\+reaction\+Force }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+\_\+tool\+Pos} & Position of the haptic tool \\
+\hline
+{\em a\+\_\+tool\+Vel} & Velocity of the haptic tool \\
+\hline
+{\em a\+\_\+tool\+ID} & ID number of the haptic tool \\
+\hline
+{\em a\+\_\+reaction\+Force} & Vector that stores force to be applied to haptic tool.\\
+\hline
+\end{DoxyParams}
+This function is inherited from c\+Generic\+Effect and is called on each iteration of the haptic update thread. The haptic tool is constrained to a line by computing the projection between the tool and the line and applying a force that is normal from the point to the line. Essentially, the haptic tool is connected to the line by a spring along the projection from the tool to the line. \mbox{\Hypertarget{classc_constrain_to_line_a048f1b2dfdfef5eed63afcce053bb8f3}\label{classc_constrain_to_line_a048f1b2dfdfef5eed63afcce053bb8f3}} 
+\index{cConstrainToLine@{cConstrainToLine}!getEnabled@{getEnabled}}
+\index{getEnabled@{getEnabled}!cConstrainToLine@{cConstrainToLine}}
+\doxysubsubsection{\texorpdfstring{getEnabled()}{getEnabled()}}
+{\footnotesize\ttfamily bool c\+Constrain\+To\+Line\+::get\+Enabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Determine whether the line constraint is enabled. True if it is, false otherwise \mbox{\Hypertarget{classc_constrain_to_line_a0f9bf489d88ea38477d60b82f640b487}\label{classc_constrain_to_line_a0f9bf489d88ea38477d60b82f640b487}} 
+\index{cConstrainToLine@{cConstrainToLine}!setEnabled@{setEnabled}}
+\index{setEnabled@{setEnabled}!cConstrainToLine@{cConstrainToLine}}
+\doxysubsubsection{\texorpdfstring{setEnabled()}{setEnabled()}}
+{\footnotesize\ttfamily void c\+Constrain\+To\+Line\+::set\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{e }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & True enables this effect, false deactivates it\\
+\hline
+\end{DoxyParams}
+Set whether the haptic tool is being constrained to a line 
+
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/haptics/c\+Constrain\+To\+Line.\+h\item 
+/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/haptics/\mbox{\hyperlink{c_constrain_to_line_8h}{c\+Constrain\+To\+Line.\+h}}\item 
 /home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/haptics/c\+Constrain\+To\+Line.\+cpp\end{DoxyCompactItemize}

@@ -5,6 +5,10 @@ using namespace chai3d;
 using namespace std;
 
 /**
+ * @file cPipe.h
+ *
+ * @class cPipe 
+ *
  * @brief Pipe class for generating cylindrical pipes.
  */
 class cPipe : public cGenericObject 

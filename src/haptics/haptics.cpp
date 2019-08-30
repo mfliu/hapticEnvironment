@@ -1,8 +1,25 @@
 #include "haptics.h"
 
+/**
+ * @file haptics.h 
+ * @file haptics.cpp
+ *
+ * @brief Functions for haptic control.
+ *
+ * This file contains the initialization of the haptic device, as well as the update function that
+ * is called in the haptics thread. 
+ */
+
 HapticData hapticsData;
 extern GraphicsData graphicsData;
 extern ControlData controlData;
+
+/**
+ * @brief Initializes the haptic thread. 
+ *
+ * Contains some custom scale factors depending on which device is
+ * used (Falcon or delta.3)
+ */
 void initHaptics(void)
 {
   hapticsData.handler = new cHapticDeviceHandler();
@@ -42,6 +59,11 @@ void initHaptics(void)
   cout << "Haptics tool initialized" << endl;
 }
 
+/**
+ * @brief Starts the haptic thread. 
+ *
+ * Stores a pointer to the haptic thread in the ControlData struct
+ */
 void startHapticsThread(void)
 {
   hapticsData.hapticsThread = new cThread();
@@ -52,6 +74,12 @@ void startHapticsThread(void)
   cout << "Haptics thread started" << endl;
 }
 
+/**
+ * @brief Haptic update function 
+ *
+ * This function is called on each iteration of the haptic loop. It computes the global and local
+ * positions of the device and renders any forces based on objects in the Chai3d world
+ */
 void updateHaptics(void)
 {
   cPrecisionClock clock;

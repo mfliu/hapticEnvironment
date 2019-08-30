@@ -5,13 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Haptic Environment Documentation: cConstantForceFieldEffect Class Reference</title>
+<title>Haptic Environment: cConstantForceFieldEffect Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,7 +27,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Haptic Environment Documentation
+   <div id="projectname">Haptic Environment
    </div>
    <div id="projectbrief">Documentation for haptic environment code</div>
   </td>
@@ -70,6 +76,11 @@ $(function() {
 <div class="title">cConstantForceFieldEffect Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Create a constant force field pervasive in the entire workspace.  
+ <a href="classc_constant_force_field_effect.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="c_constant_force_field_effect_8h_source.html">cConstantForceFieldEffect.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for cConstantForceFieldEffect:</div>
 <div class="dyncontent">
@@ -79,11 +90,9 @@ Inheritance diagram for cConstantForceFieldEffect:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adfbef03c788f0791bf8bc073494f07a2"><td class="memItemLeft" align="right" valign="top"><a id="adfbef03c788f0791bf8bc073494f07a2"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>cConstantForceFieldEffect</b> (cWorld *worldPtr, double d, double m)</td></tr>
+<tr class="memitem:adfbef03c788f0791bf8bc073494f07a2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_constant_force_field_effect.html#adfbef03c788f0791bf8bc073494f07a2">cConstantForceFieldEffect</a> (cWorld *worldPtr, double d, double m)</td></tr>
 <tr class="separator:adfbef03c788f0791bf8bc073494f07a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf9ea19e5e15c3bd0823d40dc5f75777"><td class="memItemLeft" align="right" valign="top"><a id="abf9ea19e5e15c3bd0823d40dc5f75777"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>computeForce</b> (const cVector3d &amp;a_toolPos, const cVector3d &amp;a_toolVel, const unsigned int &amp;a_toolID, cVector3d &amp;a_reactionForce)</td></tr>
+<tr class="memitem:abf9ea19e5e15c3bd0823d40dc5f75777"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_constant_force_field_effect.html#abf9ea19e5e15c3bd0823d40dc5f75777">computeForce</a> (const cVector3d &amp;a_toolPos, const cVector3d &amp;a_toolVel, const unsigned int &amp;a_toolID, cVector3d &amp;a_reactionForce)</td></tr>
 <tr class="separator:abf9ea19e5e15c3bd0823d40dc5f75777"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -95,6 +104,105 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>magnitude</b></td><
 double&#160;</td><td class="memItemRight" valign="bottom"><b>direction</b></td></tr>
 <tr class="separator:a0ee0cb2120b3a1c969abea9216315488"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Create a constant force field pervasive in the entire workspace. </p>
+<p>Force fields created with this class have a magnitude and direction, and are exprienced regardless of the kinematics of the haptic tool. All haptic effects must override the cGenericEffect class, which contains the function computeForce.</p>
+<dl class="section see"><dt>See also</dt><dd>cGenericEffect </dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="adfbef03c788f0791bf8bc073494f07a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfbef03c788f0791bf8bc073494f07a2">&#9670;&nbsp;</a></span>cConstantForceFieldEffect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cConstantForceFieldEffect::cConstantForceFieldEffect </td>
+          <td>(</td>
+          <td class="paramtype">cWorld *&#160;</td>
+          <td class="paramname"><em>worldPtr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>m</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">worldPtr</td><td>Pointer to the world. Force field effects are applied to the entire environment </td></tr>
+    <tr><td class="paramname">d</td><td>Direction of force field </td></tr>
+    <tr><td class="paramname">m</td><td>Magnitude of force field</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Constructor for constant force field effect. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="abf9ea19e5e15c3bd0823d40dc5f75777"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf9ea19e5e15c3bd0823d40dc5f75777">&#9670;&nbsp;</a></span>computeForce()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cConstantForceFieldEffect::computeForce </td>
+          <td>(</td>
+          <td class="paramtype">const cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_toolPos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_toolVel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned int &amp;&#160;</td>
+          <td class="paramname"><em>a_toolID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_reactionForce</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a_toolPos</td><td>Position of the haptic tool in the workspace </td></tr>
+    <tr><td class="paramname">a_toolVel</td><td>Velocity of the haptic tool </td></tr>
+    <tr><td class="paramname">a_toolID</td><td>ID assigned to this particular haptic device </td></tr>
+    <tr><td class="paramname">a_reactionForce</td><td>A vector for storing the force to be applied to the haptic tool</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function is a virtual function from cGenericEffect that is implemented here. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/<a class="el" href="c_constant_force_field_effect_8h_source.html">cConstantForceFieldEffect.h</a></li>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/cConstantForceFieldEffect.cpp</li>

@@ -1,0 +1,68 @@
+\hypertarget{haptics_8h}{}\doxysection{/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/haptics/haptics.h File Reference}
+\label{haptics_8h}\index{/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/haptics.h@{/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/haptics/haptics.h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}chai3d.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}graphics/graphics.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}core/controller.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}c\+Bounding\+Plane.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}c\+Constant\+Force\+Field\+Effect.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}c\+Viscosity\+Effect.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}c\+Freeze\+Effect.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}c\+Position\+Force\+Field\+Effect.\+h\char`\"{}}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_haptic_data}{Haptic\+Data}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{haptics_8h_aa0a48ff01dc9cbc43cec43c6b1707479}\label{haptics_8h_aa0a48ff01dc9cbc43cec43c6b1707479}} 
+\#define {\bfseries \+\_\+\+H\+A\+P\+T\+I\+C\+S\+\_\+\+H\+\_\+\+I\+N\+C\+L\+U\+D\+E\+D\+\_\+}
+\item 
+\mbox{\Hypertarget{haptics_8h_ab47c7cf62fd7a7860c2e0ea2c5e73443}\label{haptics_8h_ab47c7cf62fd7a7860c2e0ea2c5e73443}} 
+\#define {\bfseries H\+A\+P\+T\+I\+C\+\_\+\+T\+O\+O\+L\+\_\+\+R\+A\+D\+I\+US}~2
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{haptics_8h_aea30bcf257bf572dfbc1ba657868a058}{init\+Haptics}} (void)
+\begin{DoxyCompactList}\small\item\em Initializes the haptic thread. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{haptics_8h_a6a79f42f3500eaa34bbe57d42f1ad9d5}{start\+Haptics\+Thread}} (void)
+\begin{DoxyCompactList}\small\item\em Starts the haptic thread. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{haptics_8h_a462f255791f9149b42eb171276add3a0}{update\+Haptics}} (void)
+\begin{DoxyCompactList}\small\item\em Haptic update function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{haptics_8h_aea30bcf257bf572dfbc1ba657868a058}\label{haptics_8h_aea30bcf257bf572dfbc1ba657868a058}} 
+\index{haptics.h@{haptics.h}!initHaptics@{initHaptics}}
+\index{initHaptics@{initHaptics}!haptics.h@{haptics.h}}
+\doxysubsubsection{\texorpdfstring{initHaptics()}{initHaptics()}}
+{\footnotesize\ttfamily void init\+Haptics (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initializes the haptic thread. 
+
+Contains some custom scale factors depending on which device is used (Falcon or delta.\+3) \mbox{\Hypertarget{haptics_8h_a6a79f42f3500eaa34bbe57d42f1ad9d5}\label{haptics_8h_a6a79f42f3500eaa34bbe57d42f1ad9d5}} 
+\index{haptics.h@{haptics.h}!startHapticsThread@{startHapticsThread}}
+\index{startHapticsThread@{startHapticsThread}!haptics.h@{haptics.h}}
+\doxysubsubsection{\texorpdfstring{startHapticsThread()}{startHapticsThread()}}
+{\footnotesize\ttfamily void start\+Haptics\+Thread (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Starts the haptic thread. 
+
+Stores a pointer to the haptic thread in the \mbox{\hyperlink{struct_control_data}{Control\+Data}} struct \mbox{\Hypertarget{haptics_8h_a462f255791f9149b42eb171276add3a0}\label{haptics_8h_a462f255791f9149b42eb171276add3a0}} 
+\index{haptics.h@{haptics.h}!updateHaptics@{updateHaptics}}
+\index{updateHaptics@{updateHaptics}!haptics.h@{haptics.h}}
+\doxysubsubsection{\texorpdfstring{updateHaptics()}{updateHaptics()}}
+{\footnotesize\ttfamily void update\+Haptics (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Haptic update function. 
+
+This function is called on each iteration of the haptic loop. It computes the global and local positions of the device and renders any forces based on objects in the Chai3d world 

@@ -1,0 +1,57 @@
+\hypertarget{controller_8h}{}\doxysection{/home/mfl24/\+Documents/chai\+Projects/haptic\+Environment/src/core/controller.h File Reference}
+\label{controller_8h}\index{/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/core/controller.h@{/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/core/controller.h}}
+{\ttfamily \#include \char`\"{}chai3d.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}G\+L\+F\+W/glfw3.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$atomic$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include \char`\"{}network/network.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}network/streamer.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}network/listener.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}haptics/haptics.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}graphics/graphics.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}combined/combined.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include \char`\"{}rpc/client.\+h\char`\"{}}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_control_data}{Control\+Data}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{controller_8h_ae1d35590a2bbad855286a6e72e0a9181}{all\+Threads\+Down}} (void)
+\item 
+void \mbox{\hyperlink{controller_8h_a67b72387b99fb35706b11eeba7070bc4}{close}} (void)
+\item 
+void \mbox{\hyperlink{controller_8h_a2f751138b5d47b3bcaf45aa63abfaeb4}{parse\+Packet}} (char $\ast$packet)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{controller_8h_ae1d35590a2bbad855286a6e72e0a9181}\label{controller_8h_ae1d35590a2bbad855286a6e72e0a9181}} 
+\index{controller.h@{controller.h}!allThreadsDown@{allThreadsDown}}
+\index{allThreadsDown@{allThreadsDown}!controller.h@{controller.h}}
+\doxysubsubsection{\texorpdfstring{allThreadsDown()}{allThreadsDown()}}
+{\footnotesize\ttfamily bool all\+Threads\+Down (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Checks if the haptics and messaging threads have exited yet. The graphics loop is in main, and exits when all other threads are down, so it is not checked here. \mbox{\Hypertarget{controller_8h_a67b72387b99fb35706b11eeba7070bc4}\label{controller_8h_a67b72387b99fb35706b11eeba7070bc4}} 
+\index{controller.h@{controller.h}!close@{close}}
+\index{close@{close}!controller.h@{controller.h}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily void close (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Ends the program. This method does so by setting the \char`\"{}simulation\+Running\char`\"{} boolean to false. When false, other threads will exit. To exit gracefully, this method waits until all threads have returned before stopping the haptic tool and exiting the graphic interface. \mbox{\Hypertarget{controller_8h_a2f751138b5d47b3bcaf45aa63abfaeb4}\label{controller_8h_a2f751138b5d47b3bcaf45aa63abfaeb4}} 
+\index{controller.h@{controller.h}!parsePacket@{parsePacket}}
+\index{parsePacket@{parsePacket}!controller.h@{controller.h}}
+\doxysubsubsection{\texorpdfstring{parsePacket()}{parsePacket()}}
+{\footnotesize\ttfamily void parse\+Packet (\begin{DoxyParamCaption}\item[{char $\ast$}]{packet }\end{DoxyParamCaption})}
+
+This function receives packets from the listener threads and updates the haptic environment variables accordingly. 
+\begin{DoxyParams}{Parameters}
+{\em packet} & is a pointer to a char array of bytes \\
+\hline
+\end{DoxyParams}

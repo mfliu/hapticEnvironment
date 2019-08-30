@@ -1,21 +1,51 @@
 \hypertarget{struct_m_s_g___h_e_a_d_e_r}{}\doxysection{M\+S\+G\+\_\+\+H\+E\+A\+D\+ER Struct Reference}
 \label{struct_m_s_g___h_e_a_d_e_r}\index{MSG\_HEADER@{MSG\_HEADER}}
+
+
+{\ttfamily \#include $<$message\+Definitions.\+h$>$}
+
 \doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{struct_m_s_g___h_e_a_d_e_r_a91feb2a1e2940db849b8d9f379c24c46}\label{struct_m_s_g___h_e_a_d_e_r_a91feb2a1e2940db849b8d9f379c24c46}} 
-int {\bfseries serial\+\_\+no}
+int \mbox{\hyperlink{struct_m_s_g___h_e_a_d_e_r_a91feb2a1e2940db849b8d9f379c24c46}{serial\+\_\+no}}
 \item 
-\mbox{\Hypertarget{struct_m_s_g___h_e_a_d_e_r_a042293f98458920e037def4ce2c5a1db}\label{struct_m_s_g___h_e_a_d_e_r_a042293f98458920e037def4ce2c5a1db}} 
-int {\bfseries msg\+\_\+type}
+int \mbox{\hyperlink{struct_m_s_g___h_e_a_d_e_r_a042293f98458920e037def4ce2c5a1db}{msg\+\_\+type}}
 \item 
-\mbox{\Hypertarget{struct_m_s_g___h_e_a_d_e_r_a06315a858cc9b99b405c82f3f2d8b2ec}\label{struct_m_s_g___h_e_a_d_e_r_a06315a858cc9b99b405c82f3f2d8b2ec}} 
-double {\bfseries reserved}
+double \mbox{\hyperlink{struct_m_s_g___h_e_a_d_e_r_a06315a858cc9b99b405c82f3f2d8b2ec}{reserved}}
 \item 
-\mbox{\Hypertarget{struct_m_s_g___h_e_a_d_e_r_a1fd1b9960ad37ae42b05910b83f22918}\label{struct_m_s_g___h_e_a_d_e_r_a1fd1b9960ad37ae42b05910b83f22918}} 
-double {\bfseries timestamp}
+double \mbox{\hyperlink{struct_m_s_g___h_e_a_d_e_r_a1fd1b9960ad37ae42b05910b83f22918}{timestamp}}
 \end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{struct_m_s_g___h_e_a_d_e_r}{M\+S\+G\+\_\+\+H\+E\+A\+D\+ER}} is included in all messages that are sent. It contains metadata about the time and type of message 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{struct_m_s_g___h_e_a_d_e_r_a042293f98458920e037def4ce2c5a1db}\label{struct_m_s_g___h_e_a_d_e_r_a042293f98458920e037def4ce2c5a1db}} 
+\index{MSG\_HEADER@{MSG\_HEADER}!msg\_type@{msg\_type}}
+\index{msg\_type@{msg\_type}!MSG\_HEADER@{MSG\_HEADER}}
+\doxysubsubsection{\texorpdfstring{msg\_type}{msg\_type}}
+{\footnotesize\ttfamily int M\+S\+G\+\_\+\+H\+E\+A\+D\+E\+R\+::msg\+\_\+type}
+
+Type of message should correspond to one of the integers listed in \mbox{\hyperlink{message_definitions_8h_source}{message\+Definitions.\+h}}. \mbox{\Hypertarget{struct_m_s_g___h_e_a_d_e_r_a06315a858cc9b99b405c82f3f2d8b2ec}\label{struct_m_s_g___h_e_a_d_e_r_a06315a858cc9b99b405c82f3f2d8b2ec}} 
+\index{MSG\_HEADER@{MSG\_HEADER}!reserved@{reserved}}
+\index{reserved@{reserved}!MSG\_HEADER@{MSG\_HEADER}}
+\doxysubsubsection{\texorpdfstring{reserved}{reserved}}
+{\footnotesize\ttfamily double M\+S\+G\+\_\+\+H\+E\+A\+D\+E\+R\+::reserved}
+
+Reserved for now \mbox{\Hypertarget{struct_m_s_g___h_e_a_d_e_r_a91feb2a1e2940db849b8d9f379c24c46}\label{struct_m_s_g___h_e_a_d_e_r_a91feb2a1e2940db849b8d9f379c24c46}} 
+\index{MSG\_HEADER@{MSG\_HEADER}!serial\_no@{serial\_no}}
+\index{serial\_no@{serial\_no}!MSG\_HEADER@{MSG\_HEADER}}
+\doxysubsubsection{\texorpdfstring{serial\_no}{serial\_no}}
+{\footnotesize\ttfamily int M\+S\+G\+\_\+\+H\+E\+A\+D\+E\+R\+::serial\+\_\+no}
+
+Serial Number of message, received from \mbox{\hyperlink{class_message_handler}{Message\+Handler}}. \mbox{\Hypertarget{struct_m_s_g___h_e_a_d_e_r_a1fd1b9960ad37ae42b05910b83f22918}\label{struct_m_s_g___h_e_a_d_e_r_a1fd1b9960ad37ae42b05910b83f22918}} 
+\index{MSG\_HEADER@{MSG\_HEADER}!timestamp@{timestamp}}
+\index{timestamp@{timestamp}!MSG\_HEADER@{MSG\_HEADER}}
+\doxysubsubsection{\texorpdfstring{timestamp}{timestamp}}
+{\footnotesize\ttfamily double M\+S\+G\+\_\+\+H\+E\+A\+D\+E\+R\+::timestamp}
+
+Time \mbox{\hyperlink{class_message_handler}{Message\+Handler}} made the message. 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

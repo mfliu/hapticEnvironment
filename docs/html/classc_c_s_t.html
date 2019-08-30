@@ -5,13 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Haptic Environment Documentation: cCST Class Reference</title>
+<title>Haptic Environment: cCST Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,7 +27,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Haptic Environment Documentation
+   <div id="projectname">Haptic Environment
    </div>
    <div id="projectbrief">Documentation for haptic environment code</div>
   </td>
@@ -69,6 +75,11 @@ $(function() {
 <div class="title">cCST Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Instance of a critical stability task paradigm.  
+ <a href="classc_c_s_t.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="c_c_s_t_8h_source.html">cCST.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for cCST:</div>
 <div class="dyncontent">
@@ -81,34 +92,324 @@ Inheritance diagram for cCST:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af07dae93133ddb613683d5adc7096189"><td class="memItemLeft" align="right" valign="top"><a id="af07dae93133ddb613683d5adc7096189"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>cCST</b> (cWorld *worldPtr, double l, double f, bool v, bool h)</td></tr>
+<tr class="memitem:af07dae93133ddb613683d5adc7096189"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_c_s_t.html#af07dae93133ddb613683d5adc7096189">cCST</a> (cWorld *worldPtr, double l, double f, bool v, bool h)</td></tr>
 <tr class="separator:af07dae93133ddb613683d5adc7096189"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45ef6ab882283e34d88b4f123a2eceb3"><td class="memItemLeft" align="right" valign="top"><a id="a45ef6ab882283e34d88b4f123a2eceb3"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>computeForce</b> (const cVector3d &amp;a_toolPos, const cVector3d &amp;a_toolVel, const unsigned int &amp;a_toolID, cVector3d &amp;a_reactionForce)</td></tr>
+<tr class="memitem:a45ef6ab882283e34d88b4f123a2eceb3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_c_s_t.html#a45ef6ab882283e34d88b4f123a2eceb3">computeForce</a> (const cVector3d &amp;a_toolPos, const cVector3d &amp;a_toolVel, const unsigned int &amp;a_toolID, cVector3d &amp;a_reactionForce)</td></tr>
 <tr class="separator:a45ef6ab882283e34d88b4f123a2eceb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a04e4f8d10ac350957e803223b0ab6d"><td class="memItemLeft" align="right" valign="top"><a id="a4a04e4f8d10ac350957e803223b0ab6d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>graphicsLoopFunction</b> (double dt, cVector3d toolPos, cVector3d toolVel)</td></tr>
+<tr class="memitem:a4a04e4f8d10ac350957e803223b0ab6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_c_s_t.html#a4a04e4f8d10ac350957e803223b0ab6d">graphicsLoopFunction</a> (double dt, cVector3d toolPos, cVector3d toolVel)</td></tr>
 <tr class="separator:a4a04e4f8d10ac350957e803223b0ab6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c69f8bf61a3031f15106f1f6f6a3f05"><td class="memItemLeft" align="right" valign="top"><a id="a2c69f8bf61a3031f15106f1f6f6a3f05"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setVisionEnabled</b> (bool v)</td></tr>
+<tr class="memitem:a2c69f8bf61a3031f15106f1f6f6a3f05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_c_s_t.html#a2c69f8bf61a3031f15106f1f6f6a3f05">setVisionEnabled</a> (bool v)</td></tr>
 <tr class="separator:a2c69f8bf61a3031f15106f1f6f6a3f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c3dfb0ef8ed2d3dfc2e0fd8846c1c03"><td class="memItemLeft" align="right" valign="top"><a id="a0c3dfb0ef8ed2d3dfc2e0fd8846c1c03"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setHapticEnabled</b> (bool h)</td></tr>
+<tr class="memitem:a0c3dfb0ef8ed2d3dfc2e0fd8846c1c03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_c_s_t.html#a0c3dfb0ef8ed2d3dfc2e0fd8846c1c03">setHapticEnabled</a> (bool h)</td></tr>
 <tr class="separator:a0c3dfb0ef8ed2d3dfc2e0fd8846c1c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85ec7fbeab2e8e3b9706890492f9fe51"><td class="memItemLeft" align="right" valign="top"><a id="a85ec7fbeab2e8e3b9706890492f9fe51"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>setLambda</b> (double l)</td></tr>
+<tr class="memitem:a85ec7fbeab2e8e3b9706890492f9fe51"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_c_s_t.html#a85ec7fbeab2e8e3b9706890492f9fe51">setLambda</a> (double l)</td></tr>
 <tr class="separator:a85ec7fbeab2e8e3b9706890492f9fe51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42be640dc8619f2abf2e3e917fb53942"><td class="memItemLeft" align="right" valign="top"><a id="a42be640dc8619f2abf2e3e917fb53942"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>startCST</b> ()</td></tr>
+<tr class="memitem:a42be640dc8619f2abf2e3e917fb53942"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_c_s_t.html#a42be640dc8619f2abf2e3e917fb53942">startCST</a> ()</td></tr>
 <tr class="separator:a42be640dc8619f2abf2e3e917fb53942"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace4fcb63c13e0ca1fafe0ba12ae87ed0"><td class="memItemLeft" align="right" valign="top"><a id="ace4fcb63c13e0ca1fafe0ba12ae87ed0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>stopCST</b> ()</td></tr>
+<tr class="memitem:ace4fcb63c13e0ca1fafe0ba12ae87ed0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_c_s_t.html#ace4fcb63c13e0ca1fafe0ba12ae87ed0">stopCST</a> ()</td></tr>
 <tr class="separator:ace4fcb63c13e0ca1fafe0ba12ae87ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b0df7768ca3fcfdf9bbb117c575e05b"><td class="memItemLeft" align="right" valign="top"><a id="a8b0df7768ca3fcfdf9bbb117c575e05b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>destructCST</b> ()</td></tr>
+<tr class="memitem:a8b0df7768ca3fcfdf9bbb117c575e05b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classc_c_s_t.html#a8b0df7768ca3fcfdf9bbb117c575e05b">destructCST</a> ()</td></tr>
 <tr class="separator:a8b0df7768ca3fcfdf9bbb117c575e05b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Instance of a critical stability task paradigm. </p>
+<p>This class instantiates a Critical Stability Task (CST) object. The CST involves stabilizing a cursor with the haptic robot. Each instantiation of the CST creates a CST cursor. The CST can be instantiated with haptic feedback only, visual feedback only, or both. The haptic feedback uses a position-dependent force field to render state information to the user. For more information on the CST, see Quick et al. (<a href="https://www.physiology.org/doi/full/10.1152/jn.00300.2017">https://www.physiology.org/doi/full/10.1152/jn.00300.2017</a>)</p>
+<p>The CST system is governed by the equation: </p><p class="formulaDsp">
+\[ \frac{dx}{dt} = \lambda (x(t)-u(t)) \]
+</p>
+<p> where \(x(t)\) is the CST cursor position and \(u(t)\) is the hand position, and \(\lambda\) is the degree of instability of the system. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="af07dae93133ddb613683d5adc7096189"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af07dae93133ddb613683d5adc7096189">&#9670;&nbsp;</a></span>cCST()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cCST::cCST </td>
+          <td>(</td>
+          <td class="paramtype">cWorld *&#160;</td>
+          <td class="paramname"><em>worldPtr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>l</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>h</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">worldPtr</td><td>Pointer to the world </td></tr>
+    <tr><td class="paramname">l</td><td>Lambda, or the instability parameter for CST </td></tr>
+    <tr><td class="paramname">f</td><td>Magnitude of the force </td></tr>
+    <tr><td class="paramname">v</td><td>Set whether visual feedback is enabled </td></tr>
+    <tr><td class="paramname">h</td><td>Set whether haptic feedback is enabled</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Constructor for a CST object. A CST object inherits both from <a class="el" href="classc_generic_moving_object.html" title="A generic abstract class for any object that moves across the screen at regular time intervals.">cGenericMovingObject</a> and cGenericEffect because the CST cursor is a graphical object whose position must be updated at each iteration of the graphical loop. Similarly, cGenericEffect enables haptic feedback rendering. <br  />
+ </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a45ef6ab882283e34d88b4f123a2eceb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45ef6ab882283e34d88b4f123a2eceb3">&#9670;&nbsp;</a></span>computeForce()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cCST::computeForce </td>
+          <td>(</td>
+          <td class="paramtype">const cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_toolPos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_toolVel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned int &amp;&#160;</td>
+          <td class="paramname"><em>a_toolID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cVector3d &amp;&#160;</td>
+          <td class="paramname"><em>a_reactionForce</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a_toolPos</td><td>Position of the haptic tool </td></tr>
+    <tr><td class="paramname">a_toolVel</td><td>Velocity of the haptic tool </td></tr>
+    <tr><td class="paramname">a_toolID</td><td>ID number of the haptic tool </td></tr>
+    <tr><td class="paramname">a_reactionForce</td><td>Vector for storing forces to be applied the haptic tool</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function takes the position of the CST cursor computed by computeNextPosition and determines the force needed to be rendered to the user. </p>
+
+</div>
+</div>
+<a id="a8b0df7768ca3fcfdf9bbb117c575e05b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b0df7768ca3fcfdf9bbb117c575e05b">&#9670;&nbsp;</a></span>destructCST()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cCST::destructCST </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>When a session of CST is complete, this is called to clear up memory allocated to the CST object and remove it from the Chai3d world. </p>
+
+</div>
+</div>
+<a id="a4a04e4f8d10ac350957e803223b0ab6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a04e4f8d10ac350957e803223b0ab6d">&#9670;&nbsp;</a></span>graphicsLoopFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cCST::graphicsLoopFunction </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cVector3d&#160;</td>
+          <td class="paramname"><em>toolPos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cVector3d&#160;</td>
+          <td class="paramname"><em>toolVel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dt</td><td>Time increment since this function was last run </td></tr>
+    <tr><td class="paramname">toolPos</td><td>Position of the haptic tool </td></tr>
+    <tr><td class="paramname">toolVel</td><td>Velocity of the haptic tool</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Since the CST cursor is a moving object and inherits from <a class="el" href="classc_generic_moving_object.html" title="A generic abstract class for any object that moves across the screen at regular time intervals.">cGenericMovingObject</a>, it must override this function. This function updates the graphical rendering of the CST cursor based on the position computed by the computeNextPosition function. </p>
+
+<p>Reimplemented from <a class="el" href="classc_generic_moving_object.html">cGenericMovingObject</a>.</p>
+
+</div>
+</div>
+<a id="a0c3dfb0ef8ed2d3dfc2e0fd8846c1c03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c3dfb0ef8ed2d3dfc2e0fd8846c1c03">&#9670;&nbsp;</a></span>setHapticEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cCST::setHapticEnabled </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>h</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>Set whether haptic feedback should be given.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>True to enable haptic feedback, false to disable haptic feedback. </p>
+
+</div>
+</div>
+<a id="a85ec7fbeab2e8e3b9706890492f9fe51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85ec7fbeab2e8e3b9706890492f9fe51">&#9670;&nbsp;</a></span>setLambda()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cCST::setLambda </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>l</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">l</td><td>Lambda</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Set the value of the instability parameter \(\lambda\) </p>
+
+</div>
+</div>
+<a id="a2c69f8bf61a3031f15106f1f6f6a3f05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c69f8bf61a3031f15106f1f6f6a3f05">&#9670;&nbsp;</a></span>setVisionEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cCST::setVisionEnabled </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Set whether visual feedback should be given.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>True to enable visual feedback, false to disable visual feedback. </p>
+
+</div>
+</div>
+<a id="a42be640dc8619f2abf2e3e917fb53942"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42be640dc8619f2abf2e3e917fb53942">&#9670;&nbsp;</a></span>startCST()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cCST::startCST </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The CST object is instantiated for all trials of CST. This function enables the start of a new trial of CST </p>
+
+</div>
+</div>
+<a id="ace4fcb63c13e0ca1fafe0ba12ae87ed0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace4fcb63c13e0ca1fafe0ba12ae87ed0">&#9670;&nbsp;</a></span>stopCST()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cCST::stopCST </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops a CST trial. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/combined/<a class="el" href="c_c_s_t_8h_source.html">cCST.h</a></li>
 <li>/home/mfl24/Documents/chaiProjects/hapticEnvironment/src/combined/cCST.cpp</li>

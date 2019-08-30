@@ -1,6 +1,7 @@
 #include "graphics.h"
 
 /**
+ * @file graphics.h
  * @file graphics.cpp
  * @brief Functions for setting up and starting the graphics loop.
  *

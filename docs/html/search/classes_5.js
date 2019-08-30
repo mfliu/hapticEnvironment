@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hapticdata_153',['HapticData',['../struct_haptic_data.html',1,'']]]
+  ['hapticdata_192',['HapticData',['../struct_haptic_data.html',1,'']]]
 ];

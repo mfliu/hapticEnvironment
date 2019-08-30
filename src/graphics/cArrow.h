@@ -6,6 +6,10 @@ using namespace chai3d;
 using namespace std;
 
 /**
+ * @file cArrow.h
+ *
+ * @class cArrow 
+ *
  * @brief A graphical arrow class 
  */
 class cArrow : public cGenericObject
