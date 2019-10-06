@@ -290,6 +290,18 @@ void parsePacket(char* packet)
       }
       break;
     }
+
+    case HAPTICS_SET_ENABLED_WORLD:
+    {
+      M_HAPTICS_SET_ENABLED_WORLD worldEnabled;
+      memcpy(&worldEnabled, packet, sizeof(worldEnabled));
+      char* effectName;
+      effectName = worldEnabled.effectName;
+      cGenericEffect* fieldEffect = controlData.worldEffects[effectName];
+      fieldEffect->setEnabled(worldEnabled.enabled);
+      break; 
+    }
+
     case HAPTICS_SET_STIFFNESS:
     {
       cout << "Received HAPTICS_SET_STIFFNESS Message" << endl;

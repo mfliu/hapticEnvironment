@@ -29,6 +29,7 @@
 // Haptics Messages 1000-2000
 #define HAPTIC_DATA_STREAM 1000
 #define HAPTICS_SET_ENABLED 1001
+#define HAPTICS_SET_ENABLED_WORLD 1002
 #define HAPTICS_SET_STIFFNESS 1008
 #define HAPTICS_BOUNDING_PLANE 1009 
 #define HAPTICS_CONSTANT_FORCE_FIELD 1010
@@ -170,6 +171,12 @@ typedef struct {
   char objectName[MAX_STRING_LENGTH];
   int enabled;
 } M_HAPTICS_SET_ENABLED;
+
+typedef struct {
+  MSG_HEADER header;
+  char effectName[MAX_STRING_LENGTH];
+  int enabled;
+} M_HAPTICS_SET_ENABLED_WORLD;
 
 typedef struct {
   MSG_HEADER header;

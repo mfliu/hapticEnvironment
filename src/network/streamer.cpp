@@ -78,7 +78,6 @@ void updateStreamer(void)
     toolData.forceX = forceX;
     toolData.forceY = forceY;
     toolData.forceZ = forceZ;
-      
     char collisions[4][MAX_STRING_LENGTH];
     memset(&collisions, 0, sizeof(collisions));
     int collisionIdx = 0;
@@ -103,7 +102,7 @@ void updateStreamer(void)
     {
       controlData.dataFile.write((const char*) packet, sizeof(toolData));
     }
-    //usleep(500); // 1000 microseconds = 1 millisecond
+    usleep(250); // 1000 microseconds = 1 millisecond
     sendInt.wait();
     auto sendNum = sendInt.get().as<int>();
   }

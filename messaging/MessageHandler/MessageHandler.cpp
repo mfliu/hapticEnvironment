@@ -66,9 +66,14 @@ int MessageHandler::addModule(int moduleID, string ipAddr, int port) //, const i
 int MessageHandler::subscribeTo(int myID, int subscribeID) 
 {
   map<int, set<int>>::iterator it = moduleSubscribers.find(subscribeID);
-  if (it == moduleSubscribers.end()) {
+  if (it == moduleSubscribers.end() and subscribeID != 999) {
     cout << "Could not find module ID " << subscribeID << "." << endl;
     return 0;
+  }
+  if (subscribeID == 999) {
+    for (map<int, set<int>>::iterator modIt = moduleSubscribers.begin(); modIt != moduleSubscribers.end(); ++modIt) {
+      moduleSubscribers[subscribeID].insert(myID);
+    }
   }
   moduleSubscribers[subscribeID].insert(myID);
   return 1;
@@ -76,6 +81,9 @@ int MessageHandler::subscribeTo(int myID, int subscribeID)
 
 int MessageHandler::sendMessage(vector<char> packet, uint16_t lengthPacket, int sendingModule)
 { 
+  //MSG_HEADER header;
+  //memcpy(&header, reinterpret_cast<char*> (&packet[0]), sizeof(header));
+  //cout << header.serial_no << endl;
   map<int, set<int>>::iterator it = moduleSubscribers.find(sendingModule);
   set<int> receivingModules;
   if (it != moduleSubscribers.end()) {

@@ -28,9 +28,9 @@ class MessageHandler
     atomic_int msgNum{0};
     high_resolution_clock::time_point startTime;
     char msg[MAX_PACKET_LENGTH]; 
-    map<int, set<int>> moduleSubscribers;
-    map<int, int> moduleSockets;
-    map<int, struct sockaddr_in> socketStructs;
+    map<int, set<int>> moduleSubscribers; // map of moduleID to IDs of modules that subscribe to that module
+    map<int, int> moduleSockets; // map of moduleID to socket number 
+    map<int, struct sockaddr_in> socketStructs; //map of socket number to the socket struct
 
   public:
     MessageHandler(const char* address, int iPort);
