@@ -72,8 +72,9 @@ int MessageHandler::subscribeTo(int myID, int subscribeID)
   }
   if (subscribeID == 999) {
     for (map<int, set<int>>::iterator modIt = moduleSubscribers.begin(); modIt != moduleSubscribers.end(); ++modIt) {
-      moduleSubscribers[subscribeID].insert(myID);
+      moduleSubscribers[modIt->first].insert(myID);
     }
+    return 1;
   }
   moduleSubscribers[subscribeID].insert(myID);
   return 1;
