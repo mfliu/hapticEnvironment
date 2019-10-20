@@ -51,6 +51,7 @@ int main(int argc, char* argv[])
     initDisplay();
     initScene();
   }
+
   initHaptics();
   startHapticsThread(); 
   atexit(close);

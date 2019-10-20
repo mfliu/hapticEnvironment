@@ -47,7 +47,6 @@ void updateStreamer(void)
     posX = pos.x();
     posY = pos.y();
     posZ = pos.z();
-
     vel = hapticsData.tool->getDeviceGlobalLinVel();
     velX = vel.x();
     velY = vel.y();

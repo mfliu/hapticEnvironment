@@ -95,7 +95,7 @@ void initScene(void)
   //graphicsData.camera->setStereoEyeSeparation(0.03);
   //graphicsData.camera->setStereoFocalLength(50.0);
   graphicsData.camera->setMirrorVertical(graphicsData.mirroredDisplay);
-  
+  graphicsData.camera->setMirrorHorizontal(graphicsData.mirroredDisplay);  
 
   graphicsData.light = new cDirectionalLight(graphicsData.world);
   graphicsData.camera->addChild(graphicsData.light); 
