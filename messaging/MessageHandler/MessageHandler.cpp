@@ -28,7 +28,7 @@ double MessageHandler::getTimestamp()
 
 int MessageHandler::addModule(int moduleID, string ipAddr, int port) //, const int subscriberList[10])
 {
-  //cout << "Adding module " << moduleID << " with IP " << ipAddr << ":" << port << endl;
+  cout << "Adding module " << moduleID << " with IP " << ipAddr << ":" << port << endl;
   struct sockaddr_in sockStruct;
   int sockLen = sizeof(sockStruct);
   int sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -112,10 +112,21 @@ int MessageHandler::testMessage(int val)
   return 1;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
   //TODO: Read Ports and IP address from config file
-  MessageHandler* mh = new MessageHandler("127.0.0.1", 8080);
+  const char* IP;
+  int PORT;
+  if (argc <= 2) {
+    IP = "127.0.0.1";
+    PORT = 8080;
+  }
+  else {
+    IP = argv[1];
+    PORT = atoi(argv[2]);
+  }
+  MessageHandler* mh = new MessageHandler(IP, PORT);
+  cout << "Made Message Handler with IP " << IP << " and PORT " << PORT << endl;
   mh->getServer()->bind("getMsgNum", [&mh](){return mh->getMsgNum();});
   mh->getServer()->bind("getTimestamp", [&mh](){return mh->getTimestamp();});
   mh->getServer()->bind("addModule", [&mh](int moduleID, string ipAddr, int port){return mh->addModule(moduleID, ipAddr, port);});

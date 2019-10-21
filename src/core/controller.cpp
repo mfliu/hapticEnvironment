@@ -18,6 +18,11 @@ ControlData controlData;
 
 int main(int argc, char* argv[])
 {
+  const char* MODULE_IP;
+  int MODULE_PORT;
+  const char* MH_IP;
+  int MH_PORT;
+
   cout << endl;
   cout << "-----------------------------------" << endl;
   cout << "CHAI3D" << endl;
@@ -38,9 +43,23 @@ int main(int argc, char* argv[])
   //controlData.LISTENER_IP = "127.0.0.1";
   //controlData.LISTENER_PORT = 7000;
   controlData.MODULE_NUM = 1;
-  controlData.IPADDR = "127.0.0.1";
-  controlData.PORT = 7000;
-  controlData.client = new rpc::client("127.0.0.1", 8080);
+  if (argc < 2) {
+    controlData.IPADDR = "127.0.0.1";
+    controlData.PORT = 7000;
+  }
+  else {
+    controlData.IPADDR = argv[1];
+    controlData.PORT = atoi(argv[2]);
+  }
+  if (argc <= 3) {
+    controlData.MH_IP = "127.0.0.1";
+    controlData.MH_PORT = 8080;
+  }
+  else {
+    controlData.MH_IP = argv[3];
+    controlData.MH_PORT = atoi(argv[4]);
+  }
+  controlData.client = new rpc::client(controlData.MH_IP, controlData.MH_PORT);
   //controlData.SENDER_IPS.push_back("127.0.0.1");
   //controlData.SENDER_IPS.push_back("127.0.0.1");
   //controlData.SENDER_PORTS.push_back(9000);

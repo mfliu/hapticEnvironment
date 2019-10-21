@@ -29,7 +29,6 @@ int msgLen = sizeof(msgStruct);
 int addMessageHandlerModule()
 {
   auto addMod = controlData.client->call("addModule", controlData.MODULE_NUM, controlData.IPADDR, controlData.PORT);
-  //addMod.wait();
   return addMod.as<int>();
 }
 

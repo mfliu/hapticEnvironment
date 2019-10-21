@@ -38,6 +38,8 @@ struct ControlData
   const char* IPADDR;
   int PORT;
   int msg_socket;
+  const char* MH_IP;
+  int MH_PORT;
   rpc::client* client;
   
   //const char* LISTENER_IP;
