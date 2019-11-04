@@ -82,9 +82,11 @@ int MessageHandler::subscribeTo(int myID, int subscribeID)
 
 int MessageHandler::sendMessage(vector<char> packet, uint16_t lengthPacket, int sendingModule)
 { 
-  //MSG_HEADER header;
-  //memcpy(&header, reinterpret_cast<char*> (&packet[0]), sizeof(header));
-  //cout << header.serial_no << endl;
+  /*MSG_HEADER header;
+  memcpy(&header, reinterpret_cast<char*> (&packet[0]), sizeof(header));
+  if (header.msg_type == CST_CREATE) {
+    cout << "RECEIVED CST_CREATE MESSAGE" << endl;
+  }*/
   map<int, set<int>>::iterator it = moduleSubscribers.find(sendingModule);
   set<int> receivingModules;
   if (it != moduleSubscribers.end()) {

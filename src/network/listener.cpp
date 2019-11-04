@@ -36,7 +36,7 @@ void updateListener()
 {
   char rawPacket[MAX_PACKET_LENGTH];
   char* packetPointer = rawPacket;
-
+  
   while (controlData.simulationRunning)
   {
     memset(rawPacket, 0, MAX_PACKET_LENGTH);

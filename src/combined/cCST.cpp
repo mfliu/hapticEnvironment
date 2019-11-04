@@ -135,9 +135,6 @@ void cCST::graphicsLoopFunction(double dt, cVector3d toolPos, cVector3d toolVel)
     cVector3d* nextPos = cCST::computeNextPosition(toolPos);
     visualCursor->setLocalPos(0.0, currPos->y(), 0.0);
   }
-  else {
-    visualCursor->setEnabled(false);
-  }
 }
 
 /**
@@ -199,6 +196,9 @@ void cCST::startCST()
 void cCST::stopCST()
 {
   running = false;
+  if (visionEnabled == true) {
+    visualCursor->setEnabled(false);
+  }
   cstClock->stop();
   cstClock->reset();
   currPos->x(0.0);

@@ -118,6 +118,8 @@ void close()
   delete hapticsData.handler;
   cout << "Deleted handler" << endl;
   closeMessagingSocket();
+  graphicsData.world->deleteAllChildren();
+
 }
 
 /**
@@ -184,11 +186,39 @@ void parsePacket(char* packet)
       cout << "Received REMOVE_OBJECT Message" << endl;
       M_REMOVE_OBJECT rmObj;
       memcpy(&rmObj, packet, sizeof(rmObj));
-      cGenericObject* objPtr = controlData.objectMap[rmObj.objectName];
-      graphicsData.world->deleteChild(objPtr);
-      controlData.objectMap.erase(rmObj.objectName);
+      if (controlData.objectMap.find(rmObj.objectName) == controlData.objectMap.end()) {
+        cout << rmObj.objectName << " not found" << endl;
+      }
+      else{
+        cGenericObject* objPtr = controlData.objectMap[rmObj.objectName];
+        graphicsData.world->deleteChild(objPtr);
+        controlData.objectMap.erase(rmObj.objectName);
+        cout << "Removed an ojbect" << endl;
+      }
       break;
     }
+    
+    case RESET_WORLD:
+    {
+      cout << "Received RESET_WORLD Message" << endl;
+      unordered_map<string, cGenericObject*>::iterator objIt = controlData.objectMap.begin();
+      while (objIt != controlData.objectMap.end()) {
+        bool removedObj = graphicsData.world->deleteChild(objIt->second);
+        cout << "Removed " << objIt->first << "? " << removedObj << endl;
+        objIt++;
+      }
+      unordered_map<string, cGenericEffect*>::iterator effIt = controlData.worldEffects.begin();
+      while (effIt != controlData.worldEffects.end()) {
+        bool removedEffect = graphicsData.world->removeEffect(effIt->second);
+        cout << "Removed " << effIt->first << "? " << removedEffect << endl;
+        effIt++;
+      }
+      controlData.objectMap.clear();
+      controlData.objectEffects.clear();
+      controlData.worldEffects.clear();
+      break;
+    }
+
     case CST_CREATE:
     {
       cout << "Received CST_CREATE Message" << endl;
@@ -213,10 +243,17 @@ void parsePacket(char* packet)
       }
       else {
         cCST* cst = dynamic_cast<cCST*>(controlData.objectMap[cstObj.cstName]);
+        cst->stopCST();
         cst->destructCST();
         remove(graphicsData.movingObjects.begin(), graphicsData.movingObjects.end(), cst);
-        controlData.objectMap.erase(cstObj.cstName);
-        graphicsData.world->deleteChild(cst);
+        controlData.worldEffects.erase(cstObj.cstName);
+        bool removedCST = graphicsData.world->removeEffect(cst);
+        if (removedCST == true) {
+          cout << "Removed CST" << endl;
+        }
+        else {
+          cout << "Unable to remove CST" << endl;
+        }
       }
       break;
     }

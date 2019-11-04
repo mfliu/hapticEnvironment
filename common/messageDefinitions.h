@@ -15,6 +15,9 @@
 #define STOP_RECORDING 6
 #define REMOVE_OBJECT 7
 #define KEYPRESS 8
+#define PAUSE_RECORDING 9
+#define RESUME_RECORDING 10
+#define RESET_WORLD 11
 
 // Combined/Complex Object Messages 500-1000
 #define CST_CREATE 500
@@ -102,6 +105,18 @@ typedef struct {
   MSG_HEADER header;
   char keyname[MAX_STRING_LENGTH];
 } M_KEYPRESS;
+
+typedef struct {
+  MSG_HEADER header;
+} M_PAUSE_RECORDING;
+
+typedef struct {
+  MSG_HEADER header;
+} M_RESUME_RECORDING;
+
+typedef struct {
+  MSG_HEADER header;
+} M_RESET_WORLD;
 
 typedef struct {
   MSG_HEADER header;
