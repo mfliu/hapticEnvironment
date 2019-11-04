@@ -25,10 +25,14 @@ void initHaptics(void)
   hapticsData.handler = new cHapticDeviceHandler();
   hapticsData.handler->getDevice(hapticsData.hapticDevice, 0);
   hapticsData.hapticDeviceInfo = hapticsData.hapticDevice->getSpecifications();
-  
+ 
+  bool open_success = hapticsData.hapticDevice->open();
+  cout << "Opened Device " << open_success << endl;
+  bool calibrate_success = hapticsData.hapticDevice->calibrate(true);
+  cout << "Calibrate succeeded " << calibrate_success << endl;
+
   double workspaceScaleFactor;
   double forceScaleFactor;
-
   if (hapticsData.hapticDeviceInfo.m_model == C_HAPTIC_DEVICE_FALCON) {
     workspaceScaleFactor = 3000;
     forceScaleFactor = 3000;
@@ -38,6 +42,7 @@ void initHaptics(void)
     workspaceScaleFactor = 1000;
     forceScaleFactor = 1000;
     cout << "Delta Detected." << endl;
+
   }
   else {
     workspaceScaleFactor = 1000;
@@ -53,6 +58,11 @@ void initHaptics(void)
   hapticsData.tool->setRadius(HAPTIC_TOOL_RADIUS);
   hapticsData.tool->setWorkspaceScaleFactor(workspaceScaleFactor);
   hapticsData.tool->setWaitForSmallForce(false);
+  if (hapticsData.hapticDeviceInfo.m_model == C_HAPTIC_DEVICE_DELTA_3) {
+    cMatrix3d rotate = cMatrix3d();
+    rotate.set(0, 1, 0, 1, 0, 0, 0, 0, 1);
+    hapticsData.tool->setDeviceGlobalRot(rotate);
+  }
   hapticsData.tool->start();
   
   hapticsData.maxForce = hapticsData.hapticDeviceInfo.m_maxLinearForce;

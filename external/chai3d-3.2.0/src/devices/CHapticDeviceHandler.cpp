@@ -149,7 +149,7 @@ void cHapticDeviceHandler::update()
     // open all remaining devices
     for (int i=0; i<count; i++)
     {
-        device = cDeltaDevice::create(i);
+	device = cDeltaDevice::create(i);
         if (device->open())
         {
             m_devices[m_numDevices] = device;

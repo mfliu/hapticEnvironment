@@ -101,7 +101,7 @@ bool cCST::computeForce(const cVector3d& a_toolPos, const cVector3d& a_toolVel,
   usleep(1000);
   if (hapticEnabled == true && running == true) {
     cVector3d* nextPos = cCST::computeNextPosition(a_toolPos);
-    double forceMark = (forceMagnitude * (hapticsData.maxForce) * (nextPos->y()/100) + 0.0);
+    double forceMark = (forceMagnitude * (hapticsData.maxForce) * (nextPos->y()/200) + 0.0);
     //double forceMark = forceMagnitude * 8.0 * (nextPos->y()/100);
     if (forceMark > 8.0) {
       a_reactionForce.y(8.0);

@@ -562,7 +562,7 @@ bool cDeltaDevice::open()
 
     // if system is already opened then return
     if (m_deviceReady) return (C_SUCCESS);
-
+    
     // check if DHD-API call is available
     if (!s_dhdOpenID) return (C_ERROR);
 
@@ -570,13 +570,13 @@ bool cDeltaDevice::open()
     int result;
     if (s_drdOpenID) result = drdOpenID(m_deviceNumber);
     else             result = dhdOpenID(m_deviceNumber);
-
+    
     // update device status
     if (result < 0)
     {
         m_deviceReady = false;
         m_deviceID    = 0;
-        return (C_ERROR);
+	return (C_ERROR);
     }
     else
     {
@@ -636,7 +636,7 @@ bool cDeltaDevice::open()
         case (DHD_DEVICE_3DOF):
         case (DHD_DEVICE_DELTA3):
         {
-            m_specifications.m_model                         = C_HAPTIC_DEVICE_DELTA_3;
+	    m_specifications.m_model                         = C_HAPTIC_DEVICE_DELTA_3;
             m_specifications.m_manufacturerName              = "Force Dimension";
             m_specifications.m_modelName                     = "delta.3";
             m_specifications.m_maxLinearForce                =   20.0;   // [N]
@@ -1231,13 +1231,11 @@ bool cDeltaDevice::calibrate(bool a_forceCalibration)
 {
     // check if the system is available
     if (!m_deviceReady) return (C_ERROR);
-
     // check if DRD-API call is available
     if (!s_drdAutoInit || !s_drdStop || !s_drdIsInitialized)
     {
         // check if DHD-API call is available
         if (!s_dhdReset) return (C_ERROR);
-
         // reset device (asking user to calibrate manually)
         if (a_forceCalibration)
         {
