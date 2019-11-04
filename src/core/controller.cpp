@@ -223,13 +223,11 @@ void parsePacket(char* packet)
       unordered_map<string, cGenericObject*>::iterator objIt = controlData.objectMap.begin();
       while (objIt != controlData.objectMap.end()) {
         bool removedObj = graphicsData.world->deleteChild(objIt->second);
-        //cout << "Removed " << objIt->first << "? " << removedObj << endl;
         objIt++;
       }
       unordered_map<string, cGenericEffect*>::iterator effIt = controlData.worldEffects.begin();
       while (effIt != controlData.worldEffects.end()) {
         bool removedEffect = graphicsData.world->removeEffect(effIt->second);
-        //cout << "Removed " << effIt->first << "? " << removedEffect << endl;
         effIt++;
       }
       controlData.objectMap.clear();
