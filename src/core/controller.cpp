@@ -209,11 +209,10 @@ void parsePacket(char* packet)
       if (controlData.objectMap.find(rmObj.objectName) == controlData.objectMap.end()) {
         cout << rmObj.objectName << " not found" << endl;
       }
-      else{
+      else {
         cGenericObject* objPtr = controlData.objectMap[rmObj.objectName];
         graphicsData.world->deleteChild(objPtr);
         controlData.objectMap.erase(rmObj.objectName);
-        cout << "Removed an ojbect" << endl;
       }
       break;
     }
@@ -224,13 +223,13 @@ void parsePacket(char* packet)
       unordered_map<string, cGenericObject*>::iterator objIt = controlData.objectMap.begin();
       while (objIt != controlData.objectMap.end()) {
         bool removedObj = graphicsData.world->deleteChild(objIt->second);
-        cout << "Removed " << objIt->first << "? " << removedObj << endl;
+        //cout << "Removed " << objIt->first << "? " << removedObj << endl;
         objIt++;
       }
       unordered_map<string, cGenericEffect*>::iterator effIt = controlData.worldEffects.begin();
       while (effIt != controlData.worldEffects.end()) {
         bool removedEffect = graphicsData.world->removeEffect(effIt->second);
-        cout << "Removed " << effIt->first << "? " << removedEffect << endl;
+        //cout << "Removed " << effIt->first << "? " << removedEffect << endl;
         effIt++;
       }
       controlData.objectMap.clear();
@@ -268,12 +267,6 @@ void parsePacket(char* packet)
         remove(graphicsData.movingObjects.begin(), graphicsData.movingObjects.end(), cst);
         controlData.worldEffects.erase(cstObj.cstName);
         bool removedCST = graphicsData.world->removeEffect(cst);
-        if (removedCST == true) {
-          cout << "Removed CST" << endl;
-        }
-        else {
-          cout << "Unable to remove CST" << endl;
-        }
       }
       break;
     }
