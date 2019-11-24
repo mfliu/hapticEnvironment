@@ -318,6 +318,58 @@ void parsePacket(char* packet)
       cst->setLambda(lambda);
       break;
     }
+    case CUPS_CREATE:
+    {
+      cout << "Received CUPS_CREATE Message" << endl;
+      M_CUPS_CREATE createCups;
+      memcpy(&createCups, packet, sizeof(createCups));
+      cCups* cups = new cCups(graphicsData.world, createCups.escapeAngle, 
+          createCups.pendulumLength, createCups.ballMass, createCups.cartMass);
+      char* cupsName = createCups.cupsName;
+      controlData.objectMap[cupsName] = cups;
+      graphicsData.movingObjects.push_back(cups);
+      graphicsData.world->addEffect(cups);
+      controlData.worldEffects[cupsName] = cups;
+      break;
+    }
+    case CUPS_DESTRUCT:
+    {
+      cout << "Received CUPS_DESTRUCT Message" << endl;
+      M_CUPS_DESTRUCT cupsObj;
+      memcpy(&cupsObj, packet, sizeof(cupsObj));
+      if (controlData.objectMap.find(cupsObj.cupsName) == controlData.objectMap.end()) {
+        cout << cupsObj.cupsName << " not found" << endl;
+      }
+      else {
+        cCups* cups = dynamic_cast<cCups*>(controlData.objectMap[cupsObj.cupsName]);
+        cups->stopCups();
+        cups->destructCups();
+        remove(graphicsData.movingObjects.begin(), graphicsData.movingObjects.end(), cups);
+        controlData.worldEffects.erase(cupsObj.cupsName);
+        bool removedCups = graphicsData.world->removeEffect(cups);
+      }
+      break;
+    }
+    case CUPS_START:
+    {
+      cout << "Received CUPS_START Message" << endl;
+      M_CUPS_START cupsObj;
+      memcpy(&cupsObj, packet, sizeof(cupsObj));
+      cCups* cups = dynamic_cast<cCups*>(controlData.objectMap[cupsObj.cupsName]);
+      hapticsData.tool->setShowEnabled(false);
+      cups->startCups();
+      break;
+    }
+    case CUPS_STOP:
+    {
+      cout << "Received CUPS_STOP Message" << endl;
+      M_CUPS_STOP cupsObj;
+      memcpy(&cupsObj, packet, sizeof(cupsObj));
+      cCups* cups = dynamic_cast<cCups*>(controlData.objectMap[cupsObj.cupsName]);
+      cups->stopCups();
+      hapticsData.tool->setShowEnabled(true);
+      break;
+    }
     case HAPTICS_SET_ENABLED:
     {
       cout << "Received HAPTICS_SET_ENABLED Message" << endl;
@@ -546,12 +598,10 @@ void parsePacket(char* packet)
       M_GRAPHICS_SHAPE_SPHERE sphere;
       memcpy(&sphere, packet, sizeof(sphere));
       cShapeSphere* sphereObj = new cShapeSphere(sphere.radius);
-      graphicsData.world->addChild(sphereObj);
       sphereObj->setLocalPos(sphere.localPosition[0], sphere.localPosition[1], sphere.localPosition[2]);
       sphereObj->m_material->setColorf(sphere.color[0], sphere.color[1], sphere.color[2], sphere.color[3]);
-      cEffectSurface* sphereEffect = new cEffectSurface(sphereObj);
-      sphereObj->addEffect(sphereEffect);
       controlData.objectMap[sphere.objectName] = sphereObj;
+      graphicsData.world->addChild(sphereObj);
       break;
     }
     case GRAPHICS_SHAPE_TORUS:

@@ -28,6 +28,11 @@
 #define CST_SET_HAPTIC 505
 #define CST_SET_LAMBDA 506
 #define CST_DATA 507
+#define CUPS_CREATE 508
+#define CUPS_DESTRUCT 509
+#define CUPS_START 510
+#define CUPS_STOP 511
+#define CUPS_DATA 512 
 
 // Haptics Messages 1000-2000
 #define HAPTIC_DATA_STREAM 1000
@@ -81,6 +86,7 @@ typedef struct {
 
 typedef struct {
   MSG_HEADER header;
+  int trialNum;
 } M_TRIAL_START;
 
 typedef struct {
@@ -166,6 +172,36 @@ typedef struct {
   double cursorY;
   double cursorZ;
 } M_CST_DATA;
+
+typedef struct {
+  MSG_HEADER header;
+  char cupsName[MAX_STRING_LENGTH];
+  double escapeAngle;
+  double pendulumLength;
+  double ballMass;
+  double cartMass;
+} M_CUPS_CREATE;
+
+typedef struct  {
+  MSG_HEADER header;
+  char cupsName[MAX_STRING_LENGTH];
+} M_CUPS_DESTRUCT;
+
+typedef struct {
+  MSG_HEADER header;
+  char cupsName[MAX_STRING_LENGTH];
+} M_CUPS_START;
+
+typedef struct {
+  MSG_HEADER header;
+  char cupsName[MAX_STRING_LENGTH];
+} M_CUPS_STOP;
+
+typedef struct {
+  MSG_HEADER header;
+  double ballPos;
+  double cartPos;
+} M_CUPS_DATA;
 
 typedef struct {
   MSG_HEADER header;
